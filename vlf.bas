@@ -160,7 +160,7 @@
 		{var:anzahl_hints}     =14
 		{var:anzahl_event}     =12
 		{var:inventar_max}     =99
-		{var:anzahl_tile}      =23
+		{var:anzahl_tile}      =40
 
 		rs=165: 'pro raum 160 data
 		
@@ -245,11 +245,23 @@
 		if a>=192 and a<=254 then c=a     : print "{gray1}"+chr$(18)+chr$(c);
 		if a=255 then c=a-64              : print "{gray1}"+chr$(18)+chr$(c);
 	{:next}
-		next a
-		print chr$(5)
-		'print anfuehrungszeichen chr$(18)+chr$(34)
-		'print "{home}{down:20}{rvrs on}{32}{33}{34}"
-		stop
+	next a
+
+	{:get1}
+	get a$:if a$="" then {:get1}
+
+	print "{white}"+chr$(147)
+	for i=0 to {var:anzahl_tile}-1
+		print"{home}{clear}";
+		print {var:map_tile}(i);
+		print"{home}{white}{down:3}";i
+		
+	{:get2}
+		get z$:if z$="" then {:get2}
+	next
+
+	print chr$(5)
+	stop
 
 
 
@@ -1291,29 +1303,46 @@ goto{:goto_newgame}
 	data"mira",9,23,7,"{orange}{rvrs on}${rvrs off}{$ca}{down}{left:2}{$cb}{$cc}",1,1,1,2 'bl
 'tile
 	'{var:map_tile}(x)
-	data"{lt. green}{rvrs off}{211}{rvrs off}{lt. green}{212}{down}{left:2}{rvrs off}{lt. green}{212}{rvrs off}{lt. green}{211}"
-	data"{brown}{rvrs off}{163}{rvrs off}{brown}{164}{down}{left:2}{rvrs off}{brown}{212}{rvrs off}{brown}{211}"
-	data"{lt. red}{rvrs off}{191}{rvrs on}{lt. red}{64}{down}{left:2}{rvrs on}{lt. red}{65}{rvrs on}{lt. red}{66}"
-	data"{lt. green}{rvrs off}{211}{rvrs off}{lt. green}{213}{down}{left:2}{rvrs off}{lt. green}{213}{rvrs off}{lt. green}{211}"
-	data"{orange}{rvrs off}{214}{rvrs off}{orange}{214}{down}{left:2}{rvrs off}{orange}{214}{rvrs off}{orange}{214}"
-	data"{brown}{rvrs off}{211}{rvrs off}{brown}{212}{down}{left:2}{rvrs off}{brown}{212}{rvrs off}{brown}{211}"
-	data"{lt. green}{rvrs on}{81}{rvrs on}{lt. green}{82}{down}{left:2}{rvrs on}{lt. green}{83}{rvrs on}{lt. green}{84}"
-	data"{brown}{rvrs off}{55}{rvrs off}{brown}{55}{down}{left:2}{rvrs off}{brown}{55}{rvrs off}{brown}{55}"
-	data"{gray1}{rvrs off}{165}{rvrs off}{gray1}{166}{down}{left:2}{rvrs off}{gray1}{167}{rvrs off}{gray1}{168}"
-	data"{brown}{rvrs off}{220}{rvrs off}{brown}{221}{down}{left:2}{rvrs off}{brown}{222}{rvrs off}{brown}{223}"
-	data"{lt. red}{rvrs off}{209}{rvrs off}{lt. red}{209}{down}{left:2}{rvrs off}{lt. red}{209}{rvrs off}{lt. red}{209}"
-	data"{lt. red}{rvrs off}{210}{rvrs off}{lt. red}{210}{down}{left:2}{rvrs off}{lt. red}{210}{rvrs off}{lt. red}{210}"
-	data"{lt. green}{rvrs off}{215}{rvrs off}{lt. green}{214}{down}{left:2}{rvrs off}{lt. green}{214}{rvrs off}{lt. green}{215}"
-	data"{brown}{rvrs off}{161}{rvrs off}{brown}{162}{down}{left:2}{rvrs off}{brown}{162}{rvrs off}{brown}{161}"
-	data"{gray1}{rvrs off}{170}{rvrs on}{gray1}{86}{down}{left:2}{rvrs on}{gray1}{87}{rvrs on}{gray1}{88}"
-	data"{gray2}{rvrs off}{171}{rvrs off}{gray2}{172}{down}{left:2}{rvrs off}{gray2}{173}{rvrs off}{gray2}{174}"
-	data"{gray1}{rvrs off}{183}{rvrs off}{gray1}{184}{down}{left:2}{rvrs off}{gray1}{185}{rvrs off}{gray1}{186}"
-	data"{lt. green}{rvrs on}{76}{rvrs on}{lt. green}{77}{down}{left:2}{rvrs on}{lt. green}{78}{rvrs on}{lt. green}{79}"
-	data"{brown}{rvrs on}{80}{rvrs on}{brown}{80}{down}{left:2}{rvrs on}{brown}{80}{rvrs on}{brown}{80}"
-	data"{brown}{rvrs on}{94}{rvrs on}{brown}{94}{down}{left:2}{rvrs on}{brown}{93}{rvrs on}{brown}{93}"
-	data"{brown}{rvrs on}{94}{rvrs on}{brown}{95}{down}{left:2}{rvrs on}{brown}{93}{rvrs on}{brown}{93}"
-	data"{gray1}{rvrs on}{89}{rvrs on}{gray1}{90}{down}{left:2}{rvrs on}{gray1}{91}{rvrs on}{gray1}{92}"
-	data"{brown}{rvrs on}{95}{rvrs on}{brown}{94}{down}{left:2}{rvrs on}{brown}{93}{rvrs on}{brown}{93}"
+data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{193}{down}{left:2}{rvrs off}{gray1}{193}{rvrs off}{gray1}{192}{rvrs off}"
+data"{gray1}{rvrs off}{194}{rvrs off}{gray1}{195}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{193}{rvrs off}"
+data"{gray1}{rvrs off}{196}{rvrs off}{gray1}{197}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{193}{rvrs off}"
+data"{orange}{rvrs off}{198}{rvrs off}{orange}{198}{down}{left:2}{rvrs off}{orange}{198}{rvrs off}{orange}{198}{rvrs off}"
+data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{193}{down}{left:2}{rvrs off}{gray1}{193}{rvrs off}{gray1}{192}{rvrs off}"
+data"{gray1}{rvrs off}{199}{rvrs off}{gray1}{200}{down}{left:2}{rvrs off}{gray1}{201}{rvrs off}{gray1}{202}{rvrs off}"
+data"{lt. green}{rvrs off}{203}{rvrs off}{lt. green}{198}{down}{left:2}{rvrs off}{lt. green}{198}{rvrs off}{lt. green}{204}{rvrs off}"
+data"{gray1}{rvrs off}{205}{rvrs off}{gray1}{206}{down}{left:2}{rvrs off}{gray1}{207}{rvrs off}{gray1}{208}{rvrs off}"
+data"{brown}{rvrs off}{209}{rvrs off}{brown}{210}{down}{left:2}{rvrs off}{brown}{211}{rvrs off}{brown}{212}{rvrs off}"
+data"{lt. red}{rvrs off}{213}{rvrs off}{lt. red}{213}{down}{left:2}{rvrs off}{lt. red}{213}{rvrs off}{lt. red}{213}{rvrs off}"
+data"{lt. red}{rvrs off}{214}{rvrs off}{lt. red}{215}{down}{left:2}{rvrs off}{lt. red}{216}{rvrs off}{lt. red}{217}{rvrs off}"
+data"{lt. red}{rvrs off}{218}{rvrs off}{lt. red}{219}{down}{left:2}{rvrs off}{lt. red}{220}{rvrs off}{lt. red}{221}{rvrs off}"
+data"{lt. green}{rvrs off}{203}{rvrs off}{lt. green}{198}{down}{left:2}{rvrs off}{lt. green}{198}{rvrs off}{lt. green}{204}{rvrs off}"
+data"{brown}{rvrs off}{222}{rvrs off}{brown}{222}{down}{left:2}{rvrs off}{brown}{222}{rvrs off}{brown}{222}{rvrs off}"
+data"{gray1}{rvrs off}{223}{rvrs off}{gray1}{160}{down}{left:2}{rvrs off}{gray1}{161}{rvrs off}{gray1}{162}{rvrs off}"
+data"{gray2}{rvrs off}{163}{rvrs off}{gray2}{164}{down}{left:2}{rvrs off}{gray2}{165}{rvrs off}{gray2}{166}{rvrs off}"
+data"{gray1}{rvrs off}{167}{rvrs off}{gray1}{168}{down}{left:2}{rvrs off}{gray1}{169}{rvrs off}{gray1}{170}{rvrs off}"
+data"{lt. green}{rvrs off}{171}{rvrs off}{lt. green}{172}{down}{left:2}{rvrs off}{lt. green}{173}{rvrs off}{lt. green}{174}{rvrs off}"
+data"{lt. green}{rvrs off}{175}{rvrs off}{lt. green}{176}{down}{left:2}{rvrs off}{lt. green}{175}{rvrs off}{lt. green}{176}{rvrs off}"
+data"{lt. green}{rvrs off}{177}{rvrs off}{lt. green}{178}{down}{left:2}{rvrs off}{lt. green}{179}{rvrs off}{lt. green}{180}{rvrs off}"
+data"{brown}{rvrs off}{171}{rvrs off}{brown}{172}{down}{left:2}{rvrs off}{brown}{173}{rvrs off}{brown}{174}{rvrs off}"
+data"{brown}{rvrs off}{175}{rvrs off}{brown}{176}{down}{left:2}{rvrs off}{brown}{175}{rvrs off}{brown}{176}{rvrs off}"
+data"{brown}{rvrs off}{177}{rvrs off}{brown}{178}{down}{left:2}{rvrs off}{brown}{179}{rvrs off}{brown}{180}{rvrs off}"
+data"{brown}{rvrs off}{203}{rvrs off}{brown}{198}{down}{left:2}{rvrs off}{brown}{198}{rvrs off}{brown}{204}{rvrs off}"
+data"{brown}{rvrs off}{181}{rvrs off}{brown}{181}{down}{left:2}{rvrs off}{brown}{182}{rvrs off}{brown}{182}{rvrs off}"
+data"{gray1}{rvrs off}{183}{rvrs off}{gray1}{184}{down}{left:2}{rvrs off}{gray1}{185}{rvrs off}{gray1}{186}{rvrs off}"
+data"{brown}{rvrs off}{181}{rvrs off}{brown}{187}{down}{left:2}{rvrs off}{brown}{182}{rvrs off}{brown}{182}{rvrs off}"
+data"{brown}{rvrs off}{187}{rvrs off}{brown}{181}{down}{left:2}{rvrs off}{brown}{182}{rvrs off}{brown}{182}{rvrs off}"
+data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+data"{brown}{rvrs off}{188}{rvrs off}{brown}{188}{down}{left:2}{rvrs off}{brown}{188}{rvrs off}{brown}{188}{rvrs off}"
+data"{gray1}{rvrs off}{198}{rvrs off}{gray1}{198}{down}{left:2}{rvrs off}{gray1}{198}{rvrs off}{gray1}{198}{rvrs off}"
+data"{gray1}{rvrs off}{189}{rvrs off}{gray1}{198}{down}{left:2}{rvrs off}{gray1}{189}{rvrs off}{gray1}{198}{rvrs off}"
+data"{gray1}{rvrs off}{189}{rvrs off}{gray1}{198}{down}{left:2}{rvrs off}{gray1}{190}{rvrs off}{gray1}{198}{rvrs off}"
+data"{gray1}{rvrs off}{191}{rvrs on}{gray1}{64}{down}{left:2}{rvrs on}{gray1}{65}{rvrs on}{gray1}{65}{rvrs off}"
+data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{66}{down}{left:2}{rvrs on}{gray1}{67}{rvrs on}{gray1}{67}{rvrs off}"
+data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 'items
 	'{var:item_ident}(0-17) 0 = weappon
 	'{var:item_ident}(0-17) 1 = ruestung
