@@ -228,34 +228,39 @@
 
 
 'D&U
-	print "{white}"+chr$(147)
-	z=-1
-	for a=0 to255
-		b=0
-		z=z+1
-		if z=16 then print : z=0
-		if a>=0 and a<=31    then c=a+64  : print chr$(c);
-		if a>=32 and a<=63   then c=a+00  : print chr$(c);
-		if a>=64 and a<=95   then c=a+32  : print "{gray1}"+chr$(c);
-		if a>=96 and a<=127  then c=a+64  : print "{gray1}"+chr$(c);
-		rem inventeriert
-		if a=162 then print" "; : goto {:next}
-		if a>=128 and a<=159 then c=a-64  : print "{gray1}"+chr$(18)+chr$(c);
-		if a>=160 and a<=191 then c=a-128 : print "{gray1}"+chr$(18)+chr$(c);
-		if a>=192 and a<=254 then c=a     : print "{gray1}"+chr$(18)+chr$(c);
-		if a=255 then c=a-64              : print "{gray1}"+chr$(18)+chr$(c);
-	{:next}
-	next a
+	'print char
+		print "{white}"+chr$(147)
+		z=-1
+		for a=0 to255
+			b=0
+			z=z+1
+			if z=16 then print : z=0
+			if a>=0 and a<=31    then c=a+64  : print chr$(c);
+			if a>=32 and a<=63   then c=a+00  : print chr$(c);
+			if a>=64 and a<=95   then c=a+32  : print "{gray1}"+chr$(c);
+			if a>=96 and a<=127  then c=a+64  : print "{gray1}"+chr$(c);
+			rem inventeriert
+			if a=162 then print" "; : goto {:next}
+			if a>=128 and a<=159 then c=a-64  : print "{gray1}"+chr$(18)+chr$(c);
+			if a>=160 and a<=191 then c=a-128 : print "{gray1}"+chr$(18)+chr$(c);
+			if a>=192 and a<=254 then c=a     : print "{gray1}"+chr$(18)+chr$(c);
+			if a=255 then c=a-64              : print "{gray1}"+chr$(18)+chr$(c);
+		{:next}
+		next a
 	gosub {:gosub_joywait_fire}
+
+	'raster
+		poke 1020,{var:farbe_bl} 'hintergrundfarbe map
+		poke 1021,{var:farbe_sw} 'hintergrundfarbe schrift
+		sys 820                  'start asm.raster
 		print "{white}"+chr$(147)
 	'print tile
-	for i=0 to 4
-		print"{home}{down:3}"left$(cd$,i*2);
-	'print map tile
-		for j=0 to 15
-		print {var:map_tile}(sp)"{up}";
-		sp=sp+1
-	next j,i
+		for i=0 to 4
+			print"{home}{down:3}"left$(cd$,i*2);
+			for j=0 to 15
+			print {var:map_tile}(sp)"{up}";
+			sp=sp+1
+		next j,i
 	'white stop
 		print chr$(5)
 		stop
@@ -269,7 +274,6 @@ goto{:goto_newgame}
 {:mainloop}
 	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
 	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
-	poke 1022,74             'start raster
 	sys 820                  'start asm.raster
 	gosub{:gosub_print_rahmen_map}
 	gosub{:gosub_print_player_hp}
