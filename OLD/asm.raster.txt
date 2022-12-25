@@ -1,0 +1,70 @@
+{asm}
+
+orig $334       ;sys 820
+
+sei
+
+lda $3fe        ; Rasterzeile 74 poke1022
+sta $d012
+lda $d011       ; High-Bit löschen
+and #$7f
+sta $d011
+
+lda $d01a       ; Rasterzeilen-Interrupt einschalten
+ora #$01
+sta $d01a
+
+lda #<irq       ; Interrupt-Routine verbiegen
+sta $0314
+lda #>irq
+sta $0315
+
+cli
+rts
+
+irq:
+lda $d019       ; Test auf VIC-Interrupt
+bmi vic_irq
+
+lda $dc0d       ; Timer-Interrupt bestätigen
+cli             ; Neuen VIC-Interrupt zulasen
+jmp $ea31       ; System-Interrupt ausführen
+
+vic_irq: 
+sta $d019       ; VIC-Interrupt bestätigen
+
+
+
+
+;*** BEI RASTER 50 WEITER IM PROGRAMM
+	lda $d012       ; Pruefen, in welcher Zeile der
+	cmp $3fe        ; Rasterzeilen-Interrupt auftrat
+	bne jmp_blau    ; wenn vergleich cmp nicht jump
+
+;*** HINTERGRUND SCHWARZ
+	lda $3fc
+	sta $d021
+
+;*** SCHREIBE $D012 MIT 202
+	lda #202         ; Nächster Rasterzeilen-Interrupt
+	sta $d012
+	bne ende
+
+jmp_blau:
+	;*** HINTERGRUND BLAU
+	lda $3fd
+	sta $d021
+
+	;***  LADE AKKU MIT RASTER 50
+	lda $3fe    ; Nächster Rasterzeilen-Interrupt
+	sta $d012
+
+ende:
+	pla         ; Interrupt geordnet beenden
+	tay
+	pla
+	tax
+	pla
+	rti
+
+{endasm}
