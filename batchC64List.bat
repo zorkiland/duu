@@ -25,22 +25,22 @@ xcopy txt.ende.seq VICE\bin\*.* /Y
 REM SCHREIBE DISK
 cd VICE
 cd bin
-c1541 -format "main,id" d64 main.d64
-c1541 -attach main.d64 -write loader.prg loader
-c1541 -attach main.d64 -write main.prg main
-c1541 -attach main.d64 -write blitz.prg blitz
-c1541 -attach main.d64 -write asm.raster.prg asm.raster
-c1541 -attach main.d64 -write txt.intro.seq txt.intro,s
-c1541 -attach main.d64 -write txt.ende.seq txt.ende,s
+c1541 -format "dungeon,id" d64 dungeon.d64
+c1541 -attach dungeon.d64 -write loader.prg loader
+c1541 -attach dungeon.d64 -write main.prg main
+c1541 -attach dungeon.d64 -write blitz.prg blitz
+c1541 -attach dungeon.d64 -write asm.raster.prg asm.raster
+c1541 -attach dungeon.d64 -write txt.intro.seq txt.intro,s
+c1541 -attach dungeon.d64 -write txt.ende.seq txt.ende,s
 
 cd..
 cd..
 
 REM COPY main.D64->PROJECT
-xcopy VICE\bin\main.d64 *.* /Y
+xcopy VICE\bin\dungeon.d64 *.* /Y
 
 pause
 rem exit
 rem exit
 REM START EMU
-micro64.exe VICE\bin\main.d64
+micro64.exe VICE\bin\dungeon.d64

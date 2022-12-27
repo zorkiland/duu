@@ -4,46 +4,6 @@
 
 'event(x) = find item bei gefunden event_room(x) = -1 else raumnummer
 'hints(x) = aktion poke mapspeicher beim start alle = 0
-'if {var:item_ident}({var:inventar_slot}(m))=9 then {:equipment}
-
-
-
-'00 = weg
-'01 = schalter
-'02 = weg schatten
-'03 = schwarz
-'04 = weg druckplatte versteckt
-'05 = weg druckplatte
-'06 = grass
-'07 = truhe
-'08 = leiter
-'09 = dach
-'10 = mauer
-'11 = brunnen
-'12 = grass
-'13 = wasser
-'14 = gitter
-'15 = busch lila
-'17 = busch tuerkis
-'18 = baum unten
-'19 = maum mitte
-'20 = baum oben
-'21 = baum unten winter
-'22 = baum mitte winter
-'23 = grass winter
-'24 = haus unten
-'25 = haus türe
-'26 = haus fenster rechts
-'27 = haus fenster links
-'28 = fluss
-'29 = fluss schatten links
-'30 = fluss schatten schraeg links
-'31 = fluss ufer braun oben
-'32 = brücke
-'48-51 = player
-'64-77 = monster
-
-
 
 {renumber}
 'supervar_item
@@ -322,15 +282,51 @@ goto{:goto_newgame}
 		c=peek(cp+zx+zy*20)
 	'wenn nextpos
 		if c=1 then  {:raumaktion_schalten}  'wenn c=01 schalter
-		if c=2 then  {:raumaktion_durchgang} 'wenn c=02 brunnen
-		if c=4 then  {:raumaktion_durchgang} 'wenn c=04 schwarz
-		if c=8 then  {:raumaktion_text}      'wenn c=08 truhe
-		if c=9 then  {:raumaktion_durchgang} 'wenn c=09 leiter
+		if c=3 then  {:raumaktion_durchgang} 'wenn c=03 schwarz
+		if c=7 then  {:raumaktion_text}      'wenn c=07 truhe
+		if c=8 then  {:raumaktion_durchgang} 'wenn c=08 leiter
+		if c=11 then {:raumaktion_durchgang} 'wenn c=11 brunnen
 		if c=13 then {:raumaktion_heilen}    'wenn c=13 wasser
-		if c=14 then {:raumaktion_print}     'wenn c=14 npc
-		if c=17 then {:raumaktion_text}      'wenn c=17 baum
-		if c=21 then {:raumaktion_durchgang} 'wenn c=21 tuere
+		if c=18 then {:raumaktion_text}      'wenn c=18 baum
+		if c=25 then {:raumaktion_durchgang} 'wenn c=25 tuere
+		if c=99 then {:raumaktion_print}     'wenn c=99 npc
 		if c>9 then  {:mainloop_oldpos}      'wenn c>9 nicht begehbar
+
+		'00 = weg
+		'01 = schalter
+		'02 = weg schatten
+		'03 = schwarz
+		'04 = weg druckplatte versteckt
+		'05 = weg druckplatte
+		'06 = grass
+		'07 = truhe
+		'08 = leiter
+		'09 = dach
+		'10 = mauer
+		'11 = brunnen
+		'12 = grass
+		'13 = wasser
+		'14 = gitter
+		'15 = busch lila
+		'17 = busch tuerkis
+		'18 = baum unten
+		'19 = maum mitte
+		'20 = baum oben
+		'21 = baum unten winter
+		'22 = baum mitte winter
+		'23 = grass winter
+		'24 = haus unten
+		'25 = haus türe
+		'26 = haus fenster rechts
+		'27 = haus fenster links
+		'28 = fluss
+		'29 = fluss schatten links
+		'30 = fluss schatten schraeg links
+		'31 = fluss ufer braun oben
+		'32 = brücke
+		'48-51 = player
+		'64-77 = monster
+
 {:mainloop_set_newpos}
 	'loesche player print tile
 		print"{home}"left$(cd$,3+y*2)spc(x*2){var:map_tile}(peek(cp+x+y*20))
@@ -348,49 +344,49 @@ goto{:goto_newgame}
 		if y=8   and  peek(cp+163)=255theny=7:goto{:mainloop_print_playertile}
 		if y=8   then cr=peek(cp+163):y=0:goto{:mainloop_print_map}
 	'wenn newpos
-		if c=5 then{:raumaktion_schalten} 'wenn c=5 druckplatte versteckt
-		if c=6 then{:raumaktion_schalten} 'wenn c=6 druckplatte
+		if c=4 then{:raumaktion_schalten} 'wenn c=4 druckplatte versteckt
+		if c=5 then{:raumaktion_schalten} 'wenn c=5 druckplatte
 		goto{:mainloop_print_playertile}  'else goto print player
 
 'raumaktion
 {:raumaktion_durchgang}
-	if cr=5  then cr=2:x=3:y=3 :goto{:mainloop_cleartop}
-	if cr=2  then cr=5:x=11:y=4:goto{:mainloop_cleartop}
-	if cr=0  then cr=6:x=9:y=6 :goto{:mainloop_cleartop}
-	if cr=6  then cr=0:x=3:y=4 :goto{:mainloop_cleartop}
-	if cr=11 then cr=13:x=5:y=6:goto{:mainloop_cleartop}
-	if cr=13 then cr=11:x=2:y=4:goto{:mainloop_cleartop}
-	if cr=16 then {:goto_end_game}
+	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=99 then {:goto_end_game}
 {:raumaktion_schalten}
 	'wenn c=01 schalter
-		if c=1 and cr=4 and zx=6  then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_print_map}
-		if c=1 and cr=4 and zx=14 then {var:hints}(1)=1-{var:hints}(1):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_oldpos}
-	'wenn c=5 druckplatte versteckt
-		if c=5 and cr=14 and x=7  and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-		if c=5 and cr=14 and x=17 and {var:hints}(7)=0  then {var:hints}(7)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-	'wenn c=6 druckplatte
-		if c=6 and cr=12 and y=2  and {var:hints}(12)=0 then {var:hints}(12)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-		if c=6 and cr=12 and y=6  and {var:hints}(13)=0 then {var:hints}(13)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=1 and cr=0  and zx=16 then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_print_map}
+		if c=1 and cr=99 and zx=0  then {var:hints}(1)=1-{var:hints}(1):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_oldpos}
+	'wenn c=4 druckplatte versteckt
+		if c=4 and cr=99 and x=0  and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=4 and cr=99 and x=0 and {var:hints}(7)=0  then {var:hints}(7)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+	'wenn c=5 druckplatte
+		if c=5 and cr=99 and y=0  and {var:hints}(12)=0 then {var:hints}(12)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=5 and cr=99 and y=0  and {var:hints}(13)=0 then {var:hints}(13)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
 {:raumaktion_text}
 	'aktion truhe
-		if c=8  and aa=0 then goto {:mainloop_oldpos}
-		if c=8  and aa=1 then print"{home}{white}{down}{right}in der truhe ist was!"         :gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=7  and aa=0 then goto {:mainloop_oldpos}
+		if c=7  and aa=1 then print"{home}{white}{down}{right}in der truhe ist was!"         :gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'aktion baum
-		if c=17 and aa=0 then goto {:mainloop_oldpos}
-		if c=17 and aa=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=18 and aa=0 then goto {:mainloop_oldpos}
+		if c=18 and aa=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 {:raumaktion_print}
 	'npc                                                           123456789a123456789b123456789c12345678
-		if cr=0  then          print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
-		if cr=6  then          print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if cr=99  then          print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if cr=99  then          print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'npc player
-		if cr=1  then          print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(2)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(1)=1:goto{:mainloop}
-		if cr=4  then          print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(5)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(2)=1:goto{:mainloop}
-		if cr=9  and x<=2then  print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(9)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(3)=1:goto{:mainloop}
+		if cr=99  then          print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(2)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(1)=1:goto{:mainloop}
+		if cr=99  then          print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(5)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(2)=1:goto{:mainloop}
+		if cr=99  and x<=2then  print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(9)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(3)=1:goto{:mainloop}
 	'monster
-		if cr=3  then          print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:hints}(4)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if cr=9  and x>3then   print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:hints}(3)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if cr=15 then          print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:hints}(8)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if cr=16 then          print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:hints}(10)=1:gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if cr=99  then          print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:hints}(4)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if cr=99  and x>3then   print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:hints}(3)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if cr=99 then          print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:hints}(8)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if cr=99 then          print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:hints}(10)=1:gosub{:gosub_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=13 wasser
 		if c=13 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
@@ -975,9 +971,10 @@ goto{:goto_newgame}
 		if is={var:inventar_max} then return
 	goto{:inventar_next}
 {:gosub_poke_mapspeicher}
+	'c=10 mauer
+		'poke                         cr*rs      c+x+y
+		f=8-{var:hints}(0)*8 : c=30960+0*rs:poke c+8+4*20,f+2 'f kann 2 oder 10 sein
 	'c=13 wasser
-		'poke                            cr*rs     c+x+y             c+x+y             c+ x+y
-		f=13-{var:hints}(0)*13 : c=30960+4*rs:poke c+8+6*20,f:  poke c+9+6*20,f:  poke c+10+6*20,f
 		'poke                            cr*rs     c+x+y             c+ x+y            c+ x+y
 		f=13-{var:hints}(1)*13 : c=30960+2*rs:poke c+12+1*20,f: poke c+12+2*20,f: poke c+11+1*20,f
 	'c=14 npc
@@ -1002,9 +999,9 @@ goto{:goto_newgame}
 		'poke   cr*rs*x+y
 		poke 30960+14*rs+8+2*20,11-{var:hints}(7)*11
 	'c=06 druckplatte
-		'poke   cr*rs+x+y
+		'poke      cr*rs+x+y
 		poke 30960+12*rs+15+2*20,6-{var:hints}(12)*6
-		'poke   cr*rs+x+y
+		'poke      cr*rs+x+y
 		poke 30960+12*rs+15+6*20,6-{var:hints}(13)*6
 	'c=18 gitter
 		t=18:if {var:hints}(12)+{var:hints}(13)=2 then t=0
@@ -1120,25 +1117,29 @@ goto{:goto_newgame}
 	fori=0to13:{var:inventar_slot}(i)=0:next
 	{var:inventar_slot}(0)=18
 	'posx 0-19 posy 0-7
-	{var:event_room}(0)=3   :{var:event_posx}(0)=12   :{var:event_posy}(0)=5  :{var:event_item}(0)=4  : 'feuer
-	{var:event_room}(1)=6   :{var:event_posx}(1)=16   :{var:event_posy}(1)=5  :{var:event_item}(1)=3  : 'kraeuter
-	{var:event_room}(2)=8   :{var:event_posx}(2)=14   :{var:event_posy}(2)=3  :{var:event_item}(2)=8  : 'kirsche
-	{var:event_room}(3)=9   :{var:event_posx}(3)=1    :{var:event_posy}(3)=4  :{var:event_item}(3)=5  : 'eis
-	{var:event_room}(4)=13  :{var:event_posx}(4)=18   :{var:event_posy}(4)=4  :{var:event_item}(4)=16 : 'weste
-	{var:event_room}(5)=13  :{var:event_posx}(5)=18   :{var:event_posy}(5)=6  :{var:event_item}(5)=17 : 'schild
-	{var:event_room}(6)=13  :{var:event_posx}(6)=15   :{var:event_posy}(6)=2  :{var:event_item}(6)=13 : 'stab
-	{var:event_room}(7)=14  :{var:event_posx}(7)=10   :{var:event_posy}(7)=2  :{var:event_item}(7)=15 : 'stock
-	{var:event_room}(8)=12  :{var:event_posx}(8)=1    :{var:event_posy}(8)=2  :{var:event_item}(8)=11 : 'flegel
-	{var:event_room}(9)=15  :{var:event_posx}(9)=16   :{var:event_posy}(9)=4  :{var:event_item}(9)=7  : 'bombe
-	{var:event_room}(10)=0  :{var:event_posx}(10)=8   :{var:event_posy}(10)=5 :{var:event_item}(10)=9 : 'heilen
-	{var:event_room}(11)=6  :{var:event_posx}(11)=3   :{var:event_posy}(11)=5 :{var:event_item}(11)=15: 'stock
+
+	{var:event_room}(1)=0  :{var:event_posx}(1)=16   :{var:event_posy}(1)=5  :{var:event_item}(1)=3   'kraeuter
+	{var:event_room}(2)=0  :{var:event_posx}(2)=3    :{var:event_posy}(2)=5 :{var:event_item}(2)=15   'stock
+
+
+	{var:event_room}(3)=99  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
+	{var:event_room}(4)=99  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
+	{var:event_room}(5)=99  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
+	{var:event_room}(6)=99  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
+	{var:event_room}(7)=99  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
+	{var:event_room}(8)=99  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
+	{var:event_room}(9)=99  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
+	{var:event_room}(10)=99 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
+	{var:event_room}(11)=99 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
+	{var:event_room}(12)=99 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
+
 	'print rahmen
 	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
 	print"{$c6}{$c7:38}{up:3}";
 	poke50151,72:poke56295,9
 	'raum und posx/y
-	x=8:y=3:cr=0
+	x=13:y=4:cr=0
 	'player aktiv
 	{var:player_activ}(0)=1:{var:player_activ}(1)=0:{var:player_activ}(2)=0:{var:player_activ}(3)=0
 	'{var:player_activ}(0)=1:{var:player_activ}(1)=1:{var:player_activ}(2)=1:{var:player_activ}(3)=1
