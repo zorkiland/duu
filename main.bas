@@ -2,9 +2,6 @@
 'c64list v4.0
 '*****************************
 
-'event(x) = find item bei gefunden event_room(x) = -1 else raumnummer
-'hints(x) = aktion poke mapspeicher beim start alle = 0
-
 {renumber}
 'supervar_item
 	{var:event_room=er}
@@ -309,7 +306,7 @@ goto{:goto_newgame}
 		if c=3 then{:raumaktion_schalten} 'wenn c=2 druckplatte
 		goto{:mainloop_print_playertile}  'else goto print player
 
-'raumaktion
+'***edit duu***
 {:raumaktion_durchgang}
 	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
 	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
@@ -320,14 +317,14 @@ goto{:goto_newgame}
 	if cr=16 then {:goto_end_game}
 {:raumaktion_schalten}
 	'wenn c=14 schalter
-		if c=14 and cr=0  and zx=16 then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_print_map}
-		if c=14 and cr=16 and zx=0  then {var:hints}(1)=1-{var:hints}(1):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_oldpos}
+		if c=14 and cr=0  and zx=16 then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_raumaktion_poke_mapspeicher} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_print_map}
+		if c=14 and cr=16 and zx=0  then {var:hints}(1)=1-{var:hints}(1):gosub{:gosub_raumaktion_poke_mapspeicher} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_oldpos}
 	'wenn c=2 druckplatte versteckt
-		if c=2 and cr=16 and x=0  and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-		if c=2 and cr=16 and x=0 and {var:hints}(7)=0  then {var:hints}(7)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=2 and cr=16 and x=0  and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=2 and cr=16 and x=0 and {var:hints}(7)=0  then {var:hints}(7)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
 	'wenn c=3 druckplatte
-		if c=3 and cr=16 and y=0  and {var:hints}(12)=0 then {var:hints}(12)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-		if c=3 and cr=16 and y=0  and {var:hints}(13)=0 then {var:hints}(13)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=3 and cr=16 and y=0  and {var:hints}(12)=0 then {var:hints}(12)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=3 and cr=16 and y=0  and {var:hints}(13)=0 then {var:hints}(13)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
 {:raumaktion_text}
 	'aktion truhe
 		if c=12  and aa=0 then goto {:mainloop_oldpos}
@@ -340,17 +337,50 @@ goto{:goto_newgame}
 		if cr=16  then          print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 		if cr=16  then          print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'npc player
-		if c=49  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(2)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(1)=1:goto{:mainloop}
-		if c=52  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(5)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(2)=1:goto{:mainloop}
-		if c=51  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(9)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(3)=1:goto{:mainloop}
+		if c=49  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(2)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1:goto{:mainloop}
+		if c=52  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(5)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(2)=1:goto{:mainloop}
+		if c=51  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(9)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(3)=1:goto{:mainloop}
 	'monster
-		if c=47  then          print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:hints}(4)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if c=72  then          print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:hints}(3)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if c=76 then           print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:hints}(8)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if c=77 then           print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:hints}(10)=1:gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if c=47  then          print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:hints}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=72  then          print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:hints}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=76 then           print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:hints}(8)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=77 then           print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:hints}(10)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=47 wasser
 		if c=47 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+{:gosub_raumaktion_poke_mapspeicher}
+
+	'ein und ausschalten
+		'poke                            cr*rs        c+xx+y
+		f=15-{var:hints}(0)*15 : c=30960+00*rs : poke c+08+4*20,f+1 'c=16 mauer (f kann 1 oder 16 sein)
+		f=13-{var:hints}(1)*13 : c=30960+16*rs : poke c+12+1*20,f   'wasser
+	
+	'nur auschalten
+		'poke      cr*rs+xx+y
+		poke 30960+00*rs+13+5*20,49-{var:hints}(2)*49  'lena
+		poke 30960+00*rs+06+5*20,52-{var:hints}(5)*52  'dolm
+		poke 30960+00*rs+06+3*20,51-{var:hints}(9)*51  'mira
+		poke 30960+16*rs+00+0*20,47-{var:hints}(3)*47  'nacho
+		poke 30960+16*rs+01+0*20,72-{var:hints}(4)*72  'troll
+		poke 30960+16*rs+02+0*20,76-{var:hints}(8)*76  'dracul
+		poke 30960+16*rs+03+0*20,77-{var:hints}(10)*77 'glados
+		poke 30960+16*rs+03+5*20,45-{var:hints}(6)*45  'c=45 busch vi druckplatte versteck
+		poke 30960+16*rs+08+2*20,16-{var:hints}(7)*16  'c=16 mauer druckplatte versteck
+		poke 30960+16*rs+15+2*20,03-{var:hints}(12)*3  'c=03 druckplatte
+		poke 30960+16*rs+15+6*20,03-{var:hints}(13)*3  'c=03 druckplatte
+	
+	'verknuepfung
+		t=13:if {var:hints}(12)+{var:hints}(13)=2 then t=0
+		'poke      cr*rs+xx+y
+		poke 30960+16*rs+08+0,t 'c=13 gitter
+
+	return
+{:gosub_raumaktion_print_schalter_status}
+		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+	return
 
 'mainmenu
 {:mainmenu}
@@ -931,51 +961,7 @@ goto{:goto_newgame}
 	'wenn inventar max
 		if is={var:inventar_max} then return
 	goto{:inventar_next}
-{:gosub_poke_mapspeicher}
 
-	'c=16 mauer
-		'poke                           cr*rs      c+x+y
-		f=15-{var:hints}(0)*15 : c=30960+0*rs:poke c+8+4*20,f+1 'f kann 1 oder 16 sein
-	
-	'c=13 wasser
-		'poke                            cr*rs      c+x+y             c+ x+y            c+ x+y
-		f=13-{var:hints}(1)*13 : c=30960+16*rs:poke c+12+1*20,f: poke c+12+2*20,f: poke c+11+1*20,f
-	
-	'c>=48 npc
-		'poke      cr*rs+xx+y
-		poke 30960+00*rs+13+5*20,49-{var:hints}(2)*49 'lena
-		poke 30960+00*rs+06+5*20,52-{var:hints}(5)*52 'dolm
-		poke 30960+00*rs+06+3*20,51-{var:hints}(9)*51 'mira
-		poke 30960+16*rs+00+0*20,14-{var:hints}(3)*47 'nacho
-		poke 30960+16*rs+01+0*20,14-{var:hints}(4)*72 'troll
-		poke 30960+16*rs+02+0*20,14-{var:hints}(8)*76 'dracul
-		poke 30960+16*rs+03+0*20,14-{var:hints}(10)*77'glados
-	
-	'c=16 busch vi druckplatte versteck
-		'poke      cr*rs+x+y
-		poke 30960+16*rs+3+5*20,16-{var:hints}(6)*16
-
-	'c=16 mauer druckplatte versteck
-		'poke      cr*rs*x+y
-		poke 30960+16*rs+8+2*20,11-{var:hints}(7)*11
-
-	'c=06 druckplatte
-		'poke      cr*rs+xx+y
-		poke 30960+16*rs+15+2*20,6-{var:hints}(12)*6
-		'poke      cr*rs+xx+y
-		poke 30960+16*rs+15+6*20,6-{var:hints}(13)*6
-	'c=13 gitter
-		t=13:if {var:hints}(12)+{var:hints}(13)=2 then t=0
-		'poke      cr*rs+xx+y
-		poke 30960+16*rs+08+0,t
-
-	return
-{:gosub_print_schalter_status}
-		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-	return
 {:gosub_monsterauswal_ini}
 	ifcc>=11thenreturn
 	{var:fight_hp}(cc)={var:monster_hp}(a):{var:fight_mp}(cc)={var:monster_mp}(a):{var:fight_active}(cc)=a:{var:fight_rnd_str}(cc)=int(rnd(0)*{var:monster_str}(a)):{var:fight_str}(cc)={var:monster_str}(a)
@@ -1070,51 +1056,52 @@ goto{:goto_newgame}
 {:goto_player_magic}
 	ifm=9then{:goto_heal_magic}
 	goto{:battelmenu_select_magic}
+
+'***edit duu***
 {:goto_newgame}
 	'part 1 start variabeln
-	for i=0 to {var:anzahl_hints}-1:{var:hints}(i)=0:next
-	fori=0to3:{var:player_exp}(i)=0:next
-	{var:player_atk}(0)=5:{var:player_def}(0)=2:{var:player_atk}(1)=4:{var:player_def}(1)=3:{var:player_atk}(2)=1:{var:player_def}(2)=1:{var:player_atk}(3)=1:{var:player_def}(3)=1:gosub{:gosub_poke_mapspeicher}
+		for i=0 to {var:anzahl_hints}-1:{var:hints}(i)=0:next
+		for i=0 to 3:{var:player_exp}(i)=0:next
+		{var:player_atk}(0)=5:{var:player_def}(0)=2:{var:player_atk}(1)=4:{var:player_def}(1)=3:{var:player_atk}(2)=1:{var:player_def}(2)=1:{var:player_atk}(3)=1:{var:player_def}(3)=1:gosub{:gosub_raumaktion_poke_mapspeicher}
 	'item 0-13 = 0
-	fori=0to13:{var:inventar_slot}(i)=0:next
-	{var:inventar_slot}(0)=18
-	'posx 0-19 posy 0-7
-
-	{var:event_room}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0 :{var:event_item}(1)=0   'leer
-	{var:event_room}(1)=0  :{var:event_posx}(1)=16   :{var:event_posy}(1)=5 :{var:event_item}(1)=3   'kraeuter
-	{var:event_room}(2)=0  :{var:event_posx}(2)=3    :{var:event_posy}(2)=5 :{var:event_item}(2)=15  'stock
-
-
-	{var:event_room}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
-	{var:event_room}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
-	{var:event_room}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
-	{var:event_room}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
-	{var:event_room}(7)=16  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
-	{var:event_room}(8)=16  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
-	{var:event_room}(9)=16  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
-	{var:event_room}(10)=16 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
-	{var:event_room}(11)=16 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
-	{var:event_room}(12)=16 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
-
+		for i=0 to 13:{var:inventar_slot}(i)=0:next
+		{var:inventar_slot}(0)=18
+	'event
+		'event(x) = find item bei gefunden event_room(x) = -1 else raumnummer
+		{var:event_room}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0  :{var:event_item}(1)=0   'leer
+		{var:event_room}(1)=0   :{var:event_posx}(1)=16  :{var:event_posy}(1)=5  :{var:event_item}(1)=3   'kraeuter
+		{var:event_room}(2)=0   :{var:event_posx}(2)=3   :{var:event_posy}(2)=5  :{var:event_item}(2)=15  'stock
+		{var:event_room}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
+		{var:event_room}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
+		{var:event_room}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
+		{var:event_room}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
+		{var:event_room}(7)=16  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
+		{var:event_room}(8)=16  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
+		{var:event_room}(9)=16  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
+		{var:event_room}(10)=16 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
+		{var:event_room}(11)=16 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
+		{var:event_room}(12)=16 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
 	'print rahmen
-	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
-	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
-	print"{$c6}{$c7:38}{up:3}";
-	poke50151,72:poke56295,9
+		print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
+		fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
+		print"{$c6}{$c7:38}{up:3}";
+		poke50151,72:poke56295,9
 	'raum und posx/y
-	x=13:y=3:cr=0
+		x=13:y=3:cr=0
 	'player aktiv
-	{var:player_activ}(0)=1:{var:player_activ}(1)=0:{var:player_activ}(2)=0:{var:player_activ}(3)=0
-	'{var:player_activ}(0)=1:{var:player_activ}(1)=1:{var:player_activ}(2)=1:{var:player_activ}(3)=1
+		{var:player_activ}(0)=1:{var:player_activ}(1)=0:{var:player_activ}(2)=0:{var:player_activ}(3)=0	
 	'set player hp max
-	{var:player_hp_max}(0)=15:{var:player_hp_max}(1)=17:{var:player_hp_max}(2)=9:{var:player_hp_max}(3)=9:{var:player_mp_max}(0)=0:{var:player_mp_max}(1)=0:{var:player_mp_max}(2)=7:{var:player_mp_max}(3)=23
+		{var:player_hp_max}(0)=15:{var:player_hp_max}(1)=17:{var:player_hp_max}(2)=9:{var:player_hp_max}(3)=9:{var:player_mp_max}(0)=0:{var:player_mp_max}(1)=0:{var:player_mp_max}(2)=7:{var:player_mp_max}(3)=23
 	'set player hp mp usw
-	fori=0to3:{var:player_hp}(i)={var:player_hp_max}(i):{var:player_mp}(i)={var:player_mp_max}(i):{var:player_exp}(i)=0:{var:player_waffe}(i)=0:{var:player_ruestung}(i)=0:next
+		fori=0to3:{var:player_hp}(i)={var:player_hp_max}(i):{var:player_mp}(i)={var:player_mp_max}(i):{var:player_exp}(i)=0:{var:player_waffe}(i)=0:{var:player_ruestung}(i)=0:next
 	'player weappon = item 1 ruestung= item 2
-	{var:player_waffe}(0)=1:{var:player_ruestung}(0)=2
-	gosub {:gosub_poke_mapspeicher}
-	{var:seq_select}="intro" : gosub {:gosub_print_txt_screen}
+		{var:player_waffe}(0)=1:{var:player_ruestung}(0)=2
+	'poke mapspeicher
+		gosub {:gosub_raumaktion_poke_mapspeicher}
+	'print text
+		{var:seq_select}="intro" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
+
 {:goto_end_game}
 	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
@@ -1122,12 +1109,6 @@ goto{:goto_newgame}
 	poke 50151,72:poke 56295,9
 	{var:seq_select}="ende" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
-{:gosub_print_rahmen_intro}
-	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
-	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
-	print"{$c6}{$c7:38}{up:3}";
-	poke 50151,72:poke 56295,9
-	return
 {:gosub_print_txt_screen}
 	poke 1020,{var:farbe_bl}
 	poke 56322,224 : 'tastatur 224=aus 225=an
