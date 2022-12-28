@@ -470,7 +470,7 @@ goto{:goto_newgame}
 	'loesche event item
 		{var:event_room}(ei)=-1
 	'inventar print
-		print"{home}{white}{down}{right}gefunden: ";{var:item_name}({var:inventar_slot}(is));: gosub{:gosub_joywait_fire} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
+		print"{home}{white}{down}{right}gefunden: ";{var:item_name}({var:inventar_slot}(is));: gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
 	{:nimm_next}
 		'wenn ei=max
 		ei=ei+1
@@ -971,10 +971,10 @@ goto{:goto_newgame}
 
 	return
 {:gosub_print_schalter_status}
-		if cr=4 and zx=6  and zy=4 and {var:hints}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-		if cr=4 and zx=6  and zy=4 and {var:hints}(0)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-		if cr=4 and zx=14 and zy=4 and {var:hints}(1)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-		if cr=4 and zx=14 and zy=4 and {var:hints}(1)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
 	return
 {:gosub_monsterauswal_ini}
 	ifcc>=11thenreturn
@@ -1232,20 +1232,20 @@ goto{:goto_newgame}
 'monster
 	'{var:monster_xxx}(x)
 	'    name hp mp str atk def res exp
-	data"imp"    ,5   ,0  ,8  ,4  ,1  ,0 ,3
-	data"snake"  ,8   ,0  ,12 ,6  ,1  ,0 ,5
-	data"viper"  ,12  ,0  ,18 ,6  ,1  ,0 ,9
-	data"nacho"  ,30  ,0  ,22 ,15 ,5  ,0 ,50
-	data"golem"  ,20  ,0  ,4  ,20 ,8  ,0 ,17
-	data"moss"   ,30  ,0  ,7  ,26 ,9  ,0 ,21
-	data"bones"  ,50  ,0  ,20 ,18 ,8  ,0 ,15
-	data"wisp"   ,25  ,50 ,15 ,0  ,8  ,0 ,17
-	data"troll"  ,100 ,0  ,9  ,40 ,13 ,0 ,100
-	data"spark"  ,30  ,50 ,22 ,0  ,8  ,0 ,17
-	data"burner" ,80  ,90 ,30 ,25 ,13 ,0 ,42
-	data"tberry" ,120 ,10 ,60 ,60 ,20 ,0 ,150
-	data"dracul" ,250 ,60 ,50 ,70 ,25 ,0 ,500
-	data"glados" ,500 ,70 ,60 ,80 ,30 ,0 ,1000
+	data"imp",5,0,8,4,1,0,3
+	data"snake",8,0,12,6,1,0,5
+	data"viper",12,0,18,6,1,0,9
+	data"nacho",30,0,22,15,5,0,50
+	data"golem",20,0,4,20,8,0,17
+	data"moss",30,0,7,26,9,0,21
+	data"bones",50,0,20,18,8,0,15
+	data"wisp",25,50,15,0,8,0,17
+	data"troll",100,0,9,40,13,0,100
+	data"spark",30,50,22,0,8,0,17
+	data"burner",80,90,30,25,13,0,42
+	data"tberry",120,10,60,60,20,0,150
+	data"dracul",250,60,50,70,25,0,500
+	data"glados",500,70,60,80,30,0,1000
 'player
 	'{var:player_xxx}(x)
 	'    name  hp mp str atk def waffe ruestung
