@@ -1080,6 +1080,7 @@ goto{:goto_newgame}
 	{var:inventar_slot}(0)=18
 	'posx 0-19 posy 0-7
 
+	{var:event_room}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0 :{var:event_item}(1)=0   'leer
 	{var:event_room}(1)=0  :{var:event_posx}(1)=16   :{var:event_posy}(1)=5 :{var:event_item}(1)=3   'kraeuter
 	{var:event_room}(2)=0  :{var:event_posx}(2)=3    :{var:event_posy}(2)=5 :{var:event_item}(2)=15  'stock
 
