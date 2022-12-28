@@ -1111,8 +1111,6 @@ goto{:goto_newgame}
 	fori=0to3:{var:player_hp}(i)={var:player_hp_max}(i):{var:player_mp}(i)={var:player_mp_max}(i):{var:player_exp}(i)=0:{var:player_waffe}(i)=0:{var:player_ruestung}(i)=0:next
 	'player weappon = item 1 ruestung= item 2
 	{var:player_waffe}(0)=1:{var:player_ruestung}(0)=2
-	'nach new game: load,poke mapspeicher,goto mainloop
-	'gosub {:gosub_load}
 	gosub {:gosub_poke_mapspeicher}
 	{var:seq_select}="intro" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
@@ -1123,29 +1121,6 @@ goto{:goto_newgame}
 	poke 50151,72:poke 56295,9
 	{var:seq_select}="ende" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
-{:gosub_load}
-	open1,8,4,"pfsave":open2,8,15:input#2,er,m$,t,ss
-	ifer<>0thenprint"{home}{white}{down}{right}error loading    ";:close2:close1:goto{:goto_newgame}
-	fori=0to3:input#1,{var:player_hp}(i):input#1,{var:player_mp}(i):input#1,{var:player_str}(i):input#1,{var:player_hp_max}(i)
-	input#1,{var:player_mp_max}(i):input#1,{var:player_activ}(i)
-	input#1,{var:player_atk}(i):input#1,{var:player_def}(i):input#1,{var:player_waffe}(i):input#1,{var:player_ruestung}(i):input#1,{var:player_exp}(i)
-	input#1,{var:player_level}(i):next
-	fori=0to13:input#1,{var:inventar_slot}(i):next:fori=0to{var:anzahl_hints}-1:input#1,{var:hints}(i):next
-	fori=0to{var:anzahl_event}-1:input#1,{var:event_room}(i):next
-	input#1,x:input#1,y:input#1,cr
-	close1:close2:gosub{:gosub_poke_mapspeicher}:return
-{:gosub_save}
-	open15,8,15,"s:pfsave":close15
-	open1,8,4,"pfsave,w"
-	fori=0to3:print#1,{var:player_hp}(i):print#1,{var:player_mp}(i):print#1,{var:player_str}(i):print#1,{var:player_hp_max}(i)
-	print#1,{var:player_mp_max}(i):print#1,{var:player_activ}(i)
-	print#1,{var:player_atk}(i):print#1,{var:player_def}(i):print#1,{var:player_waffe}(i):print#1,{var:player_ruestung}(i):print#1,{var:player_exp}(i)
-	print#1,{var:player_level}(i)
-	next
-	fori=0to13:print#1,{var:inventar_slot}(i):next:fori=0to{var:anzahl_hints}-1:print#1,{var:hints}(i):next
-	fori=0to{var:anzahl_event}-1:print#1,{var:event_room}(i):next
-	print#1,x:print#1,y:print#1,cr
-	close1 : return
 {:gosub_print_rahmen_intro}
 	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
