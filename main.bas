@@ -209,14 +209,12 @@
 	for i=0 to {var:anzahl_tile}-1
 		read {var:map_tile}(i)
 	next
-'copy tile
-	'48-51 = player	
-		zz=48
-		for i=0 to 3
-		{var:player_tile}(i) = {var:map_tile}(zz)
-		zz=zz+1
-		next i
-	'64-77 = monster
+'copy tile player
+	{var:player_tile}(0) = {var:map_tile}(48) 'kron
+	{var:player_tile}(1) = {var:map_tile}(49) 'lena
+	{var:player_tile}(2) = {var:map_tile}(52) 'dolm
+	{var:player_tile}(3) = {var:map_tile}(51) 'mira
+'copy tile monster
 		zz=64
 		for i=0 to {var:anzahl_monster}-1
 		{var:monster_tile}(i) = {var:map_tile}(zz)
@@ -238,10 +236,7 @@
 	poke {var:rahmenfarbe},{var:farbe_sw}'                  rahmenfarbe
 	poke {var:bildschirmfarbe},{var:farbe_bl}'              bildschirmfarbe
 
-
-'goto {:goto_char_tile_test}
 goto{:goto_newgame}
-
 
 'mainloop
 {:mainloop}
@@ -270,6 +265,7 @@ goto{:goto_newgame}
 	if a$=chr$(17)  or a$="s"then print ct$;:zy=y+1:goto{:mainloop_if_newpos}
 	if a$=chr$(13) then {:mainmenu}
 	goto {:mainloop_joyauswertung}
+
 {:mainloop_if_newpos}
 	'wenn event(x) = find item passt
 		aa=0
@@ -281,52 +277,19 @@ goto{:goto_newgame}
 	'read nextpos map
 		c=peek(cp+zx+zy*20)
 	'wenn nextpos
-		if c=1 then  {:raumaktion_schalten}  'wenn c=01 schalter
-		if c=3 then  {:raumaktion_durchgang} 'wenn c=03 schwarz
-		if c=7 then  {:raumaktion_text}      'wenn c=07 truhe
-		if c=8 then  {:raumaktion_durchgang} 'wenn c=08 leiter
-		if c=11 then {:raumaktion_durchgang} 'wenn c=11 brunnen
-		if c=13 then {:raumaktion_heilen}    'wenn c=13 wasser
-		if c=18 then {:raumaktion_text}      'wenn c=18 baum
-		if c=25 then {:raumaktion_durchgang} 'wenn c=25 tuere
-		if c=99 then {:raumaktion_print}     'wenn c=99 npc
-		if c>9 then  {:mainloop_oldpos}      'wenn c>9 nicht begehbar
+		if c=08 then {:raumaktion_durchgang} 'wenn c=08 schwarz
+		if c=09 then {:raumaktion_durchgang} 'wenn c=09 leiter
+		if c=10 then {:raumaktion_durchgang} 'wenn c=10 brunnen
+		if c=11 then {:raumaktion_durchgang} 'wenn c=11 tuere
 
-		'00 = weg
-		'01 = schalter
-		'02 = weg schatten
-		'03 = schwarz
-		'04 = weg druckplatte versteckt
-		'05 = weg druckplatte
-		'06 = grass
-		'07 = truhe
-		'08 = leiter
-		'09 = dach
-		'10 = mauer
-		'11 = brunnen
-		'12 = grass
-		'13 = wasser
-		'14 = gitter
-		'15 = busch lila
-		'17 = busch tuerkis
-		'18 = baum unten
-		'19 = maum mitte
-		'20 = baum oben
-		'21 = baum unten winter
-		'22 = baum mitte winter
-		'23 = grass winter
-		'24 = haus unten
-		'25 = haus türe
-		'26 = haus fenster rechts
-		'27 = haus fenster links
-		'28 = fluss
-		'29 = fluss schatten links
-		'30 = fluss schatten schraeg links
-		'31 = fluss ufer braun oben
-		'32 = brücke
-		'48-51 = player
-		'64-77 = monster
-
+		if c=12 then  {:raumaktion_text}      'wenn c=12 truhe
+		if c=14 then  {:raumaktion_schalten}  'wenn c=14 schalter
+		
+		if c=25 then {:raumaktion_text}      'wenn c=25 baum
+		if c=47 then {:raumaktion_heilen}    'wenn c=47 wasser
+		
+		if c>=48 then {:raumaktion_print}    'wenn c>=48 npc
+		if c>7 then  {:mainloop_oldpos}      'wenn c>7 nicht begehbar
 {:mainloop_set_newpos}
 	'loesche player print tile
 		print"{home}"left$(cd$,3+y*2)spc(x*2){var:map_tile}(peek(cp+x+y*20))
@@ -344,52 +307,52 @@ goto{:goto_newgame}
 		if y=8   and  peek(cp+163)=255theny=7:goto{:mainloop_print_playertile}
 		if y=8   then cr=peek(cp+163):y=0:goto{:mainloop_print_map}
 	'wenn newpos
-		if c=4 then{:raumaktion_schalten} 'wenn c=4 druckplatte versteckt
-		if c=5 then{:raumaktion_schalten} 'wenn c=5 druckplatte
+		if c=2 then{:raumaktion_schalten} 'wenn c=2 druckplatte versteckt
+		if c=3 then{:raumaktion_schalten} 'wenn c=2 druckplatte
 		goto{:mainloop_print_playertile}  'else goto print player
 
 'raumaktion
 {:raumaktion_durchgang}
-	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
-	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
-	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
-	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
-	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
-	if cr=99 then cr=99:x=0:y=0 :goto{:mainloop_cleartop}
-	if cr=99 then {:goto_end_game}
+	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
+	if cr=16 then {:goto_end_game}
 {:raumaktion_schalten}
-	'wenn c=01 schalter
-		if c=1 and cr=0  and zx=16 then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_print_map}
-		if c=1 and cr=99 and zx=0  then {var:hints}(1)=1-{var:hints}(1):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_oldpos}
-	'wenn c=4 druckplatte versteckt
-		if c=4 and cr=99 and x=0  and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-		if c=4 and cr=99 and x=0 and {var:hints}(7)=0  then {var:hints}(7)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-	'wenn c=5 druckplatte
-		if c=5 and cr=99 and y=0  and {var:hints}(12)=0 then {var:hints}(12)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
-		if c=5 and cr=99 and y=0  and {var:hints}(13)=0 then {var:hints}(13)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+	'wenn c=14 schalter
+		if c=14 and cr=0  and zx=16 then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_print_map}
+		if c=14 and cr=16 and zx=0  then {var:hints}(1)=1-{var:hints}(1):gosub{:gosub_poke_mapspeicher} : gosub{:gosub_print_schalter_status} : goto{:mainloop_oldpos}
+	'wenn c=2 druckplatte versteckt
+		if c=2 and cr=16 and x=0  and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=2 and cr=16 and x=0 and {var:hints}(7)=0  then {var:hints}(7)=1 :gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+	'wenn c=3 druckplatte
+		if c=3 and cr=16 and y=0  and {var:hints}(12)=0 then {var:hints}(12)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=3 and cr=16 and y=0  and {var:hints}(13)=0 then {var:hints}(13)=1:gosub{:gosub_poke_mapspeicher}:goto{:mainloop_cleartop}
 {:raumaktion_text}
 	'aktion truhe
-		if c=7  and aa=0 then goto {:mainloop_oldpos}
-		if c=7  and aa=1 then print"{home}{white}{down}{right}in der truhe ist was!"         :gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=12  and aa=0 then goto {:mainloop_oldpos}
+		if c=12  and aa=1 then print"{home}{white}{down}{right}in der truhe ist was!"         :gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'aktion baum
-		if c=18 and aa=0 then goto {:mainloop_oldpos}
-		if c=18 and aa=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=25 and aa=0 then goto {:mainloop_oldpos}
+		if c=25 and aa=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 {:raumaktion_print}
 	'npc                                                           123456789a123456789b123456789c12345678
-		if cr=99  then          print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
-		if cr=99  then          print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if cr=16  then          print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if cr=16  then          print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'npc player
-		if cr=99  then          print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(2)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(1)=1:goto{:mainloop}
-		if cr=99  then          print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(5)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(2)=1:goto{:mainloop}
-		if cr=99  and x<=2then  print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(9)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(3)=1:goto{:mainloop}
+		if c=49  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(2)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(1)=1:goto{:mainloop}
+		if c=52  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(5)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(2)=1:goto{:mainloop}
+		if c=51  then           print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}: {var:hints}(9)=1:gosub{:gosub_poke_mapspeicher}:{var:player_activ}(3)=1:goto{:mainloop}
 	'monster
-		if cr=99  then          print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:hints}(4)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if cr=99  and x>3then   print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:hints}(3)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if cr=99 then          print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:hints}(8)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
-		if cr=99 then          print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:hints}(10)=1:gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if c=47  then          print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:hints}(4)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if c=72  then          print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:hints}(3)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if c=76 then           print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:hints}(8)=1 :gosub{:gosub_poke_mapspeicher}:goto{:battel}
+		if c=77 then           print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:hints}(10)=1:gosub{:gosub_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
-	'wenn c=13 wasser
-		if c=13 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+	'wenn c=47 wasser
+		if c=47 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 
 'mainmenu
 {:mainmenu}
@@ -971,42 +934,43 @@ goto{:goto_newgame}
 		if is={var:inventar_max} then return
 	goto{:inventar_next}
 {:gosub_poke_mapspeicher}
-	'c=10 mauer
-		'poke                         cr*rs      c+x+y
-		f=8-{var:hints}(0)*8 : c=30960+0*rs:poke c+8+4*20,f+2 'f kann 2 oder 10 sein
+
+	'c=16 mauer
+		'poke                           cr*rs      c+x+y
+		f=15-{var:hints}(0)*15 : c=30960+0*rs:poke c+8+4*20,f+1 'f kann 1 oder 16 sein
+	
 	'c=13 wasser
-		'poke                            cr*rs     c+x+y             c+ x+y            c+ x+y
-		f=13-{var:hints}(1)*13 : c=30960+2*rs:poke c+12+1*20,f: poke c+12+2*20,f: poke c+11+1*20,f
-	'c=14 npc
-		'poke     cr*rs+x+y
-		poke 30960+1*rs+6+6*20,14-{var:hints}(2)*14
-		'poke     cr*rs+x+y
-		poke 30960+9*rs+6+4*20,14-{var:hints}(3)*14
-		'poke     cr*rs+x+y
-		poke 30960+3*rs+10+6*20,14-{var:hints}(4)*14
-		'poke     cr*rs+x+y
-		poke 30960+4*rs+14+6*20,14-{var:hints}(5)*14
-		'poke     cr*rs+x+y
-		poke 30960+15*rs+9+4*20,14-{var:hints}(8)*14
-		'poke     cr*rs+x+y
-		poke 30960+9*rs+1+2*20,14-{var:hints}(9)*14
-		'poke     cr*rs+x+y
-		poke 30960+16*rs+8+2*20,14-{var:hints}(10)*14
-	'c=16 busch vi 
-		'poke   cr*rs+x+y
-		poke 30960+14*rs+3+5*20,16-{var:hints}(6)*16
-	'c=11 mauer
-		'poke   cr*rs*x+y
-		poke 30960+14*rs+8+2*20,11-{var:hints}(7)*11
+		'poke                            cr*rs      c+x+y             c+ x+y            c+ x+y
+		f=13-{var:hints}(1)*13 : c=30960+16*rs:poke c+12+1*20,f: poke c+12+2*20,f: poke c+11+1*20,f
+	
+	'c>=48 npc
+		'poke      cr*rs+xx+y
+		poke 30960+00*rs+13+5*20,49-{var:hints}(2)*49 'lena
+		poke 30960+00*rs+06+5*20,52-{var:hints}(5)*52 'dolm
+		poke 30960+00*rs+06+3*20,51-{var:hints}(9)*51 'mira
+		poke 30960+16*rs+00+0*20,14-{var:hints}(3)*47 'nacho
+		poke 30960+16*rs+01+0*20,14-{var:hints}(4)*72 'troll
+		poke 30960+16*rs+02+0*20,14-{var:hints}(8)*76 'dracul
+		poke 30960+16*rs+03+0*20,14-{var:hints}(10)*77'glados
+	
+	'c=16 busch vi druckplatte versteck
+		'poke      cr*rs+x+y
+		poke 30960+16*rs+3+5*20,16-{var:hints}(6)*16
+
+	'c=16 mauer druckplatte versteck
+		'poke      cr*rs*x+y
+		poke 30960+16*rs+8+2*20,11-{var:hints}(7)*11
+
 	'c=06 druckplatte
-		'poke      cr*rs+x+y
-		poke 30960+12*rs+15+2*20,6-{var:hints}(12)*6
-		'poke      cr*rs+x+y
-		poke 30960+12*rs+15+6*20,6-{var:hints}(13)*6
-	'c=18 gitter
-		t=18:if {var:hints}(12)+{var:hints}(13)=2 then t=0
-		'poke   cr*rs+x+y
-		poke 30960+12*rs+8+0,t
+		'poke      cr*rs+xx+y
+		poke 30960+16*rs+15+2*20,6-{var:hints}(12)*6
+		'poke      cr*rs+xx+y
+		poke 30960+16*rs+15+6*20,6-{var:hints}(13)*6
+	'c=13 gitter
+		t=13:if {var:hints}(12)+{var:hints}(13)=2 then t=0
+		'poke      cr*rs+xx+y
+		poke 30960+16*rs+08+0,t
+
 	return
 {:gosub_print_schalter_status}
 		if cr=4 and zx=6  and zy=4 and {var:hints}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
@@ -1118,20 +1082,20 @@ goto{:goto_newgame}
 	{var:inventar_slot}(0)=18
 	'posx 0-19 posy 0-7
 
-	{var:event_room}(1)=0  :{var:event_posx}(1)=16   :{var:event_posy}(1)=5  :{var:event_item}(1)=3   'kraeuter
-	{var:event_room}(2)=0  :{var:event_posx}(2)=3    :{var:event_posy}(2)=5 :{var:event_item}(2)=15   'stock
+	{var:event_room}(1)=0  :{var:event_posx}(1)=16   :{var:event_posy}(1)=5 :{var:event_item}(1)=3   'kraeuter
+	{var:event_room}(2)=0  :{var:event_posx}(2)=3    :{var:event_posy}(2)=5 :{var:event_item}(2)=15  'stock
 
 
-	{var:event_room}(3)=99  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
-	{var:event_room}(4)=99  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
-	{var:event_room}(5)=99  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
-	{var:event_room}(6)=99  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
-	{var:event_room}(7)=99  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
-	{var:event_room}(8)=99  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
-	{var:event_room}(9)=99  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
-	{var:event_room}(10)=99 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
-	{var:event_room}(11)=99 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
-	{var:event_room}(12)=99 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
+	{var:event_room}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
+	{var:event_room}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
+	{var:event_room}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
+	{var:event_room}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
+	{var:event_room}(7)=16  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
+	{var:event_room}(8)=16  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
+	{var:event_room}(9)=16  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
+	{var:event_room}(10)=16 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
+	{var:event_room}(11)=16 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
+	{var:event_room}(12)=16 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
 
 	'print rahmen
 	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
@@ -1139,7 +1103,7 @@ goto{:goto_newgame}
 	print"{$c6}{$c7:38}{up:3}";
 	poke50151,72:poke56295,9
 	'raum und posx/y
-	x=13:y=4:cr=0
+	x=13:y=3:cr=0
 	'player aktiv
 	{var:player_activ}(0)=1:{var:player_activ}(1)=0:{var:player_activ}(2)=0:{var:player_activ}(3)=0
 	'{var:player_activ}(0)=1:{var:player_activ}(1)=1:{var:player_activ}(2)=1:{var:player_activ}(3)=1
@@ -1311,61 +1275,61 @@ goto{:goto_newgame}
 	data"glados" ,500 ,70 ,60 ,80 ,30 ,0 ,1000
 'player
 	'{var:player_xxx}(x)
-	'    name hp mp str atk def waffe ruestung
-	data"kron" ,15 ,0  ,10 ,4 ,3 ,0 ,0
-	data"lena" ,17 ,0  ,10 ,3 ,3 ,0 ,0
-	data"dolm" ,9  ,7  ,8  ,1 ,1 ,0 ,0
-	data"mira" ,9  ,23 ,7  ,1 ,1 ,1 ,2
+	'    name  hp mp str atk def waffe ruestung
+	data"kron",15 ,0  ,10 ,4 ,3 ,0 ,0
+	data"lena",17 ,0  ,10 ,3 ,3 ,0 ,0
+	data"dolm",9  ,7  ,8  ,1 ,1 ,0 ,0
+	data"mira",9  ,23 ,7  ,1 ,1 ,1 ,2
 'tile
 	'{var:map_tile}(x)
 	data"{gray1}{rvrs off}{201}{rvrs off}{gray1}{202}{down}{left:2}{rvrs off}{gray1}{202}{rvrs off}{gray1}{201}{rvrs off}"
 	data"{gray1}{rvrs off}{203}{rvrs off}{gray1}{204}{down}{left:2}{rvrs off}{gray1}{201}{rvrs off}{gray1}{202}{rvrs off}"
-	data"{gray1}{rvrs off}{205}{rvrs off}{gray1}{206}{down}{left:2}{rvrs off}{gray1}{201}{rvrs off}{gray1}{202}{rvrs off}"
-	data"{orange}{rvrs off}{207}{rvrs off}{orange}{207}{down}{left:2}{rvrs off}{orange}{207}{rvrs off}{orange}{207}{rvrs off}"
 	data"{gray1}{rvrs off}{201}{rvrs off}{gray1}{202}{down}{left:2}{rvrs off}{gray1}{202}{rvrs off}{gray1}{201}{rvrs off}"
-	data"{gray1}{rvrs off}{208}{rvrs off}{gray1}{209}{down}{left:2}{rvrs off}{gray1}{210}{rvrs off}{gray1}{211}{rvrs off}"
-	data"{lt. green}{rvrs off}{212}{rvrs off}{lt. green}{207}{down}{left:2}{rvrs off}{lt. green}{207}{rvrs off}{lt. green}{213}{rvrs off}"
-	data"{gray1}{rvrs off}{214}{rvrs off}{gray1}{215}{down}{left:2}{rvrs off}{gray1}{216}{rvrs off}{gray1}{217}{rvrs off}"
-	data"{brown}{rvrs off}{218}{rvrs off}{brown}{219}{down}{left:2}{rvrs off}{brown}{220}{rvrs off}{brown}{221}{rvrs off}"
-	data"{lt. red}{rvrs off}{222}{rvrs off}{lt. red}{222}{down}{left:2}{rvrs off}{lt. red}{222}{rvrs off}{lt. red}{222}{rvrs off}"
-	data"{lt. red}{rvrs off}{223}{rvrs off}{lt. red}{160}{down}{left:2}{rvrs off}{lt. red}{162}{rvrs off}{lt. red}{163}{rvrs off}"
-	data"{lt. red}{rvrs off}{164}{rvrs off}{lt. red}{165}{down}{left:2}{rvrs off}{lt. red}{166}{rvrs off}{lt. red}{167}{rvrs off}"
-	data"{lt. green}{rvrs off}{212}{rvrs off}{lt. green}{207}{down}{left:2}{rvrs off}{lt. green}{207}{rvrs off}{lt. green}{213}{rvrs off}"
-	data"{brown}{rvrs off}{168}{rvrs off}{brown}{168}{down}{left:2}{rvrs off}{brown}{168}{rvrs off}{brown}{168}{rvrs off}"
-	data"{brown}{rvrs off}{169}{rvrs off}{brown}{169}{down}{left:2}{rvrs off}{brown}{169}{rvrs off}{brown}{169}{rvrs off}"
-	data"{gray2}{rvrs off}{170}{rvrs off}{gray2}{171}{down}{left:2}{rvrs off}{gray2}{172}{rvrs off}{gray2}{173}{rvrs off}"
-	data"{gray1}{rvrs off}{174}{rvrs off}{gray1}{175}{down}{left:2}{rvrs off}{gray1}{176}{rvrs off}{gray1}{177}{rvrs off}"
-	data"{lt. green}{rvrs off}{178}{rvrs off}{lt. green}{179}{down}{left:2}{rvrs off}{lt. green}{180}{rvrs off}{lt. green}{181}{rvrs off}"
-	data"{lt. green}{rvrs off}{182}{rvrs off}{lt. green}{183}{down}{left:2}{rvrs off}{lt. green}{182}{rvrs off}{lt. green}{183}{rvrs off}"
-	data"{lt. green}{rvrs off}{184}{rvrs off}{lt. green}{185}{down}{left:2}{rvrs off}{lt. green}{186}{rvrs off}{lt. green}{187}{rvrs off}"
-	data"{brown}{rvrs off}{178}{rvrs off}{brown}{179}{down}{left:2}{rvrs off}{brown}{180}{rvrs off}{brown}{181}{rvrs off}"
-	data"{brown}{rvrs off}{182}{rvrs off}{brown}{183}{down}{left:2}{rvrs off}{brown}{182}{rvrs off}{brown}{183}{rvrs off}"
-	data"{brown}{rvrs off}{184}{rvrs off}{brown}{185}{down}{left:2}{rvrs off}{brown}{186}{rvrs off}{brown}{187}{rvrs off}"
-	data"{brown}{rvrs off}{212}{rvrs off}{brown}{207}{down}{left:2}{rvrs off}{brown}{207}{rvrs off}{brown}{213}{rvrs off}"
-	data"{brown}{rvrs off}{188}{rvrs off}{brown}{188}{down}{left:2}{rvrs off}{brown}{189}{rvrs off}{brown}{189}{rvrs off}"
-	data"{gray1}{rvrs off}{190}{rvrs off}{gray1}{191}{down}{left:2}{rvrs on}{gray1}{64}{rvrs on}{gray1}{65}{rvrs off}"
-	data"{brown}{rvrs off}{188}{rvrs on}{brown}{66}{down}{left:2}{rvrs off}{brown}{189}{rvrs off}{brown}{189}{rvrs off}"
-	data"{brown}{rvrs on}{66}{rvrs off}{brown}{188}{down}{left:2}{rvrs off}{brown}{189}{rvrs off}{brown}{189}{rvrs off}"
-	data"{gray1}{rvrs off}{207}{rvrs off}{gray1}{207}{down}{left:2}{rvrs off}{gray1}{207}{rvrs off}{gray1}{207}{rvrs off}"
-	data"{gray1}{rvrs on}{67}{rvrs off}{gray1}{207}{down}{left:2}{rvrs on}{gray1}{67}{rvrs off}{gray1}{207}{rvrs off}"
-	data"{gray1}{rvrs on}{67}{rvrs off}{gray1}{207}{down}{left:2}{rvrs on}{gray1}{68}{rvrs off}{gray1}{207}{rvrs off}"
-	data"{gray1}{rvrs on}{69}{rvrs on}{gray1}{70}{down}{left:2}{rvrs on}{gray1}{71}{rvrs on}{gray1}{71}{rvrs off}"
-	data"{gray1}{rvrs on}{72}{rvrs on}{gray1}{72}{down}{left:2}{rvrs on}{gray1}{73}{rvrs on}{gray1}{73}{rvrs off}"
+	data"{gray1}{rvrs off}{205}{rvrs off}{gray1}{206}{down}{left:2}{rvrs off}{gray1}{207}{rvrs off}{gray1}{208}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{orange}{rvrs off}{209}{rvrs off}{orange}{209}{down}{left:2}{rvrs off}{orange}{209}{rvrs off}{orange}{209}{rvrs off}"
+	data"{brown}{rvrs off}{210}{rvrs off}{brown}{211}{down}{left:2}{rvrs off}{brown}{212}{rvrs off}{brown}{213}{rvrs off}"
+	data"{lt. red}{rvrs off}{214}{rvrs off}{lt. red}{215}{down}{left:2}{rvrs off}{lt. red}{216}{rvrs off}{lt. red}{217}{rvrs off}"
+	data"{gray1}{rvrs off}{218}{rvrs off}{gray1}{219}{down}{left:2}{rvrs off}{gray1}{220}{rvrs off}{gray1}{221}{rvrs off}"
+	data"{gray1}{rvrs off}{162}{rvrs off}{gray1}{163}{down}{left:2}{rvrs off}{gray1}{164}{rvrs off}{gray1}{165}{rvrs off}"
+	data"{brown}{rvrs off}{161}{rvrs off}{brown}{161}{down}{left:2}{rvrs off}{brown}{161}{rvrs off}{brown}{161}{rvrs off}"
+	data"{gray1}{rvrs off}{222}{rvrs off}{gray1}{223}{down}{left:2}{rvrs off}{gray1}{201}{rvrs off}{gray1}{202}{rvrs off}"
+	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{lt. red}{rvrs off}{166}{rvrs off}{lt. red}{167}{down}{left:2}{rvrs off}{lt. red}{168}{rvrs off}{lt. red}{169}{rvrs off}"
+	data"{lt. red}{rvrs off}{170}{rvrs off}{lt. red}{170}{down}{left:2}{rvrs off}{lt. red}{170}{rvrs off}{lt. red}{170}{rvrs off}"
+	data"{brown}{rvrs off}{171}{rvrs off}{brown}{171}{down}{left:2}{rvrs off}{brown}{172}{rvrs off}{brown}{172}{rvrs off}"
+	data"{brown}{rvrs off}{171}{rvrs off}{brown}{173}{down}{left:2}{rvrs off}{brown}{172}{rvrs off}{brown}{172}{rvrs off}"
+	data"{brown}{rvrs off}{173}{rvrs off}{brown}{171}{down}{left:2}{rvrs off}{brown}{172}{rvrs off}{brown}{172}{rvrs off}"
+	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{lt. green}{rvrs off}{174}{rvrs off}{lt. green}{209}{down}{left:2}{rvrs off}{lt. green}{209}{rvrs off}{lt. green}{175}{rvrs off}"
+	data"{lt. green}{rvrs off}{176}{rvrs off}{lt. green}{177}{down}{left:2}{rvrs off}{lt. green}{178}{rvrs off}{lt. green}{179}{rvrs off}"
+	data"{lt. green}{rvrs off}{180}{rvrs off}{lt. green}{181}{down}{left:2}{rvrs off}{lt. green}{180}{rvrs off}{lt. green}{181}{rvrs off}"
+	data"{lt. green}{rvrs off}{182}{rvrs off}{lt. green}{183}{down}{left:2}{rvrs off}{lt. green}{184}{rvrs off}{lt. green}{185}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{brown}{rvrs off}{174}{rvrs off}{brown}{209}{down}{left:2}{rvrs off}{brown}{209}{rvrs off}{brown}{175}{rvrs off}"
+	data"{brown}{rvrs off}{176}{rvrs off}{brown}{177}{down}{left:2}{rvrs off}{brown}{178}{rvrs off}{brown}{179}{rvrs off}"
+	data"{brown}{rvrs off}{180}{rvrs off}{brown}{181}{down}{left:2}{rvrs off}{brown}{180}{rvrs off}{brown}{181}{rvrs off}"
+	data"{brown}{rvrs off}{182}{rvrs off}{brown}{183}{down}{left:2}{rvrs off}{brown}{184}{rvrs off}{brown}{185}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
-	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
-	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
-	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{brown}{rvrs off}{209}{rvrs off}{brown}{209}{down}{left:2}{rvrs off}{brown}{209}{rvrs off}{brown}{209}{rvrs off}"
+	data"{brown}{rvrs off}{186}{rvrs off}{brown}{209}{down}{left:2}{rvrs off}{brown}{186}{rvrs off}{brown}{209}{rvrs off}"
+	data"{brown}{rvrs off}{186}{rvrs off}{brown}{209}{down}{left:2}{rvrs off}{brown}{187}{rvrs off}{brown}{209}{rvrs off}"
+	data"{brown}{rvrs off}{188}{rvrs off}{brown}{189}{down}{left:2}{rvrs off}{brown}{190}{rvrs off}{brown}{190}{rvrs off}"
+	data"{gray1}{rvrs off}{191}{rvrs off}{gray1}{191}{down}{left:2}{rvrs on}{gray1}{64}{rvrs on}{gray1}{64}{rvrs off}"
+	data"{gray1}{rvrs on}{65}{rvrs on}{gray1}{66}{down}{left:2}{rvrs on}{gray1}{67}{rvrs on}{gray1}{68}{rvrs off}"
+	data"{gray1}{rvrs on}{69}{rvrs on}{gray1}{70}{down}{left:2}{rvrs on}{gray1}{71}{rvrs on}{gray1}{72}{rvrs off}"
+	data"{gray1}{rvrs on}{73}{rvrs on}{gray1}{73}{down}{left:2}{rvrs on}{gray1}{73}{rvrs on}{gray1}{73}{rvrs off}"
 	data"{orange}{rvrs on}{74}{rvrs on}{orange}{75}{down}{left:2}{rvrs on}{orange}{76}{rvrs on}{orange}{77}{rvrs off}"
 	data"{gray1}{rvrs on}{78}{rvrs on}{gray1}{75}{down}{left:2}{rvrs on}{gray1}{76}{rvrs on}{gray1}{77}{rvrs off}"
 	data"{lt. green}{rvrs on}{79}{rvrs on}{lt. green}{80}{down}{left:2}{rvrs on}{lt. green}{81}{rvrs on}{lt. green}{82}{rvrs off}"
@@ -1382,7 +1346,7 @@ goto{:goto_newgame}
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
-	data"{lt. green}{rvrs on}{95}{rvrs on}{lt. green}{32}{down}{left:2}{rvrs on}{lt. green}{34}{rvrs on}{lt. green}{36}{rvrs off}"
+	data"{lt. green}{rvrs on}{95}{rvrs on}{lt. green}{33}{down}{left:2}{rvrs on}{lt. green}{35}{rvrs on}{lt. green}{36}{rvrs off}"
 	data"{gray3}{rvrs on}{37}{rvrs on}{gray3}{38}{down}{left:2}{rvrs on}{gray3}{39}{rvrs on}{gray3}{40}{rvrs off}"
 	data"{gray1}{rvrs on}{37}{rvrs on}{gray1}{38}{down}{left:2}{rvrs on}{gray1}{39}{rvrs on}{gray1}{40}{rvrs off}"
 	data"{lt. green}{rvrs on}{41}{rvrs on}{lt. green}{42}{down}{left:2}{rvrs on}{lt. green}{43}{rvrs on}{lt. green}{44}{rvrs off}"
@@ -1425,43 +1389,5 @@ goto{:goto_newgame}
 	data "weste   ",0    ,14   ,0    ,0    ,1  :'item 16 {var:event_item}(x)
 	data "schild  ",0    ,24   ,0    ,0    ,1  :'item 17 {var:event_item}(x)
 	data "zurueck ",0    ,0    ,0    ,0    ,9  :'item 18 {var:event_item}(x)
-
-{:goto_char_tile_test}
-	'print char
-		print "{white}"+chr$(147)
-		z=-1
-		for a=0 to255
-			b=0
-			z=z+1
-			if z=16 then print : z=0
-			if a>=0 and a<=31    then c=a+64  : print chr$(c);
-			if a>=32 and a<=63   then c=a+00  : print chr$(c);
-			if a>=64 and a<=95   then c=a+32  : print "{gray1}"+chr$(c);
-			if a>=96 and a<=127  then c=a+64  : print "{gray1}"+chr$(c);
-			rem inventeriert
-			if a=162 then print" "; : goto {:next}
-			if a>=128 and a<=159 then c=a-64  : print "{gray1}"+chr$(18)+chr$(c);
-			if a>=160 and a<=191 then c=a-128 : print "{gray1}"+chr$(18)+chr$(c);
-			if a>=192 and a<=254 then c=a     : print "{gray1}"+chr$(18)+chr$(c);
-			if a=255 then c=a-64              : print "{gray1}"+chr$(18)+chr$(c);
-		{:next}
-		next a
-	gosub {:gosub_joywait_fire}
-
-	'raster
-		poke 1020,{var:farbe_bl} 'hintergrundfarbe map
-		poke 1021,{var:farbe_sw} 'hintergrundfarbe schrift
-		sys 820                  'start asm.raster
-		print "{white}"+chr$(147)
-	'print tile
-		for i=0 to 4
-			print"{home}{down:3}"left$(cd$,i*2);
-			for j=0 to 15
-			print {var:map_tile}(sp)"{up}";
-			sp=sp+1
-		next j,i
-	'white stop
-		print chr$(5)
-		stop
 
 end
