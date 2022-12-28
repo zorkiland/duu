@@ -204,7 +204,6 @@
 		read {var:player_name}(i),{var:player_hp}(i),{var:player_mp}(i),{var:player_str}(i)
 		read {var:player_atk}(i),{var:player_def}(i),{var:player_waffe}(i),{var:player_ruestung}(i)
 	next
-	pm$="{rvrs on}{lt. red}{85}{86}{down}{left:2}{87}{88}{rvrs off}"
 'read tile
 	for i=0 to {var:anzahl_tile}-1
 		read {var:map_tile}(i)
@@ -215,11 +214,11 @@
 	{var:player_tile}(2) = {var:map_tile}(52) 'dolm
 	{var:player_tile}(3) = {var:map_tile}(51) 'mira
 'copy tile monster
-		zz=64
-		for i=0 to {var:anzahl_monster}-1
-		{var:monster_tile}(i) = {var:map_tile}(zz)
-		zz=zz+1
-		next i
+	zz=64
+	for i=0 to {var:anzahl_monster}-1
+	{var:monster_tile}(i) = {var:map_tile}(zz)
+	zz=zz+1
+	next i
 'read item
 	for i=0 to {var:anzahl_item}-1
 		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_str}(i),{var:item_mana}(i),{var:item_ident}(i)
@@ -253,7 +252,6 @@ goto{:goto_newgame}
 	if peek(2)=1 then cp=30960+rs*(cr-0)
 {:mainloop_print_playertile}
 	print"{home}"left$(cd$,3+y*2)spc(x*2){var:player_tile}(0);
-	rem print"{home}"left$(cd$,3+y*2)spc(x*2)pm$;
 {:mainloop_oldpos}
 	ox=zx:oy=zy
 	zx=x:zy=y
