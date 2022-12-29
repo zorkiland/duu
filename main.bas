@@ -317,10 +317,11 @@ goto{:goto_newgame}
 	if cr=16 then {:goto_end_game}
 {:raumaktion_schalten}
 	'wenn c=14 schalter
-		if c=14 and cr=0  and zx=16 then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_raumaktion_poke_mapspeicher} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_print_map}
+		'if c=14 and cr=0 and zx=16  then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_raumaktion_poke_mapspeicher} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_print_map}
+		if c=14 and cr=0 and zx=16  then {var:hints}(0)=1-{var:hints}(0):gosub{:gosub_raumaktion_poke_mapspeicher} : tx=8:ty=4 : gosub{:gosub_print_currentroom_tile_pos_xt_yt} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_oldpos}
 		if c=14 and cr=16 and zx=0  then {var:hints}(1)=1-{var:hints}(1):gosub{:gosub_raumaktion_poke_mapspeicher} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_oldpos}
 	'wenn c=2 druckplatte versteckt
-		if c=2 and cr=16 and x=0  and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
+		if c=2 and cr=16 and x=0 and {var:hints}(6)=0  then {var:hints}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
 		if c=2 and cr=16 and x=0 and {var:hints}(7)=0  then {var:hints}(7)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
 	'wenn c=3 druckplatte
 		if c=3 and cr=16 and y=0  and {var:hints}(12)=0 then {var:hints}(12)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_cleartop}
@@ -376,10 +377,17 @@ goto{:goto_newgame}
 
 	return
 {:gosub_raumaktion_print_schalter_status}
+	'schalter status
 		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
 		if cr=00 and zx=16 and zy=2 and {var:hints}(0)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
 		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
 		if cr=16 and zx=00 and zy=0 and {var:hints}(1)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+	return
+{:gosub_print_currentroom_tile_pos_xt_yt}
+	'set sp
+		sp=30960+(cr*rs)+(tx+ty*20)
+	'print tile
+		print"{home}{down:3}"left$(cd$,ty*2)spc(tx*2){var:map_tile}(peek(sp));
 	return
 
 'mainmenu
