@@ -191,7 +191,7 @@
 	next
 'copy tile player
 	{var:player_tile}(0) = {var:map_tile}(48) 'kron
-	{var:player_tile}(1) = {var:map_tile}(49) 'lena
+	{var:player_tile}(1) = {var:map_tile}(50) 'lena
 	{var:player_tile}(2) = {var:map_tile}(52) 'dolm
 	{var:player_tile}(3) = {var:map_tile}(51) 'mira
 'copy tile monster
