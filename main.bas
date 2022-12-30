@@ -296,14 +296,14 @@ goto{:goto_newgame}
 	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
 	if cr=16 then {:goto_end_game}
 {:raumaktion_schalten}
-	'wenn c=14 schalter
-		if c=14 and cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) then {var:schalter_flag}(0)=1-{var:schalter_flag}(0):gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(0):ty={var:aktor_posy}(0): gosub{:gosub_print_currentroom_tile_pos_tx_ty} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_oldpos}
-	'wenn c=3 druckplatte versteckt
-		if c=2  and cr={var:schalter_raum}(1) and  x={var:schalter_posx}(1) then {var:schalter_flag}(1)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(1):ty={var:aktor_posy}(1): gosub{:gosub_print_currentroom_tile_pos_tx_ty} : goto{:mainloop_print_playertile}
-		if c=2  and cr={var:schalter_raum}(2) and  x={var:schalter_posx}(2) then {var:schalter_flag}(2)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(2):ty={var:aktor_posy}(2): gosub{:gosub_print_currentroom_tile_pos_tx_ty} : goto{:mainloop_print_playertile}
-	'wenn c=3 druckplatte
-		if c=3  and cr={var:schalter_raum}(3) and  x={var:schalter_posx}(3) then {var:schalter_flag}(3)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(3):ty={var:aktor_posy}(3): gosub{:gosub_print_currentroom_tile_pos_tx_ty} : goto{:mainloop_print_playertile}
-		if c=3  and cr={var:schalter_raum}(4) and  x={var:schalter_posx}(4) then {var:schalter_flag}(4)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(4):ty={var:aktor_posy}(4): gosub{:gosub_print_currentroom_tile_pos_tx_ty} : goto{:mainloop_print_playertile}
+	'wenn c=14 schalter (ein/aus schalten)
+		if c=14 and cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) then {var:schalter_flag}(0)=1-{var:schalter_flag}(0):gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(0):ty={var:aktor_posy}(0): gosub{:gosub_raumaktion_print_one_tile} : gosub{:gosub_raumaktion_print_schalter_status} : goto{:mainloop_oldpos}
+	'wenn c=3 druckplatte versteckt (ein schalten)
+		if c=2  and cr={var:schalter_raum}(1) and  x={var:schalter_posx}(1) then {var:schalter_flag}(1)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(1):ty={var:aktor_posy}(1): gosub{:gosub_raumaktion_print_one_tile} : goto{:mainloop_print_playertile}
+		if c=2  and cr={var:schalter_raum}(2) and  x={var:schalter_posx}(2) then {var:schalter_flag}(2)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(2):ty={var:aktor_posy}(2): gosub{:gosub_raumaktion_print_one_tile} : goto{:mainloop_print_playertile}
+	'wenn c=3 druckplatte (ein schalten)
+		if c=3  and cr={var:schalter_raum}(3) and  x={var:schalter_posx}(3) then {var:schalter_flag}(3)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(3):ty={var:aktor_posy}(3): gosub{:gosub_raumaktion_print_one_tile} : goto{:mainloop_print_playertile}
+		if c=3  and cr={var:schalter_raum}(4) and  x={var:schalter_posx}(4) then {var:schalter_flag}(4)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(4):ty={var:aktor_posy}(4): gosub{:gosub_raumaktion_print_one_tile} : goto{:mainloop_print_playertile}
 {:raumaktion_text}
 	'aktion truhe
 		if c=12  and aa=0 then goto {:mainloop_oldpos}
@@ -316,9 +316,9 @@ goto{:goto_newgame}
 		if c={var:npc_numm}(7) then print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 		if c={var:npc_numm}(8) then print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'player
-		if c={var:npc_numm}(0) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(0)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1 :tx=12:ty=4:gosub{:gosub_print_currentroom_tile_pos_tx_ty}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
-		if c={var:npc_numm}(1) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(1)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(2)=1 :tx=7 :ty=2:gosub{:gosub_print_currentroom_tile_pos_tx_ty}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
-		if c={var:npc_numm}(2) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(2)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(3)=1 :tx=3 :ty=2:gosub{:gosub_print_currentroom_tile_pos_tx_ty}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
+		if c={var:npc_numm}(0) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(0)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1 :tx=12:ty=4:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
+		if c={var:npc_numm}(1) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(1)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(2)=1 :tx=7 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
+		if c={var:npc_numm}(2) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(2)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(3)=1 :tx=3 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
 	'monster
 		if c={var:npc_numm}(3) then print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:npc_flag}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 		if c={var:npc_numm}(4) then print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:npc_flag}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
@@ -327,14 +327,16 @@ goto{:goto_newgame}
 {:raumaktion_heilen}
 	'wenn c=47 wasser
 		if c=47 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+
+{:gosub_raumaktion_print_one_tile}
+	'set sp
+		sp=30960+(cr*rs)+(tx+ty*20)
+	'print tile
+		print"{home}{down:3}"left$(cd$,ty*2)spc(tx*2){var:map_tile}(peek(sp));
+	return
 {:gosub_raumaktion_poke_mapspeicher}
 
-	'ein und ausschalten
-		'poke     +cr                 *rs+x                  +y                     ,toggle 0 und c
-		poke 30960+{var:aktor_raum}(0)*rs+{var:aktor_posx}(0)+{var:aktor_posy}(0)*20,15-{var:schalter_flag}(0)*15+1 'c=16 mauer (f kann 1 oder 16 sein)'
-
-	'nur auschalten
-		'poke     +cr               *rs+x                +y                   ,toggle 0 und c
+	'poke30960+cr*rs+x+y*20,c-flag*c
 		poke 30960+{var:npc_raum}(0)*rs+{var:npc_posx}(0)+{var:npc_posy}(0)*20,{var:npc_numm}(0)-{var:npc_flag}(0)*{var:npc_numm}(0)  'c=50 lena
 		poke 30960+{var:npc_raum}(1)*rs+{var:npc_posx}(1)+{var:npc_posy}(1)*20,{var:npc_numm}(1)-{var:npc_flag}(1)*{var:npc_numm}(1)  'c=52 dolm
 		poke 30960+{var:npc_raum}(2)*rs+{var:npc_posx}(2)+{var:npc_posy}(2)*20,{var:npc_numm}(2)-{var:npc_flag}(2)*{var:npc_numm}(2)  'c=51 mira
@@ -343,14 +345,14 @@ goto{:goto_newgame}
 		poke 30960+{var:npc_raum}(5)*rs+{var:npc_posx}(5)+{var:npc_posy}(5)*20,{var:npc_numm}(5)-{var:npc_flag}(5)*{var:npc_numm}(5)  'c=76 dracul
 		poke 30960+{var:npc_raum}(6)*rs+{var:npc_posx}(6)+{var:npc_posy}(6)*20,{var:npc_numm}(6)-{var:npc_flag}(6)*{var:npc_numm}(6)  'c=77 glados
 
-		'poke     +cr                 *rs+x                  +y                      ,toggle 0 und c
-		poke 30960+{var:aktor_raum}(1)*rs+{var:aktor_posx}(1)+{var:aktor_posy}(1)*20,13-{var:schalter_flag}(1)*13  'c=13 gitter -> c=00
-		poke 30960+{var:aktor_raum}(2)*rs+{var:aktor_posx}(2)+{var:aktor_posy}(2)*20,13-{var:schalter_flag}(2)*12  'c=13 gitter -> c=01
+	'schalter aktor
+		poke 30960+{var:aktor_raum}(0)*rs+{var:aktor_posx}(0)+{var:aktor_posy}(0)*20,15-{var:schalter_flag}(0)*15+1 'c=16 mauer  -> c=01 (kann 1 oder 16 sein)
+		poke 30960+{var:aktor_raum}(1)*rs+{var:aktor_posx}(1)+{var:aktor_posy}(1)*20,13-{var:schalter_flag}(1)*13   'c=13 gitter -> c=00 (kann 0 oder 13 sein)
+		poke 30960+{var:aktor_raum}(2)*rs+{var:aktor_posx}(2)+{var:aktor_posy}(2)*20,13-{var:schalter_flag}(2)*12   'c=13 gitter -> c=01 (kann 1 oder 13 sein)
 	
 	'verknuepfung
 		t=13:if {var:schalter_flag}(3)+{var:schalter_flag}(4)=2 then t=0
-		'poke     +cr                 *rs+x                  +y
-		poke 30960+{var:aktor_raum}(3)*rs+{var:aktor_posx}(3)+{var:aktor_posy}(3)*20,t 'c=13 gitter
+		poke 30960+{var:aktor_raum}(3)*rs+{var:aktor_posx}(3)+{var:aktor_posy}(3)*20,t 'c=13 gitter -> c=00 (kann 0 oder 13 sein)
 
 	return
 {:gosub_raumaktion_print_schalter_status}
@@ -358,13 +360,8 @@ goto{:goto_newgame}
 		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
 		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
 	return
-{:gosub_print_currentroom_tile_pos_tx_ty}
-	'set sp
-		sp=30960+(cr*rs)+(tx+ty*20)
-	'print tile
-		print"{home}{down:3}"left$(cd$,ty*2)spc(tx*2){var:map_tile}(peek(sp));
-	return
 {:gosub_raumaktion_variabeln}
+
 	'schlater aktor variabeln
 		{var:schalter_raum}(0)=0 : {var:schalter_posx}(0)=11 : {var:schalter_posy}(0)=1 : {var:schalter_flag}(0)=0      : {var:aktor_raum}(0)=0 : {var:aktor_posx}(0)=14 : {var:aktor_posy}(0)=6  'c=14 schalter
 		{var:schalter_raum}(1)=0 : {var:schalter_posx}(1)=16 : {var:schalter_posy}(1)=6 : {var:schalter_flag}(1)=0      : {var:aktor_raum}(1)=0 : {var:aktor_posx}(1)=7  : {var:aktor_posy}(1)=4  'c=02 druckplatte versteckt
@@ -383,7 +380,25 @@ goto{:goto_newgame}
 
 		{var:npc_numm}(7)=49 : {var:npc_raum}(7)=16 : {var:npc_posx}(7)=0  : {var:npc_posy}(7)=0 : {var:npc_flag}(7)=0  'c=49 npc
 		{var:npc_numm}(8)=53 : {var:npc_raum}(8)=16 : {var:npc_posx}(8)=0  : {var:npc_posy}(8)=0 : {var:npc_flag}(8)=0  'c=53 npc
+
+	'event
+		'event(x) = find item bei gefunden event_room(x) = -1 else raumnummer
+		{var:event_room}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0  :{var:event_item}(1)=0   'leer
+		{var:event_room}(1)=0   :{var:event_posx}(1)=1   :{var:event_posy}(1)=2  :{var:event_item}(1)=3   'kraeuter
+		{var:event_room}(2)=0   :{var:event_posx}(2)=18  :{var:event_posy}(2)=2  :{var:event_item}(2)=15  'stock
+		{var:event_room}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
+		{var:event_room}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
+		{var:event_room}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
+		{var:event_room}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
+		{var:event_room}(7)=16  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
+		{var:event_room}(8)=16  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
+		{var:event_room}(9)=16  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
+		{var:event_room}(10)=16 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
+		{var:event_room}(11)=16 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
+		{var:event_room}(12)=16 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
+
 	return
+
 
 'mainmenu
 {:mainmenu}
@@ -1068,21 +1083,6 @@ goto{:goto_newgame}
 	'item 0-13 = 0
 		for i=0 to 13:{var:inventar_slot}(i)=0:next
 		{var:inventar_slot}(0)=18
-	'event
-		'event(x) = find item bei gefunden event_room(x) = -1 else raumnummer
-		{var:event_room}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0  :{var:event_item}(1)=0   'leer
-		{var:event_room}(1)=0   :{var:event_posx}(1)=1   :{var:event_posy}(1)=2  :{var:event_item}(1)=3   'kraeuter
-		{var:event_room}(2)=0   :{var:event_posx}(2)=18  :{var:event_posy}(2)=2  :{var:event_item}(2)=15  'stock
-		{var:event_room}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
-		{var:event_room}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
-		{var:event_room}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
-		{var:event_room}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
-		{var:event_room}(7)=16  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
-		{var:event_room}(8)=16  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
-		{var:event_room}(9)=16  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
-		{var:event_room}(10)=16 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
-		{var:event_room}(11)=16 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
-		{var:event_room}(12)=16 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
 	'print rahmen
 		print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 		fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
