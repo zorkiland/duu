@@ -43,4 +43,5 @@ pause
 rem exit
 rem exit
 REM START EMU
-micro64.exe VICE\bin\dungeon.d64
+rem micro64.exe VICE\bin\dungeon.d64
+ccs64.exe VICE\bin\dungeon.d64
