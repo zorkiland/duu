@@ -3,12 +3,10 @@
 '*****************************
 
 {renumber}
-'%supervar_event
-	{var:event_raum=er%}
-	{var:event_posx=ex%}
-	{var:event_posy=ey%}
-	{var:event_item=et%}
-'%supervar_item
+
+'supervar_tile
+	{var:map_tile=t$}
+'supervar_item
 	{var:item_name=i$}
 	{var:item_atk=ia%}
 	{var:item_def=id%}
@@ -19,10 +17,7 @@
 	{var:inventar_max=ix%}
 	{var:nimm_item=ni%}
 	{var:inventar_slottemp=tt%}
-'supervar_global
-	{var:sprite_register=v}
-	{var:map_tile=t$}
-'%supervar_player
+'supervar_player
 	{var:player_name=p$}
 	{var:player_hp=ph%}
 	{var:player_mp=pm%}
@@ -37,7 +32,7 @@
 	{var:player_waffe=pw%}
 	{var:player_ruestung=pr%}
 	{var:player_exp=px%}
-'%supervar_monster
+'supervar_monster
 	{var:monster_name=m$}
 	{var:monster_hp=mh%}
 	{var:monster_mp=mm%}
@@ -53,7 +48,8 @@
 	{var:multifarbspeicher_2=qp}
 	{var:bildschirmfarbe=qq}
 	{var:rahmenfarbe=qr}
-'%supervar_color
+	{var:sprite_register=v}
+'supervar_color
 	{var:farbe_sw=q1%}
 	{var:farbe_ws=q2%}
 	{var:farbe_rd=q3%}
@@ -70,7 +66,7 @@
 	{var:farbe_lgn=qd%}
 	{var:farbe_lbl=qe%}
 	{var:farbe_lgr=qf%}
-'%supervar_multicolor
+'supervar_multicolor
 	{var:farbe_multi_sw=qg%}
 	{var:farbe_multi_ws=qh%}
 	{var:farbe_multi_br=qi%}
@@ -79,7 +75,7 @@
 	{var:farbe_multi_gn=ql%}
 	{var:farbe_multi_bl=qm%}
 	{var:farbe_multi_ge=qn%}
-'%supervar_fight
+'supervar_fight
 	{var:fight_hp=fh%}
 	{var:fight_active=ft%}
 	{var:fight_rnd_str=fc%}
@@ -91,13 +87,13 @@
 	{var:fight_def=fd%}
 	{var:fight_hp_max=f1%}
 	{var:fight_mp_max=f2%}
-'$supervar_seq
+'supervar_seq
 	{var:seq_select=aa$}
 	{var:seq_buffer=b$}
-'%supervar_other
+'supervar_other
 	{var:val_atk=t1%}
 	{var:val_def=t2%}
-'%supervar_schalter
+'supervar_schalter
 	{var:schalter_raum=s0%}
 	{var:schalter_posx=s1%}
 	{var:schalter_posy=s2%}
@@ -105,12 +101,17 @@
 	{var:aktor_raum=a0%}
 	{var:aktor_posx=a1%}
 	{var:aktor_posy=a2%}
-'%supervar_npc
+'supervar_npc
 	{var:npc_numm=n0%}
 	{var:npc_raum=n1%}
 	{var:npc_posx=n2%}
 	{var:npc_posy=n3%}
 	{var:npc_flag=n4%}
+'supervar_event
+	{var:event_raum=er%}
+	{var:event_posx=ex%}
+	{var:event_posy=ey%}
+	{var:event_item=et%}
 
 'ini
 	'basicende
@@ -266,7 +267,7 @@ goto{:goto_newgame}
 		if c=14  then {:raumaktion_schalten}  'wenn c=14 schalter
 		
 		if c=25  then {:raumaktion_text}      'wenn c=25 baum
-		if c=47  then {:raumaktion_heilen}    'wenn c=47 wasser
+		if c=40  then {:raumaktion_heilen}    'wenn c=40 wasser
 		
 		if c>=48 then {:raumaktion_npc}       'wenn c>=48 npc
 		if c>7   then {:mainloop_oldpos}      'wenn c>7 nicht begehbar
@@ -312,7 +313,7 @@ goto{:goto_newgame}
 		if c=25 and aa=0 then goto {:mainloop_oldpos}
 		if c=25 and aa=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 {:raumaktion_npc}
-	'npc                                                    123456789a123456789b123456789c12345678
+	'npc                                                123456789a123456789b123456789c12345678
 		if c=49 then print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 		if c=53 then print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'player
@@ -325,8 +326,8 @@ goto{:goto_newgame}
 		if c=76 then print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:npc_flag}(5)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 		if c=77 then print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
-	'wenn c=47 wasser
-		if c=47 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+	'wenn c=40 wasser
+		if c=40 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 
 {:gosub_raumaktion_print_one_tile}
 	'set sp
@@ -389,7 +390,7 @@ goto{:goto_newgame}
 		{var:npc_raum}(8)=16 : {var:npc_posx}(8)=0  : {var:npc_posy}(8)=0 : {var:npc_flag}(8)=0  'c=53 npc
 
 	'event
-		'event(x) = find item bei gefunden event_room(x) = -1 else raumnummer
+		'event(x) = find item bei gefunden event_raum(x) = -1 else raumnummer
 		{var:event_raum}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0  :{var:event_item}(1)=0   'leer
 		{var:event_raum}(1)=0   :{var:event_posx}(1)=1   :{var:event_posy}(1)=2  :{var:event_item}(1)=3   'kraeuter
 		{var:event_raum}(2)=0   :{var:event_posx}(2)=18  :{var:event_posy}(2)=2  :{var:event_item}(2)=15  'stock
@@ -1082,7 +1083,6 @@ goto{:goto_newgame}
 	ifm=9then{:goto_heal_magic}
 	goto{:battelmenu_select_magic}
 
-'***edit duu***
 {:goto_newgame}
 	'part 1 start variabeln
 		for i=0 to 3:{var:player_exp}(i)=0:next
@@ -1112,7 +1112,6 @@ goto{:goto_newgame}
 	'print"{clr}";fre(0)
 	'stop
 	goto{:mainloop}
-
 {:goto_end_game}
 	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
