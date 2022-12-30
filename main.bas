@@ -98,15 +98,15 @@
 	{var:schalter_posx=s1%}
 	{var:schalter_posy=s2%}
 	{var:schalter_flag=s3%}
+'supervar_aktor
 	{var:aktor_raum=a0%}
 	{var:aktor_posx=a1%}
 	{var:aktor_posy=a2%}
 'supervar_npc
-	{var:npc_numm=n0%}
-	{var:npc_raum=n1%}
-	{var:npc_posx=n2%}
-	{var:npc_posy=n3%}
-	{var:npc_flag=n4%}
+	{var:npc_raum=n0%}
+	{var:npc_posx=n1%}
+	{var:npc_posy=n2%}
+	{var:npc_flag=n3%}
 'supervar_event
 	{var:event_raum=er%}
 	{var:event_posx=ex%}
@@ -174,7 +174,7 @@
 	'schlater aktor flag
 		dim {var:schalter_raum}(10),{var:schalter_posx}(10),{var:schalter_posy}(10),{var:schalter_flag}(10),{var:aktor_raum}(10),{var:aktor_posx}(10),{var:aktor_posy}(10)
 	'npc flag
-		dim {var:npc_numm}(10),{var:npc_raum}(10),{var:npc_posx}(10),{var:npc_posy}(8),{var:npc_flag}(10)
+		dim {var:npc_raum}(10),{var:npc_posx}(10),{var:npc_posy}(8),{var:npc_flag}(10)
 
 'read monster
 	for i=0 to 13
