@@ -36,12 +36,19 @@ c1541 -attach dungeon.d64 -write txt.ende.seq txt.ende,s
 cd..
 cd..
 
-REM COPY main.D64->PROJECT
+REM COPY VICE\bin\dungen.D64-> ROOT
 xcopy VICE\bin\dungeon.d64 *.* /Y
+
+REM COPY dungen.D64 -> CCS64
+xcopy dungeon.d64 CCS64\*.* /Y
+
 
 pause
 rem exit
 rem exit
 REM START EMU
 rem micro64.exe VICE\bin\dungeon.d64
-ccs64.exe VICE\bin\dungeon.d64
+
+/Y
+cd CCS64
+ccs64.exe dungeon.d64

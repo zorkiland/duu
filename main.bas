@@ -4,7 +4,7 @@
 
 {renumber}
 '%supervar_event
-	{var:event_room=er%}
+	{var:event_raum=er%}
 	{var:event_posx=ex%}
 	{var:event_posy=ey%}
 	{var:event_item=et%}
@@ -165,7 +165,7 @@
 	'items
 		dim {var:item_name}(18),{var:item_atk}(18),{var:item_def}(18),{var:item_str}(18),{var:item_mana}(18),{var:item_ident}(18)
 	'event variable
-		dim {var:event_room}(12),{var:event_posx}(12),{var:event_posy}(12),{var:event_item}(12)
+		dim {var:event_raum}(12),{var:event_posx}(12),{var:event_posy}(12),{var:event_item}(12)
 	'inventar
 		dim {var:inventar_slot}(99),{var:inventar_slottemp}(99)
 	'tile
@@ -250,7 +250,7 @@ goto{:goto_newgame}
 	'wenn event(x) = find item passt
 		aa=0
 		for i=0 to 12
-		if {var:event_room}(i)=cr and {var:event_posx}(i)=zx and {var:event_posy}(i)=zy then aa=1
+		if {var:event_raum}(i)=cr and {var:event_posx}(i)=zx and {var:event_posy}(i)=zy then aa=1
 		next i
 	'wenn am rand der map
 		if zx=-1 or zx=20 or zy=-1 or zy=8 then{:mainloop_set_newpos}
@@ -313,17 +313,17 @@ goto{:goto_newgame}
 		if c=25 and aa=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 {:raumaktion_npc}
 	'npc                                                    123456789a123456789b123456789c12345678
-		if c={var:npc_numm}(7) then print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
-		if c={var:npc_numm}(8) then print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=49 then print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=53 then print"{white}{home}{down:1}{right:2}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'player
-		if c={var:npc_numm}(0) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(0)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1 :tx=12:ty=4:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
-		if c={var:npc_numm}(1) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(1)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(2)=1 :tx=7 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
-		if c={var:npc_numm}(2) then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(2)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(3)=1 :tx=3 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
+		if c=50 then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(0)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1 :tx=12:ty=4:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
+		if c=52 then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(1)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(2)=1 :tx=7 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
+		if c=51 then print"{white}{home}{down:1}{right:2}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(2)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(3)=1 :tx=3 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
 	'monster
-		if c={var:npc_numm}(3) then print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:npc_flag}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c={var:npc_numm}(4) then print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:npc_flag}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c={var:npc_numm}(5) then print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:npc_flag}(5)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c={var:npc_numm}(6) then print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=67 then print"{white}{home}{down:1}{right:2}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:npc_flag}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=72 then print"{white}{home}{down:1}{right:2}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:npc_flag}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=76 then print"{white}{home}{down:1}{right:2}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:npc_flag}(5)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=77 then print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=47 wasser
 		if c=47 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
@@ -337,13 +337,13 @@ goto{:goto_newgame}
 {:gosub_raumaktion_poke_mapspeicher}
 
 	'poke30960+cr*rs+x+y*20,c-flag*c
-		poke 30960+{var:npc_raum}(0)*rs+{var:npc_posx}(0)+{var:npc_posy}(0)*20,{var:npc_numm}(0)-{var:npc_flag}(0)*{var:npc_numm}(0)  'c=50 lena
-		poke 30960+{var:npc_raum}(1)*rs+{var:npc_posx}(1)+{var:npc_posy}(1)*20,{var:npc_numm}(1)-{var:npc_flag}(1)*{var:npc_numm}(1)  'c=52 dolm
-		poke 30960+{var:npc_raum}(2)*rs+{var:npc_posx}(2)+{var:npc_posy}(2)*20,{var:npc_numm}(2)-{var:npc_flag}(2)*{var:npc_numm}(2)  'c=51 mira
-		poke 30960+{var:npc_raum}(3)*rs+{var:npc_posx}(3)+{var:npc_posy}(3)*20,{var:npc_numm}(3)-{var:npc_flag}(3)*{var:npc_numm}(3)  'c=67 nacho
-		poke 30960+{var:npc_raum}(4)*rs+{var:npc_posx}(4)+{var:npc_posy}(4)*20,{var:npc_numm}(4)-{var:npc_flag}(4)*{var:npc_numm}(4)  'c=72 troll
-		poke 30960+{var:npc_raum}(5)*rs+{var:npc_posx}(5)+{var:npc_posy}(5)*20,{var:npc_numm}(5)-{var:npc_flag}(5)*{var:npc_numm}(5)  'c=76 dracul
-		poke 30960+{var:npc_raum}(6)*rs+{var:npc_posx}(6)+{var:npc_posy}(6)*20,{var:npc_numm}(6)-{var:npc_flag}(6)*{var:npc_numm}(6)  'c=77 glados
+		poke 30960+{var:npc_raum}(0)*rs+{var:npc_posx}(0)+{var:npc_posy}(0)*20,50-{var:npc_flag}(0)*50  'c=50 lena
+		poke 30960+{var:npc_raum}(1)*rs+{var:npc_posx}(1)+{var:npc_posy}(1)*20,52-{var:npc_flag}(1)*52  'c=52 dolm
+		poke 30960+{var:npc_raum}(2)*rs+{var:npc_posx}(2)+{var:npc_posy}(2)*20,51-{var:npc_flag}(2)*51  'c=51 mira
+		poke 30960+{var:npc_raum}(3)*rs+{var:npc_posx}(3)+{var:npc_posy}(3)*20,67-{var:npc_flag}(3)*67  'c=67 nacho
+		poke 30960+{var:npc_raum}(4)*rs+{var:npc_posx}(4)+{var:npc_posy}(4)*20,72-{var:npc_flag}(4)*72  'c=72 troll
+		poke 30960+{var:npc_raum}(5)*rs+{var:npc_posx}(5)+{var:npc_posy}(5)*20,76-{var:npc_flag}(5)*76  'c=76 dracul
+		poke 30960+{var:npc_raum}(6)*rs+{var:npc_posx}(6)+{var:npc_posy}(6)*20,77-{var:npc_flag}(6)*77  'c=77 glados
 
 	'schalter aktor
 		poke 30960+{var:aktor_raum}(0)*rs+{var:aktor_posx}(0)+{var:aktor_posy}(0)*20,15-{var:schalter_flag}(0)*15+1 'c=16 mauer  -> c=01 (kann 1 oder 16 sein)
@@ -362,40 +362,47 @@ goto{:goto_newgame}
 	return
 {:gosub_raumaktion_variabeln}
 
-	'schlater aktor variabeln
-		{var:schalter_raum}(0)=0 : {var:schalter_posx}(0)=11 : {var:schalter_posy}(0)=1 : {var:schalter_flag}(0)=0      : {var:aktor_raum}(0)=0 : {var:aktor_posx}(0)=14 : {var:aktor_posy}(0)=6  'c=14 schalter
-		{var:schalter_raum}(1)=0 : {var:schalter_posx}(1)=16 : {var:schalter_posy}(1)=6 : {var:schalter_flag}(1)=0      : {var:aktor_raum}(1)=0 : {var:aktor_posx}(1)=7  : {var:aktor_posy}(1)=4  'c=02 druckplatte versteckt
-		{var:schalter_raum}(2)=0 : {var:schalter_posx}(2)=18 : {var:schalter_posy}(2)=6 : {var:schalter_flag}(2)=0      : {var:aktor_raum}(2)=0 : {var:aktor_posx}(2)=9  : {var:aktor_posy}(2)=5  'c=02 druckplatte versteckt
-		{var:schalter_raum}(3)=0 : {var:schalter_posx}(3)=1  : {var:schalter_posy}(3)=6 : {var:schalter_flag}(3)=0      : {var:aktor_raum}(3)=0 : {var:aktor_posx}(3)=3  : {var:aktor_posy}(3)=4  'c=03 druckplatte
-		{var:schalter_raum}(4)=0 : {var:schalter_posx}(4)=5  : {var:schalter_posy}(4)=6 : {var:schalter_flag}(4)=0      : {var:aktor_raum}(4)=0 : {var:aktor_posx}(4)=3  : {var:aktor_posy}(4)=4  'c=03 druckplatte
+	'schalter variabeln
+		{var:schalter_raum}(0)=0 : {var:schalter_posx}(0)=11 : {var:schalter_posy}(0)=1 : {var:schalter_flag}(0)=0  'c=14 schalter
+		{var:schalter_raum}(1)=0 : {var:schalter_posx}(1)=16 : {var:schalter_posy}(1)=6 : {var:schalter_flag}(1)=0  'c=02 druckplatte versteckt
+		{var:schalter_raum}(2)=0 : {var:schalter_posx}(2)=18 : {var:schalter_posy}(2)=6 : {var:schalter_flag}(2)=0  'c=02 druckplatte versteckt
+		{var:schalter_raum}(3)=0 : {var:schalter_posx}(3)=1  : {var:schalter_posy}(3)=6 : {var:schalter_flag}(3)=0  'c=03 druckplatte
+		{var:schalter_raum}(4)=0 : {var:schalter_posx}(4)=5  : {var:schalter_posy}(4)=6 : {var:schalter_flag}(4)=0  'c=03 druckplatte
+
+	'aktor variablen
+		{var:aktor_raum}(0)=0 : {var:aktor_posx}(0)=14 : {var:aktor_posy}(0)=6  'c=16 mauer  -> c=01 (kann 1 oder 16 sein)
+		{var:aktor_raum}(1)=0 : {var:aktor_posx}(1)=7  : {var:aktor_posy}(1)=4  'c=13 gitter -> c=00 (kann 0 oder 13 sein)
+		{var:aktor_raum}(2)=0 : {var:aktor_posx}(2)=9  : {var:aktor_posy}(2)=5  'c=13 gitter -> c=01 (kann 1 oder 13 sein)
+		{var:aktor_raum}(3)=0 : {var:aktor_posx}(3)=3  : {var:aktor_posy}(3)=4  'c=13 gitter -> c=01 (kann 1 oder 13 sein)
+		{var:aktor_raum}(4)=0 : {var:aktor_posx}(4)=3  : {var:aktor_posy}(4)=4  'duplikat (3)
 
 	'npc vaiabeln
-		{var:npc_numm}(0)=50 : {var:npc_raum}(0)=0  : {var:npc_posx}(0)=12 : {var:npc_posy}(0)=4 : {var:npc_flag}(0)=0  'c=50 lena
-		{var:npc_numm}(1)=52 : {var:npc_raum}(1)=0  : {var:npc_posx}(1)=7  : {var:npc_posy}(1)=2 : {var:npc_flag}(1)=0  'c=52 dolm
-		{var:npc_numm}(2)=51 : {var:npc_raum}(2)=0  : {var:npc_posx}(2)=3  : {var:npc_posy}(2)=2 : {var:npc_flag}(2)=0  'c=51 mira
-		{var:npc_numm}(3)=67 : {var:npc_raum}(3)=16 : {var:npc_posx}(3)=0  : {var:npc_posy}(3)=0 : {var:npc_flag}(3)=0  'c=67 nacho
-		{var:npc_numm}(4)=72 : {var:npc_raum}(4)=16 : {var:npc_posx}(4)=0  : {var:npc_posy}(4)=0 : {var:npc_flag}(4)=0  'c=72 troll
-		{var:npc_numm}(5)=76 : {var:npc_raum}(5)=16 : {var:npc_posx}(5)=0  : {var:npc_posy}(5)=0 : {var:npc_flag}(5)=0  'c=76 dracul
-		{var:npc_numm}(6)=77 : {var:npc_raum}(6)=16 : {var:npc_posx}(6)=0  : {var:npc_posy}(6)=0 : {var:npc_flag}(6)=0  'c=77 glados
+		{var:npc_raum}(0)=0  : {var:npc_posx}(0)=12 : {var:npc_posy}(0)=4 : {var:npc_flag}(0)=0  'c=50 lena
+		{var:npc_raum}(1)=0  : {var:npc_posx}(1)=7  : {var:npc_posy}(1)=2 : {var:npc_flag}(1)=0  'c=52 dolm
+		{var:npc_raum}(2)=0  : {var:npc_posx}(2)=3  : {var:npc_posy}(2)=2 : {var:npc_flag}(2)=0  'c=51 mira
+		{var:npc_raum}(3)=16 : {var:npc_posx}(3)=0  : {var:npc_posy}(3)=0 : {var:npc_flag}(3)=0  'c=67 nacho
+		{var:npc_raum}(4)=16 : {var:npc_posx}(4)=0  : {var:npc_posy}(4)=0 : {var:npc_flag}(4)=0  'c=72 troll
+		{var:npc_raum}(5)=16 : {var:npc_posx}(5)=0  : {var:npc_posy}(5)=0 : {var:npc_flag}(5)=0  'c=76 dracul
+		{var:npc_raum}(6)=16 : {var:npc_posx}(6)=0  : {var:npc_posy}(6)=0 : {var:npc_flag}(6)=0  'c=77 glados
 
-		{var:npc_numm}(7)=49 : {var:npc_raum}(7)=16 : {var:npc_posx}(7)=0  : {var:npc_posy}(7)=0 : {var:npc_flag}(7)=0  'c=49 npc
-		{var:npc_numm}(8)=53 : {var:npc_raum}(8)=16 : {var:npc_posx}(8)=0  : {var:npc_posy}(8)=0 : {var:npc_flag}(8)=0  'c=53 npc
+		{var:npc_raum}(7)=16 : {var:npc_posx}(7)=0  : {var:npc_posy}(7)=0 : {var:npc_flag}(7)=0  'c=49 npc
+		{var:npc_raum}(8)=16 : {var:npc_posx}(8)=0  : {var:npc_posy}(8)=0 : {var:npc_flag}(8)=0  'c=53 npc
 
 	'event
 		'event(x) = find item bei gefunden event_room(x) = -1 else raumnummer
-		{var:event_room}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0  :{var:event_item}(1)=0   'leer
-		{var:event_room}(1)=0   :{var:event_posx}(1)=1   :{var:event_posy}(1)=2  :{var:event_item}(1)=3   'kraeuter
-		{var:event_room}(2)=0   :{var:event_posx}(2)=18  :{var:event_posy}(2)=2  :{var:event_item}(2)=15  'stock
-		{var:event_room}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
-		{var:event_room}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
-		{var:event_room}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
-		{var:event_room}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
-		{var:event_room}(7)=16  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
-		{var:event_room}(8)=16  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
-		{var:event_room}(9)=16  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
-		{var:event_room}(10)=16 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
-		{var:event_room}(11)=16 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
-		{var:event_room}(12)=16 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
+		{var:event_raum}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0  :{var:event_item}(1)=0   'leer
+		{var:event_raum}(1)=0   :{var:event_posx}(1)=1   :{var:event_posy}(1)=2  :{var:event_item}(1)=3   'kraeuter
+		{var:event_raum}(2)=0   :{var:event_posx}(2)=18  :{var:event_posy}(2)=2  :{var:event_item}(2)=15  'stock
+		{var:event_raum}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
+		{var:event_raum}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
+		{var:event_raum}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
+		{var:event_raum}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
+		{var:event_raum}(7)=16  :{var:event_posx}(7)=0   :{var:event_posy}(7)=0  :{var:event_item}(7)=17  'schild
+		{var:event_raum}(8)=16  :{var:event_posx}(8)=0   :{var:event_posy}(8)=0  :{var:event_item}(8)=13  'stab
+		{var:event_raum}(9)=16  :{var:event_posx}(9)=0   :{var:event_posy}(9)=0  :{var:event_item}(9)=15  'stock
+		{var:event_raum}(10)=16 :{var:event_posx}(10)=0  :{var:event_posy}(10)=0 :{var:event_item}(10)=11 'flegel
+		{var:event_raum}(11)=16 :{var:event_posx}(11)=0  :{var:event_posy}(11)=0 :{var:event_item}(11)=7  'bombe
+		{var:event_raum}(12)=16 :{var:event_posx}(12)=0  :{var:event_posy}(12)=0 :{var:event_item}(12)=9  'heilen
 
 	return
 
@@ -510,13 +517,13 @@ goto{:goto_newgame}
 	ei=0
 	{:nimm}
 	'item im raum und pos
-		if {var:event_room}(ei)<>cr or {var:event_posx}(ei)<>ox or {var:event_posy}(ei)<>oy then {:nimm_next}
+		if {var:event_raum}(ei)<>cr or {var:event_posx}(ei)<>ox or {var:event_posy}(ei)<>oy then {:nimm_next}
 	'add item inventar
 		{var:nimm_item}={var:event_item}(ei) : gosub{:gosub_add_item_inventar}
 	'inventar max
 		if is=99 then print"{home}{white}{down}{right}du kannst nicht mehr tragen!" : gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
 	'loesche event item
-		{var:event_room}(ei)=-1
+		{var:event_raum}(ei)=-1
 	'inventar print
 		print"{home}{white}{down}{right}gefunden: ";{var:item_name}({var:inventar_slot}(is));: gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
 	{:nimm_next}
