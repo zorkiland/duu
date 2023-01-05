@@ -2,6 +2,14 @@
 'c64list v4.0
 '*****************************
 
+'edit 05.01.2023
+'gosub heilen leerzeichen : leerzeichen
+'aa in aa%
+'if a$="e" flucht auskommentiert
+'ct$ gelöscht
+'erst weiter wenn keine bewegung oder fire+rechts
+
+
 {renumber}
 
 'supervar_tile
@@ -156,7 +164,6 @@
 		
 		dd$="{home}{down:20}{white}"
 		cd$="{down:25}"
-		ct$="{home}{down}{white}{right}{$20:38}"
 'dim
 	'monster
 		dim {var:monster_name}(13),{var:monster_tile}(13),{var:monster_hp}(13),{var:monster_mp}(13),{var:monster_atk}(13),{var:monster_def}(13),{var:monster_str}(13),{var:monster_res}(13),{var:monster_exp}(13)
@@ -249,9 +256,9 @@ goto{:goto_newgame}
 
 {:mainloop_if_newpos}
 	'wenn event(x) = find item passt
-		aa=0
+		aa%=0
 		for i=0 to 12
-		if {var:event_raum}(i)=cr and {var:event_posx}(i)=zx and {var:event_posy}(i)=zy then aa=1
+		if {var:event_raum}(i)=cr and {var:event_posx}(i)=zx and {var:event_posy}(i)=zy then aa%=1
 		next i
 	'wenn am rand der map
 		if zx=-1 or zx=20 or zy=-1 or zy=8 then{:mainloop_set_newpos}
@@ -307,11 +314,11 @@ goto{:goto_newgame}
 		if c=3  and cr={var:schalter_raum}(4) and  x={var:schalter_posx}(4) then {var:schalter_flag}(4)=1                       :gosub{:gosub_raumaktion_poke_mapspeicher} :tx={var:aktor_posx}(4):ty={var:aktor_posy}(4): gosub{:gosub_raumaktion_print_one_tile} : goto{:mainloop_print_playertile}
 {:raumaktion_text}
 	'aktion truhe
-		if c=12  and aa=0 then goto {:mainloop_oldpos}
-		if c=12  and aa=1 then print"{home}{white}{down}{right}in der truhe ist was!"         :gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=12  and aa%=0 then goto {:mainloop_oldpos}
+		if c=12  and aa%=1 then print"{home}{white}{down}{right}in der truhe ist was!"         :gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'aktion baum
-		if c=25 and aa=0 then goto {:mainloop_oldpos}
-		if c=25 and aa=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=25 and aa%=0 then goto {:mainloop_oldpos}
+		if c=25 and aa%=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 {:raumaktion_npc}
 	'npc                                                123456789a123456789b123456789c12345678
 		if c=49 then print"{white}{home}{down:1}{right:2}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
@@ -327,7 +334,7 @@ goto{:goto_newgame}
 		if c=77 then print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=40 wasser
-		if c=40 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=40 then print"{home}{white}{down}{right}du bist geheilt!" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
 
 {:gosub_raumaktion_print_one_tile}
 	'set sp
@@ -598,10 +605,11 @@ goto{:goto_newgame}
 	if a$="s"then poke {var:bildschirmspeicher}+816+my*40,32:fz=0:my=my+1:goto {:battelmenu_joyauswertung_min_max}
 	if a$="w"then poke {var:bildschirmspeicher}+816+my*40,32:fz=0:my=my-1:goto {:battelmenu_joyauswertung_min_max}
 	if a$=chr$(13)then fz=0:goto {:battelmenu_on_goto}
-	'flucht nicht moeglich (raum 3,9,16)
-	'if a$="e" and cr=3 or cr=9 or cr=16 then print"{home}{down}{right}{white}flucht nicht moeglich{$20:17}":gosub{:gosub_delay_500}:print ct$:gosub{:gosub_delay_99}:goto{:battelmenu_joyauswertung}
-	'if a$="e" and fz=3  then fz=0   :poke {var:bildschirmspeicher}+816+my*40,32:goto {:mainloop}
-	'if a$="e" and fz<=3 then fz=fz+1:print"{home}{down}{right}{white}flucht{$20:32}":gosub{:gosub_delay_500}:print ct$:gosub{:gosub_delay_99}:goto{:battelmenu_print_cusor}
+	'flucht nicht moeglich (raum 14,15,16)
+	if a$="e" and cr=14 or cr=15 or cr=16 then print"{home}{down}{right}{white}flucht nicht moeglich{$20:17}":gosub{:gosub_delay_500}:gosub{:gosub_clear_top}:gosub{:gosub_delay_99}:goto{:battelmenu_joyauswertung}
+	'flucht chr$(32)=space
+	if a$="e" and fz=3  then fz=0   :poke {var:bildschirmspeicher}+816+my*40,32:goto {:mainloop}
+	if a$="e" and fz<=3 then fz=fz+1:print"{home}{down}{right}{white}flucht{$20:32}":gosub{:gosub_delay_500}:gosub{:gosub_clear_top}:gosub{:gosub_delay_99}:goto{:battelmenu_print_cusor}
 	goto {:battelmenu_joyauswertung}
 {:battelmenu_joyauswertung_min_max}
 	if my>=m then my=0
@@ -1141,13 +1149,14 @@ goto{:goto_newgame}
 {:gosub_joy}
 	a$=""
 	{:joy_wait}
-		'erst weiter wenn keine bewegung
+		'erst weiter wenn keine bewegung oder fire+rechts
 		j=peek(56320)
+		if j=103 then {:joy}
 		if j=127 then {:joy}
 		goto {:joy_wait}
 	{:joy}
 		j=peek(56320)
-		'warten fire und keine bewegung
+		'warten fire und keine bewegung return
 			if j=127 and a$=chr$(13) then return
 		'fire und links,rechts,oben oder unten
 			if j=107 then a$="e" : gosub {:gosub_delay_joy} : return 'links
@@ -1171,7 +1180,7 @@ goto{:goto_newgame}
 		goto {:joymap_wait}
 	{:joymap}
 	j=peek(56320)
-	'warten fire und keine bewegung
+	'warten fire und keine bewegung return
 		if j=127 and a$=chr$(13) then return
 	'links,rechts,oben oder unten
 		if j=123 then a$="a":gosub {:gosub_delay_joymap}:return
