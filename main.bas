@@ -240,10 +240,10 @@ goto{:goto_newgame}
 	zx=x:zy=y
 {:mainloop_joyauswertung}
 	gosub{:gosub_joymap}
-	if a$=chr$(145) or a$="w"then print ct$;:zy=y-1:goto{:mainloop_if_newpos}
-	if a$=chr$(157) or a$="a"then print ct$;:zx=x-1:goto{:mainloop_if_newpos}
-	if a$=chr$(29)  or a$="d"then print ct$;:zx=x+1:goto{:mainloop_if_newpos}
-	if a$=chr$(17)  or a$="s"then print ct$;:zy=y+1:goto{:mainloop_if_newpos}
+	if a$=chr$(145) or a$="w"then zy=y-1:goto{:mainloop_if_newpos}
+	if a$=chr$(157) or a$="a"then zx=x-1:goto{:mainloop_if_newpos}
+	if a$=chr$(29)  or a$="d"then zx=x+1:goto{:mainloop_if_newpos}
+	if a$=chr$(17)  or a$="s"then zy=y+1:goto{:mainloop_if_newpos}
 	if a$=chr$(13) then {:mainmenu}
 	goto {:mainloop_joyauswertung}
 
@@ -327,7 +327,7 @@ goto{:goto_newgame}
 		if c=77 then print"{white}{home}{down:1}{right:2}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=40 wasser
-		if c=40 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_delay_text}:gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=40 then print"{home}{white}{down}{right}du bist geheilt!":gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}:gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 
 {:gosub_raumaktion_print_one_tile}
 	'set sp
