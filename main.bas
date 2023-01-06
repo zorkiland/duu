@@ -11,6 +11,7 @@
 
 'edit 06.01.2023
 'npc text right:2 to right
+'gosub_joy fire+left/right/up/down eingefügt
 
 
 {renumber}
@@ -609,10 +610,10 @@ goto{:goto_newgame}
 	if a$="w"then poke {var:bildschirmspeicher}+816+my*40,32:fz=0:my=my-1:goto {:battelmenu_joyauswertung_min_max}
 	if a$=chr$(13)then fz=0:goto {:battelmenu_on_goto}
 	'flucht nicht moeglich (raum 14,15,16)
-	if a$="e" and cr=14 or cr=15 or cr=16 then print"{home}{down}{right}{white}flucht nicht moeglich{$20:17}":gosub{:gosub_delay_500}:gosub{:gosub_clear_top}:gosub{:gosub_delay_99}:goto{:battelmenu_joyauswertung}
-	'flucht chr$(32)=space
-	if a$="e" and fz=3  then fz=0   :poke {var:bildschirmspeicher}+816+my*40,32:goto {:mainloop}
-	if a$="e" and fz<=3 then fz=fz+1:print"{home}{down}{right}{white}flucht{$20:32}":gosub{:gosub_delay_500}:gosub{:gosub_clear_top}:gosub{:gosub_delay_99}:goto{:battelmenu_print_cusor}
+	if a$="fr" and cr=14 or cr=15 or cr=16 then print"{home}{down}{right}{white}flucht nicht moeglich{$20:17}":gosub{:gosub_delay_500}:gosub{:gosub_clear_top}:gosub{:gosub_delay_99}:goto{:battelmenu_joyauswertung}
+	'flucht
+	if a$="fr" and fz=3  then fz=0   :goto {:mainloop}
+	if a$="fr" and fz<=3 then fz=fz+1:print"{home}{down}{right}{white}flucht{$20:32}":gosub{:gosub_delay_500}:gosub{:gosub_clear_top}:gosub{:gosub_delay_99}:goto{:battelmenu_print_cusor}
 	goto {:battelmenu_joyauswertung}
 {:battelmenu_joyauswertung_min_max}
 	if my>=m then my=0
@@ -1152,20 +1153,21 @@ goto{:goto_newgame}
 {:gosub_joy}
 	a$=""
 	{:joy_wait}
-		'erst weiter wenn keine bewegung oder fire+rechts
 		j=peek(56320)
-		if j=103 then {:joy}
+		'erst weiter wenn keine bewegung
 		if j=127 then {:joy}
+		'erst weiter wenn fire+left/right/up/down
+		if j=107 or j=103 or j=110 or j=109 then {:joy}
 		goto {:joy_wait}
 	{:joy}
 		j=peek(56320)
 		'warten fire und keine bewegung return
 			if j=127 and a$=chr$(13) then return
 		'fire und links,rechts,oben oder unten
-			if j=107 then a$="e" : gosub {:gosub_delay_joy} : return 'links
-			if j=103 then a$="e" : gosub {:gosub_delay_joy} : return 'rechts
-			if j=110 then a$="e" : gosub {:gosub_delay_joy} : return 'oben
-			if j=109 then a$="e" : gosub {:gosub_delay_joy} : return 'unten
+			if j=107 then a$="fl" : gosub {:gosub_delay_joy} : return 'fire+left
+			if j=103 then a$="fr" : gosub {:gosub_delay_joy} : return 'fire+right
+			if j=110 then a$="fu" : gosub {:gosub_delay_joy} : return 'fire+up
+			if j=109 then a$="fd" : gosub {:gosub_delay_joy} : return 'fire+down
 		'links,rechts,oben oder unten
 			if j=123 then a$="a":gosub {:gosub_delay_joy}:return
 			if j=119 then a$="d":gosub {:gosub_delay_joy}:return
