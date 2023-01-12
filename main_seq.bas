@@ -236,7 +236,8 @@ goto{:goto_newgame}
 	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
 	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
 	sys 820                  'start asm.raster
-	gosub{:gosub_print_rahmen_map}
+	gosub{:gosub_print_rahmen_oben}
+	gosub{:gosub_print_rahmen_unten_map}
 	gosub{:gosub_print_player_hp}
 {:mainloop_cleartop}
 	print"{home}{down}{right}{white}{$20:38}";
@@ -328,7 +329,7 @@ goto{:goto_newgame}
 		if c=49 then print"{white}{home}{down}{right}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 		if c=53 then print"{white}{home}{down}{right}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'player
-		if c=50 then print"{white}{home}{down}{right}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(0)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1 :tx=12:ty=4:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:gosub{:gosub_print_buttom_txt}:goto{:mainloop_oldpos}
+		if c=50 then print"{white}{home}{down}{right}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(0)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1 :tx=12:ty=4:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:gosub{:gosub_input_seq}:goto{:mainloop_oldpos}
 		if c=52 then print"{white}{home}{down}{right}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(1)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(2)=1 :tx=7 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
 		if c=51 then print"{white}{home}{down}{right}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(2)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(3)=1 :tx=3 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
 	'monster
@@ -1131,6 +1132,72 @@ goto{:goto_newgame}
 	poke 50151,72:poke 56295,9
 	{var:seq_select}="ende" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
+
+'***work***
+{:gosub_print_rahmen_oben}
+	'rahmen oben
+		print"{brown}{home}{$c1}{$c2:38}{$c3}";
+		print"{$c4}                                      {$c5}";
+		print"{$c6}{$c7:38}{$c8}"
+	return
+
+{:gosub_print_rahmen_unten_battel}
+	'hp/mp wird nicht geloescht
+		print dd$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
+		for i=0 to 3:print"{$c4}{$20:10}{$c5}{$c4}{$20:12}{$c5}{$c4}{right:12}{$c5}";:next
+		print"{$c6}{$c7:10}{$c8}{$c6}{$c7:12}{$c8}{$c6}{$c7:12}";
+		poke 50151,72:poke 56295,9
+	return
+{:gosub_print_rahmen_unten_map}
+	'hp/mp wird nicht geloescht
+		print dd$;"{brown}{up}{$c1}{$c2:12}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
+		for i=0 to 3:print"{$c4}{$20:12}{$20:12}{$c5}{$c4}{right:12}{$c5}";:next
+		print"{$c6}{$c7:12}{$c7:12}{$c8}{$c6}{$c7:12}";
+		poke 50151,72:poke 56295,9
+	return
+{:gosub_input_seq}
+	poke 56322,224 : 'tastatur 224=aus 225=an
+	open 1,8,4,"txt.welcome,s,r"
+	i=0:sb$(0)="":sb$(1)="":sb$(2)=""
+	{:input_seq}
+		input#1,sb$(i)
+		if st=0 then i=i+1: goto{:input_seq}
+	close 1
+	poke 56322,225 : 'tastatur 224=aus 225=an
+	goto {:gosub_print_seq_textbox}
+
+{:gosub_info_txt}
+	ib$(0)=ib$(1)
+	ib$(1)=ib$(2)
+	ib$(2)=va$
+	print "{home}{cyan}"
+	goto {:print_info_textbox}
+
+{:gosub_print_info_textbox}
+	'clear
+		print "{home}{right}{down:20}"+"{$20:24}"
+		print "{home}{right}{down:21}"+"{$20:24}"
+		print "{home}{right}{down:22}"+"{$20:24}"
+	'print
+		print "{home}{right}{down:20}"+ib$(0)
+		print "{home}{right}{down:21}"+ib$(1)
+		print "{home}{right}{down:22}"+ib$(2)
+	return
+
+{:gosub_print_seq_textbox}
+	'clear
+		print "{home}{right}{down:20}"+"{$20:24}"
+		print "{home}{right}{down:21}"+"{$20:24}"
+		print "{home}{right}{down:22}"+"{$20:24}"
+	'print
+		print "{home}{right}{down:20}"+sb$(0)
+		print "{home}{right}{down:21}"+sb$(1)
+		print "{home}{right}{down:22}"+sb$(2)
+	return
+
+
+
+
 {:gosub_print_txt_screen}
 	poke 1020,{var:farbe_bl}
 	poke 56322,224 : 'tastatur 224=aus 225=an
@@ -1145,23 +1212,7 @@ goto{:goto_newgame}
 		print {var:seq_buffer};
 		if {var:seq_buffer}<>" " then poke 162,0: wait 162,4
 	goto {:txt_screen_get}
-{:gosub_print_buttom_txt}
-		printdd$;"{brown}{up}{$c1}{$c2:12}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
-		fori=0to3:print"{$c4}{$20:12}{$20:12}{$c5}{$c4}{right:12}{$c5}";:next
-		print"{$c6}{$c7:12}{$c7:12}{$c8}{$c6}{$c7:12}{white}";
-		poke 56322,224 : 'tastatur 224=aus 225=an
-	open 1,8,4,"txt.welcome,s,r"
-	aa=0
-	{:buttom_txt_input}
-		input#1,s$
-		aa=aa+1
-		if aa=1 then print "{home}{right}{down:20}"+s$
-		if aa=2 then print "{home}{right}{down:21}"+s$
-		if aa=3 then print "{home}{right}{down:22}"+s$
-		if st=0 then {:buttom_txt_input}
-	close 1
-	poke 56322,225 : 'tastatur 224=aus 225=an
-	return
+
 
 
 {:gosub_validate_hp_mp}
