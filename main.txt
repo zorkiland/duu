@@ -60,7 +60,7 @@
 59 GOSUB647
 60 GOSUB656
 61 GOSUB448
-62 GOSUB689
+62 GOSUB692
 63 PRINT"{home}{down}{right}{white}                                      ";
 64 POKE1020,Q7%
 65 GOSUB546
@@ -68,7 +68,7 @@
 67 PRINT"{home}"LEFT$(CD$,3+Y*2)SPC(X*2)PD$(0);
 68 OX=ZX:OY=ZY
 69 ZX=X:ZY=Y
-70 GOSUB730
+70 GOSUB732
 71 IFA$=CHR$(145)ORA$="W"THENZY=Y-1:GOTO77
 72 IFA$=CHR$(157)ORA$="A"THENZX=X-1:GOTO77
 73 IFA$=CHR$(29)ORA$="D"THENZX=X+1:GOTO77
@@ -113,19 +113,19 @@
 112 IFC=3ANDCR=S0%(3)ANDX=S1%(3)THENS3%(3)=1:GOSUB131:TX=A1%(3):TY=A2%(3):GOSUB128:GOTO67
 113 IFC=3ANDCR=S0%(4)ANDX=S1%(4)THENS3%(4)=1:GOSUB131:TX=A1%(4):TY=A2%(4):GOSUB128:GOTO67
 114 IFC=12ANDAA%=0THENGOTO68
-115 IFC=12ANDAA%=1THENVA$="IN DER TRUHE IST WAS!":GOSUB685:GOTO68
+115 IFC=12ANDAA%=1THENVA$="{cyan}% {white}IN DER TRUHE IST WAS":GOSUB686:GOTO68
 116 IFC=25ANDAA%=0THENGOTO68
-117 IFC=25ANDAA%=1THENVA$="DER BAUM SIEHT INTRESSANT AUS!":GOSUB685:GOTO68
-118 IFC=49THENPRINT"{white}{home}{down}{right}EIN HEILZAUBER IST UNTER DEM BAUM":GOSUB751:GOSUB521:GOTO68
-119 IFC=53THENPRINT"{white}{home}{down}{right}EIN FEUERZAUBER IST IN DEN KATAKOMBEN":GOSUB751:GOSUB521:GOTO68
-120 IFC=50THENN3%(0)=1:GOSUB131:P3%(1)=1:TX=12:TY=4:GOSUB128:GOSUB448:AA$="TXT.WELCOME.LENA":GOSUB661:GOTO68
-121 IFC=52THENN3%(1)=1:GOSUB131:P3%(2)=1:TX=7:TY=2:GOSUB128:GOSUB448:AA$="TXT.WELCOME.DOLM":GOSUB661:GOTO68
-122 IFC=51THENN3%(2)=1:GOSUB131:P3%(3)=1:TX=3:TY=2:GOSUB128:GOSUB448:AA$="TXT.WELCOME.MIRA":GOSUB661:GOTO68
-123 IFC=67THENPRINT"{white}{home}{down}{right}DU KANNST HIER NICHT DURCH!":GOSUB751:FF=4:N3%(3)=1:GOSUB131:GOTO256
-124 IFC=72THENPRINT"{white}{home}{down}{right}ACH WIE SUESS!":GOSUB751:FF=9:N3%(4)=1:GOSUB131:GOTO256
-125 IFC=76THENPRINT"{white}{home}{down}{right}DU WILLST MICH BESIEGEN!":GOSUB751:FF=13:N3%(5)=1:GOSUB131:GOTO256
-126 IFC=77THENPRINT"{white}{home}{down}{right}DU HAST MEINE ERWARTUNG UEBERTROFFEN!":GOSUB751:FF=14:N3%(6)=1:GOSUB131:GOTO256
-127 IFC=40THENVA$="DU BIST GEHEILT!":GOSUB436:GOSUB448:GOSUB685:GOTO68
+117 IFC=25ANDAA%=1THENVA$="{cyan}% {white}DER BAUM SIEHT INTRESSANT AUS":GOSUB686:GOTO68
+118 IFC=49THENPRINT"{white}{home}{down}{right}EIN HEILZAUBER IST UNTER DEM BAUM":GOSUB753:GOSUB521:GOTO68
+119 IFC=53THENPRINT"{white}{home}{down}{right}EIN FEUERZAUBER IST IN DEN KATAKOMBEN":GOSUB753:GOSUB521:GOTO68
+120 IFC=50THENAA$="TXT.WELCOME.LENA":GOSUB661:N3%(0)=1:GOSUB131:P3%(1)=1:TX=12:TY=4:GOSUB128:GOSUB448:GOTO68
+121 IFC=52THENAA$="TXT.WELCOME.DOLM":GOSUB661:N3%(1)=1:GOSUB131:P3%(2)=1:TX=7:TY=2:GOSUB128:GOSUB448:GOTO68
+122 IFC=51THENAA$="TXT.WELCOME.MIRA":GOSUB661:N3%(2)=1:GOSUB131:P3%(3)=1:TX=3:TY=2:GOSUB128:GOSUB448:GOTO68
+123 IFC=67THENPRINT"{white}{home}{down}{right}DU KANNST HIER NICHT DURCH!":GOSUB753:FF=4:N3%(3)=1:GOSUB131:GOTO256
+124 IFC=72THENPRINT"{white}{home}{down}{right}ACH WIE SUESS!":GOSUB753:FF=9:N3%(4)=1:GOSUB131:GOTO256
+125 IFC=76THENPRINT"{white}{home}{down}{right}DU WILLST MICH BESIEGEN!":GOSUB753:FF=13:N3%(5)=1:GOSUB131:GOTO256
+126 IFC=77THENPRINT"{white}{home}{down}{right}DU HAST MEINE ERWARTUNG UEBERTROFFEN!":GOSUB753:FF=14:N3%(6)=1:GOSUB131:GOTO256
+127 IFC=40THENVA$="{cyan}% {white}DU BIST GEHEILT":GOSUB436:GOSUB448:GOSUB686:GOTO68
 128 SP=30960+(CR*RS)+(TX+TY*20)
 129 PRINT"{home}{down:3}"LEFT$(CD$,TY*2)SPC(TX*2)T$(PEEK(SP));
 130 RETURN
@@ -142,8 +142,8 @@
 141 T=13:IFS3%(3)+S3%(4)=2THENT=0
 142 POKE30960+A0%(3)*RS+A1%(3)+A2%(3)*20,T
 143 RETURN
-144 IFCR=S0%(0)ANDZX=S1%(0)ANDS3%(0)=0THENVA$="DER SCHALTER IST AUS!":GOSUB685
-145 IFCR=S0%(0)ANDZX=S1%(0)ANDS3%(0)=1THENVA$="SCHALTER IST EIN!":GOSUB685
+144 IFCR=S0%(0)ANDZX=S1%(0)ANDS3%(0)=0THENVA$="{cyan}% {white}DER SCHALTER IST AUS":GOSUB686
+145 IFCR=S0%(0)ANDZX=S1%(0)ANDS3%(0)=1THENVA$="{cyan}% {white}SCHALTER IST EIN":GOSUB686
 146 RETURN
 147 S0%(0)=0:S1%(0)=11:S2%(0)=1:S3%(0)=0
 148 S0%(1)=0:S1%(1)=16:S2%(1)=6:S3%(1)=0
@@ -181,7 +181,7 @@
 180 PRINT"{home}{down}{white}{right}  UNTERSUCHE  EQUIPMENTS  INVENTAR"
 181 M=0
 182 POKEQS+42+M*12,35
-183 GOSUB713
+183 GOSUB715
 184 POKEQS+42+M*12,32
 185 IFA$="A"THENM=M-1-3*(M=0):GOTO182
 186 IFA$="D"THENM=M+1+3*(M=2):GOTO182
@@ -208,7 +208,7 @@
 207 P=0
 208 CP=QS+2+(4-8*(P>1))*40:IFP=1ORP=3THENCP=CP+20
 209 POKECP,35
-210 GOSUB713
+210 GOSUB715
 211 POKECP,32
 212 IFP=0ANDA$="D"ANDP3%(1)=1THENP=1:GOTO208
 213 IFP=0ANDA$="S"ANDP3%(2)=1THENP=2:GOTO208
@@ -227,7 +227,7 @@
 226 SL=0:CP=CP+81
 227 PRINT"{home}{down}{right}{white}EQUIPMENT: WAFFE ODER RUESTUNG       ";
 228 POKECP+SL*40,35
-229 GOSUB713
+229 GOSUB715
 230 POKECP+SL*40,32:IFA$="W"ORA$="S"THENSL=1-SL:GOTO228
 231 IFA$=CHR$(13)THEN233
 232 GOTO228
@@ -243,17 +243,17 @@
 242 IFSL=0THENQ=PW%(P):PW%(P)=IN%(M):IN%(M)=Q:GOTO63
 243 IFSL=1THENQ=PR%(P):PR%(P)=IN%(M):IN%(M)=Q:GOTO63
 244 GOSUB521
-245 GOSUB756
+245 GOSUB758
 246 EI=0
 247 IFER%(EI)<>CROREX%(EI)<>OXOREY%(EI)<>OYTHEN252
 248 NI%=ET%(EI):GOSUB554
-249 IFIS=99THENVA$="DU KANNST NICHT MEHR TRAGEN!":GOSUB685:GOTO68
+249 IFIS=99THENVA$="{cyan}% {white}DU KANNST NICHT MEHR TRAGEN":GOSUB686:GOTO68
 250 ER%(EI)=-1
-251 VA$="GEFUNDEN: "+I$(IN%(IS)):GOSUB685:GOTO68
+251 VA$="{green}& {white}GEFUNDEN: "+I$(IN%(IS)):GOSUB686:GOTO68
 252 EI=EI+1
 253 IFEI=12THEN255
 254 GOTO247
-255 VA$="NICHTS BESONDERES!":GOSUB685:GOTO68
+255 VA$="{cyan}% {white}NICHTS BESONDERES":GOSUB686:GOTO68
 256 FORI=4TO11:FT%(I)=-1:NEXT
 257 PP=4:CC=4:WX=0
 258 FORI=0TO3:FT%(I)=-2:FH%(I)=PH%(I):FM%(I)=PM%(I):FS%(I)=PS%(I)
@@ -288,13 +288,13 @@
 287 PRINT"{left:3}{up}"PD$(C);
 288 MY=0:FZ=0
 289 POKEQS+816+MY*40,35
-290 GOSUB713
+290 GOSUB715
 291 IFA$="S"THENPOKEQS+816+MY*40,32:FZ=0:MY=MY+1:GOTO298
 292 IFA$="W"THENPOKEQS+816+MY*40,32:FZ=0:MY=MY-1:GOTO298
 293 IFA$=CHR$(13)THENFZ=0:GOTO301
-294 IFA$="FR"ANDCR=14ORCR=15ORCR=16THENPRINT"{home}{down}{right}{white}FLUCHT NICHT MOEGLICH                 ":GOSUB756:GOSUB521:GOSUB758:GOTO290
+294 IFA$="FR"ANDCR=14ORCR=15ORCR=16THENPRINT"{home}{down}{right}{white}FLUCHT NICHT MOEGLICH                 ":GOSUB758:GOSUB521:GOSUB760:GOTO290
 295 IFA$="FR"ANDFZ=3THENFZ=0:GOTO56
-296 IFA$="FR"ANDFZ<=3THENFZ=FZ+1:PRINT"{home}{down}{right}{white}FLUCHT                                ":GOSUB756:GOSUB521:GOSUB758:GOTO289
+296 IFA$="FR"ANDFZ<=3THENFZ=FZ+1:PRINT"{home}{down}{right}{white}FLUCHT                                ":GOSUB758:GOSUB521:GOSUB760:GOTO289
 297 GOTO290
 298 IFMY>=MTHENMY=0
 299 IFMY<0THENMY=M-1
@@ -307,7 +307,7 @@
 306 PRINTDD$;SPC(16)"{white}         {down}{left:9}         {down}{left:9}         {down}{left:9}         ";
 307 IFIN%(M)=0ORIT%(IN%(M))<>3THEN282
 308 M=IN%(M)
-309 IFIE%(M)>FM%(C)THENPRINT"{home}{down}{right}NICHT GENUG MANA                     ";:GOSUB751:GOTO282
+309 IFIE%(M)>FM%(C)THENPRINT"{home}{down}{right}NICHT GENUG MANA                     ";:GOSUB753:GOTO282
 310 GOSUB581
 311 GOTO607
 312 AP=IE%(M)+2-INT(RND(0)*5):FM%(C)=FM%(C)-IE%(M):PM%(C)=FM%(C):GOSUB448
@@ -329,7 +329,7 @@
 328 GOTO272
 329 GOSUB581
 330 AP=FA%(C)-FD(CE)
-331 IFAP<=0THENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{white}MISS";:GOSUB749:GOTO343
+331 IFAP<=0THENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{white}MISS";:GOSUB751:GOTO343
 332 AP=INT(RND(0)*AP)+1
 333 FH%(CE)=FH%(CE)-AP:IFFH%(CE)<0THENFH%(CE)=0
 334 IFCE<4THENPH%(CE)=FH%(CE)
@@ -341,9 +341,9 @@
 340 POKEV,(FX%(CE)*8+21)AND255:POKEV+1,FY%(CE)*8+50:POKE50168,16:POKEV+28,0
 341 POKEV+16,-(FX%(CE)>30):POKEV+21,1
 342 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{white}";AP
-343 FORI=0TO5:POKEV,PEEK(V)+2:POKEV+1,PEEK(V+1)+2:GOSUB750:NEXTI
+343 FORI=0TO5:POKEV,PEEK(V)+2:POKEV+1,PEEK(V+1)+2:GOSUB752:NEXTI
 344 POKEV+21,0:IFCE<4THENGOSUB448
-345 GOSUB749
+345 GOSUB751
 346 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}    "
 347 IFFT%(CE)=-1THENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE));"  {down}{left:2}  ";
 348 IFCC=0THEN374
@@ -364,14 +364,14 @@
 363 IFCC=0THEN374
 364 IFPP=0THEN402
 365 GOTO272
-366 GOSUB749
+366 GOSUB751
 367 PRINT"{white}{home}{down}{right}"M$(FT%(C))": GREIFT AN                    "
 368 FC%(C)=FC%(C)-100
-369 IFFT%(C)=7THENIFFM%(C)>=IE%(9)THENM=9:GOSUB749:GOSUB411:GOTO610
-370 IFFT%(C)=9THENIFFM%(C)>=IE%(6)THENM=6:GOSUB749:GOSUB405:GOTO312
-371 IFFT%(C)=10THENIFFM%(C)>=IE%(4)THENM=4:GOSUB749:GOSUB405:GOTO312
-372 IFFT%(C)=11THENIFFM%(C)>=IE%(12)THENM=12:GOSUB749:GOSUB405:GOTO617
-373 GOSUB749:GOSUB405:GOTO330
+369 IFFT%(C)=7THENIFFM%(C)>=IE%(9)THENM=9:GOSUB751:GOSUB411:GOTO610
+370 IFFT%(C)=9THENIFFM%(C)>=IE%(6)THENM=6:GOSUB751:GOSUB405:GOTO312
+371 IFFT%(C)=10THENIFFM%(C)>=IE%(4)THENM=4:GOSUB751:GOSUB405:GOTO312
+372 IFFT%(C)=11THENIFFM%(C)>=IE%(12)THENM=12:GOSUB751:GOSUB405:GOTO617
+373 GOSUB751:GOSUB405:GOTO330
 374 POKE1020,Q1%
 375 PRINTDD$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}HP{brown}{$c2:2}{white}MP{brown}{$c2}{$c3}{white}";
 376 PRINT"{home}{down}{right}DU HAST GEWONNEN                     ";:GOSUB565
@@ -398,10 +398,10 @@
 397 IFP1%(I)>999THENP1%(I)=999
 398 IFP2%(I)>999THENP2%(I)=999
 399 RETURN
-400 GOSUB742
+400 GOSUB744
 401 GOTO63
 402 PRINT"{home}{down}{right}{white}DU HAST VERLOREN                     "
-403 GOSUB742
+403 GOSUB744
 404 GOTO625
 405 RE=INT(RND(0)*4):CE=0
 406 IFFT%(CE)=-2ANDPH%(CE)>0THEN409
@@ -449,9 +449,9 @@
 448 PRINTDD$;
 449 FORI=0TO3:IFP3%(I)=0THENPRINTSPC(40);:GOTO455
 450 PRINT"{white}";:IFPH%(I)=0THENPRINT"{red}";
-451 PRINTSPC(27)P$(I)" ";:A=PH%(I):GOSUB711
+451 PRINTSPC(27)P$(I)" ";:A=PH%(I):GOSUB713
 452 PRINTD$;
-453 A=PM%(I):GOSUB711
+453 A=PM%(I):GOSUB713
 454 PRINT" "D$"{right}";
 455 NEXT:RETURN
 456 FORI=0TO3:IFPH%(I)<=0ORP3%(I)=0THENNEXT:RETURN
@@ -473,7 +473,7 @@
 472 IFMI<13THEN463
 473 CP=QS+MX+MY*40
 474 POKECP+(M-MO)*40,35
-475 GOSUB713
+475 GOSUB715
 476 POKECP+(M-MO)*40,32
 477 IFA$="W"THENM=M-1:GOTO481
 478 IFA$="S"THENM=M+1:GOTO481
@@ -573,7 +573,7 @@
 572 CM=0
 573 FORI=4TO7
 574 IFFT%(I)=-1THENNEXT:RETURN
-575 A=FH%(I):GOSUB711
+575 A=FH%(I):GOSUB713
 576 PRINT"{home}{right}"LEFT$(CD$,20+CM)M$(FT%(I));
 577 PRINT"{home}{right}"LEFT$(CD$,20+CM);"{right:7}";D$
 578 CM=CM+1
@@ -582,7 +582,7 @@
 581 CE=4:PRINT"{home}{down}{right}{white}"P$(C)": WAHELE DEIN ZIEL               "
 582 IFFT%(CE)=-1THEN591
 583 POKEQS-1+FX%(CE)+FY%(CE)*40,35
-584 GOSUB713
+584 GOSUB715
 585 IFA$=CHR$(13)THENPOKEQS-1+FX%(CE)+FY%(CE)*40,32:RETURN
 586 IFA$="S"THENGOTO591
 587 IFA$="W"THENGOTO599
@@ -612,13 +612,13 @@
 611 FH%(CE)=FH%(CE)+AP:IFFH%(CE)>F1%(CE)THENFH%(CE)=F1%(CE)
 612 IFCE<4THENPH%(CE)=FH%(CE):GOSUB448
 613 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{green}";AP
-614 GOSUB756
+614 GOSUB758
 615 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}    "
 616 GOTO272
 617 FM%(C)=FM%(C)-IE%(M):IFC<4THENPM%(C)=FM%(C):GOSUB448
 618 FS%(CE)=FS%(CE)/2:IFFS%(CE)<5THENFS%(CE)=5
 619 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{green}SLOW";
-620 GOSUB756
+620 GOSUB758
 621 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}    "
 622 GOTO272
 623 IFM=9THEN610
@@ -637,13 +637,13 @@
 636 FORI=0TO3:PH%(I)=P1%(I):PM%(I)=P2%(I):PX%(I)=0:PW%(I)=0:PR%(I)=0:NEXT
 637 PW%(0)=1:PR%(0)=2
 638 GOSUB131
-639 AA$="INTRO":GOSUB699
+639 AA$="INTRO":GOSUB701
 640 GOTO56
 641 PRINT"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 642 FORI=1TO23:PRINT"{$c4}"SPC(38)"{$c5}";:NEXT
 643 PRINT"{$c6}{$c7:38}{up:3}";
 644 POKE50151,72:POKE56295,9
-645 AA$="ENDE":GOSUB699
+645 AA$="ENDE":GOSUB701
 646 GOTO56
 647 PRINT"{brown}{home}{$c1}{$c2:38}{$c3}";
 648 PRINT"{$c4}                                      {$c5}";
@@ -660,9 +660,9 @@
 659 POKE50151,72:POKE56295,9
 660 RETURN
 661 POKE56322,224
-662 IFAA$="TXT.WELCOME.LENA"THENOPEN1,8,4,"TXT.WELCOME.LENA,S,R":VA$="LENA AUFGENOMMEN!"
-663 IFAA$="TXT.WELCOME.DOLM"THENOPEN1,8,4,"TXT.WELCOME.DOLM,S,R":VA$="DOLM AUFGENOMMEN!"
-664 IFAA$="TXT.WELCOME.MIRA"THENOPEN1,8,4,"TXT.WELCOME.MIRA,S,R":VA$="MIRA AUFGENOMMEN!"
+662 IFAA$="TXT.WELCOME.LENA"THENOPEN1,8,4,"TXT.WELCOME.LENA,S,R":VA$="{green}& {white}LENA: {white}IST IM TEAM"
+663 IFAA$="TXT.WELCOME.DOLM"THENOPEN1,8,4,"TXT.WELCOME.DOLM,S,R":VA$="{green}& {white}DOLM: {white}IST IM TEAM"
+664 IFAA$="TXT.WELCOME.MIRA"THENOPEN1,8,4,"TXT.WELCOME.MIRA,S,R":VA$="{green}& {white}MIRA: {white}IST IM TEAM"
 665 IFAA$=""THENRETURN
 666 I=0:SB$(0)="":SB$(1)="":SB$(2)=""
 667 INPUT#1,SB$(I)
@@ -673,165 +673,165 @@
 672 PRINT"{home}{right}{down:21}"+"                        "
 673 PRINT"{home}{right}{down:22}"+"                        "
 674 PRINT"{home}{right}{down:23}"+"                        "
-675 PRINT"{home}{white}"
-676 PRINT"{home}{right}{down:20}"+SB$(0)
-677 PRINT"{home}{right}{down:21}"+SB$(1)
-678 PRINT"{home}{right}{down:22}"+SB$(2)
-679 GOSUB742
+675 PRINT"{home}{right}{down:20}{cyan}% {white}"+SB$(0)
+676 PRINT"{home}{right}{down:21}{cyan}  {white}"+SB$(1)
+677 PRINT"{home}{right}{down:22}{cyan}  {white}"+SB$(2)
+678 PRINT"{home}{right}{down:23}{cyan}  {white}"+SB$(3)
+679 GOSUB744
 680 PRINT"{home}{right}{down:20}"+"                        "
 681 PRINT"{home}{right}{down:21}"+"                        "
 682 PRINT"{home}{right}{down:22}"+"                        "
-683 GOSUB685
-684 RETURN
-685 IB$(0)=IB$(1)
-686 IB$(1)=IB$(2)
-687 IB$(2)=IB$(3)
-688 IB$(3)=VA$
-689 PRINT"{home}{right}{down:20}"+"                        "
-690 PRINT"{home}{right}{down:21}"+"                        "
-691 PRINT"{home}{right}{down:22}"+"                        "
-692 PRINT"{home}{right}{down:23}"+"                        "
-693 PRINT"{home}{cyan}"
-694 PRINT"{home}{right}{down:20}"+IB$(0)
-695 PRINT"{home}{right}{down:21}"+IB$(1)
-696 PRINT"{home}{right}{down:22}"+IB$(2)
-697 PRINT"{home}{right}{down:23}"+IB$(3)
-698 RETURN
-699 POKE1020,Q7%
-700 POKE56322,224
-701 IFAA$="INTRO"THENOPEN1,8,4,"TXT.INTRO,S,R"
-702 IFAA$="ENDE"THENOPEN1,8,4,"TXT.ENDE,S,R"
-703 IFAA$=""THENRETURN
-704 GET#1,B$
-705 IFB$="$"THENPRINT"{home}{down:2}{right:2}{white}";:GOTO704
-706 IFB$="%"THENPRINT"{right:2}{white}";:GOTO704
-707 IFB$="#"THENCLOSE1:POKE56322,255:GOSUB742:RETURN
-708 PRINTB$;
-709 IFB$<>" "THENPOKE162,0:WAIT162,4
-710 GOTO704
-711 T$=STR$(A)
-712 D$=RIGHT$("000"+RIGHT$(T$,LEN(T$)-1),3):RETURN
-713 A$=""
-714 J=PEEK(56320)
-715 IFJ=127THEN718
-716 IFJ=107ORJ=103ORJ=110ORJ=109THEN718
-717 GOTO714
-718 J=PEEK(56320)
-719 IFJ=127ANDA$=CHR$(13)THENRETURN
-720 IFJ=107THENA$="FL":GOSUB747:RETURN
-721 IFJ=103THENA$="FR":GOSUB747:RETURN
-722 IFJ=110THENA$="FU":GOSUB747:RETURN
-723 IFJ=109THENA$="FD":GOSUB747:RETURN
-724 IFJ=123THENA$="A":GOSUB747:RETURN
-725 IFJ=119THENA$="D":GOSUB747:RETURN
-726 IFJ=126THENA$="W":GOSUB747:RETURN
-727 IFJ=125THENA$="S":GOSUB747:RETURN
-728 IFJ=111THENA$=CHR$(13)
-729 GOTO718
-730 A$=""
-731 J=PEEK(56320)
-732 IFJ<>111ANDJ<>107ANDJ<>103ANDJ<>110ANDJ<>109THEN734
-733 GOTO731
-734 J=PEEK(56320)
-735 IFJ=127ANDA$=CHR$(13)THENRETURN
-736 IFJ=123THENA$="A":GOSUB748:RETURN
-737 IFJ=119THENA$="D":GOSUB748:RETURN
-738 IFJ=126THENA$="W":GOSUB748:RETURN
-739 IFJ=125THENA$="S":GOSUB748:RETURN
-740 IFJ=111THENA$=CHR$(13)
-741 GOTO734
-742 A$=""
-743 J=PEEK(56320)
-744 IFJ=127ANDA$=CHR$(13)THENRETURN
-745 IFJ=111THENA$=CHR$(13)
-746 GOTO743
-747 POKE162,0:WAIT162,16:RETURN
-748 POKE162,0:WAIT162,8:RETURN
-749 POKE162,0:WAIT162,32:RETURN
-750 POKE162,0:WAIT162,2:RETURN
-751 POKE162,0:WAIT162,32
-752 POKE162,0:WAIT162,32
+683 PRINT"{home}{right}{down:23}"+"                        "
+684 GOSUB686
+685 RETURN
+686 IFIB$(0)=""THENIB$(0)=VA$:GOTO692
+687 IFIB$(1)=""THENIB$(1)=VA$:GOTO692
+688 IFIB$(2)=""THENIB$(2)=VA$:GOTO692
+689 IB$(0)=IB$(1)
+690 IB$(1)=IB$(2)
+691 IB$(2)=VA$
+692 PRINT"{home}{white}"
+693 PRINT"{home}{right}{down:20}"+"                        "
+694 PRINT"{home}{right}{down:21}"+"                        "
+695 PRINT"{home}{right}{down:22}"+"                        "
+696 PRINT"{home}{right}{down:23}"+"                        "
+697 PRINT"{home}{right}{down:20}"+IB$(0)
+698 PRINT"{home}{right}{down:21}"+IB$(1)
+699 PRINT"{home}{right}{down:22}"+IB$(2)
+700 RETURN
+701 POKE1020,Q7%
+702 POKE56322,224
+703 IFAA$="INTRO"THENOPEN1,8,4,"TXT.INTRO,S,R"
+704 IFAA$="ENDE"THENOPEN1,8,4,"TXT.ENDE,S,R"
+705 IFAA$=""THENRETURN
+706 GET#1,B$
+707 IFB$="$"THENPRINT"{home}{down:2}{right:2}{white}";:GOTO706
+708 IFB$="%"THENPRINT"{right:2}{white}";:GOTO706
+709 IFB$="#"THENCLOSE1:POKE56322,255:GOSUB744:RETURN
+710 PRINTB$;
+711 IFB$<>" "THENPOKE162,0:WAIT162,4
+712 GOTO706
+713 T$=STR$(A)
+714 D$=RIGHT$("000"+RIGHT$(T$,LEN(T$)-1),3):RETURN
+715 A$=""
+716 J=PEEK(56320)
+717 IFJ=127THEN720
+718 IFJ=107ORJ=103ORJ=110ORJ=109THEN720
+719 GOTO716
+720 J=PEEK(56320)
+721 IFJ=127ANDA$=CHR$(13)THENRETURN
+722 IFJ=107THENA$="FL":GOSUB749:RETURN
+723 IFJ=103THENA$="FR":GOSUB749:RETURN
+724 IFJ=110THENA$="FU":GOSUB749:RETURN
+725 IFJ=109THENA$="FD":GOSUB749:RETURN
+726 IFJ=123THENA$="A":GOSUB749:RETURN
+727 IFJ=119THENA$="D":GOSUB749:RETURN
+728 IFJ=126THENA$="W":GOSUB749:RETURN
+729 IFJ=125THENA$="S":GOSUB749:RETURN
+730 IFJ=111THENA$=CHR$(13)
+731 GOTO720
+732 A$=""
+733 J=PEEK(56320)
+734 IFJ<>111ANDJ<>107ANDJ<>103ANDJ<>110ANDJ<>109THEN736
+735 GOTO733
+736 J=PEEK(56320)
+737 IFJ=127ANDA$=CHR$(13)THENRETURN
+738 IFJ=123THENA$="A":GOSUB750:RETURN
+739 IFJ=119THENA$="D":GOSUB750:RETURN
+740 IFJ=126THENA$="W":GOSUB750:RETURN
+741 IFJ=125THENA$="S":GOSUB750:RETURN
+742 IFJ=111THENA$=CHR$(13)
+743 GOTO736
+744 A$=""
+745 J=PEEK(56320)
+746 IFJ=127ANDA$=CHR$(13)THENRETURN
+747 IFJ=111THENA$=CHR$(13)
+748 GOTO745
+749 POKE162,0:WAIT162,16:RETURN
+750 POKE162,0:WAIT162,8:RETURN
+751 POKE162,0:WAIT162,32:RETURN
+752 POKE162,0:WAIT162,2:RETURN
 753 POKE162,0:WAIT162,32
 754 POKE162,0:WAIT162,32
-755 RETURN
+755 POKE162,0:WAIT162,32
 756 POKE162,0:WAIT162,32
 757 RETURN
-758 POKE162,0:WAIT162,4
+758 POKE162,0:WAIT162,32
 759 RETURN
-760 DATA"IMP",5,0,8,4,1,0,3
-761 DATA"SNAKE",8,0,12,6,1,0,5
-762 DATA"VIPER",12,0,18,6,1,0,9
-763 DATA"NACHO",30,0,22,15,5,0,50
-764 DATA"GOLEM",20,0,4,20,8,0,17
-765 DATA"MOSS",30,0,7,26,9,0,21
-766 DATA"BONES",50,0,20,18,8,0,15
-767 DATA"WISP",25,50,15,0,8,0,17
-768 DATA"TROLL",100,0,9,40,13,0,100
-769 DATA"SPARK",30,50,22,0,8,0,17
-770 DATA"BURNER",80,90,30,25,13,0,42
-771 DATA"TBERRY",120,10,60,60,20,0,150
-772 DATA"DRACUL",250,60,50,70,25,0,500
-773 DATA"GLADOS",500,70,60,80,30,0,1000
-774 DATA"KRON",15 ,0  ,10 ,4 ,3 ,0 ,0
-775 DATA"LENA",17 ,0  ,10 ,3 ,3 ,0 ,0
-776 DATA"DOLM",9  ,7  ,8  ,1 ,1 ,0 ,0
-777 DATA"MIRA",9  ,23 ,7  ,1 ,1 ,1 ,2
-778 DATA"{gray1}{rvrs off}{$c9}{rvrs off}{gray1}{$ca}{down}{left:2}{rvrs off}{gray1}{$ca}{rvrs off}{gray1}{$c9}{rvrs off}"
-779 DATA"{gray1}{rvrs off}{$cb}{rvrs off}{gray1}{$cc}{down}{left:2}{rvrs off}{gray1}{$c9}{rvrs off}{gray1}{$ca}{rvrs off}"
+760 POKE162,0:WAIT162,4
+761 RETURN
+762 DATA"IMP",5,0,8,4,1,0,3
+763 DATA"SNAKE",8,0,12,6,1,0,5
+764 DATA"VIPER",12,0,18,6,1,0,9
+765 DATA"NACHO",30,0,22,15,5,0,50
+766 DATA"GOLEM",20,0,4,20,8,0,17
+767 DATA"MOSS",30,0,7,26,9,0,21
+768 DATA"BONES",50,0,20,18,8,0,15
+769 DATA"WISP",25,50,15,0,8,0,17
+770 DATA"TROLL",100,0,9,40,13,0,100
+771 DATA"SPARK",30,50,22,0,8,0,17
+772 DATA"BURNER",80,90,30,25,13,0,42
+773 DATA"TBERRY",120,10,60,60,20,0,150
+774 DATA"DRACUL",250,60,50,70,25,0,500
+775 DATA"GLADOS",500,70,60,80,30,0,1000
+776 DATA"KRON",15 ,0  ,10 ,4 ,3 ,0 ,0
+777 DATA"LENA",17 ,0  ,10 ,3 ,3 ,0 ,0
+778 DATA"DOLM",9  ,7  ,8  ,1 ,1 ,0 ,0
+779 DATA"MIRA",9  ,23 ,7  ,1 ,1 ,1 ,2
 780 DATA"{gray1}{rvrs off}{$c9}{rvrs off}{gray1}{$ca}{down}{left:2}{rvrs off}{gray1}{$ca}{rvrs off}{gray1}{$c9}{rvrs off}"
-781 DATA"{gray1}{rvrs off}{$cd}{rvrs off}{gray1}{$ce}{down}{left:2}{rvrs off}{gray1}{$cf}{rvrs off}{gray1}{$d0}{rvrs off}"
-782 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-783 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+781 DATA"{gray1}{rvrs off}{$cb}{rvrs off}{gray1}{$cc}{down}{left:2}{rvrs off}{gray1}{$c9}{rvrs off}{gray1}{$ca}{rvrs off}"
+782 DATA"{gray1}{rvrs off}{$c9}{rvrs off}{gray1}{$ca}{down}{left:2}{rvrs off}{gray1}{$ca}{rvrs off}{gray1}{$c9}{rvrs off}"
+783 DATA"{gray1}{rvrs off}{$cd}{rvrs off}{gray1}{$ce}{down}{left:2}{rvrs off}{gray1}{$cf}{rvrs off}{gray1}{$d0}{rvrs off}"
 784 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
 785 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-786 DATA"{orange}{rvrs off}{$d1}{rvrs off}{orange}{$d1}{down}{left:2}{rvrs off}{orange}{$d1}{rvrs off}{orange}{$d1}{rvrs off}"
-787 DATA"{brown}{rvrs off}{$d2}{rvrs off}{brown}{$d3}{down}{left:2}{rvrs off}{brown}{$d4}{rvrs off}{brown}{$d5}{rvrs off}"
-788 DATA"{lt. red}{rvrs off}{$d6}{rvrs off}{lt. red}{$d7}{down}{left:2}{rvrs off}{lt. red}{$d8}{rvrs off}{lt. red}{$d9}{rvrs off}"
-789 DATA"{gray1}{rvrs off}{$da}{rvrs off}{gray1}{$db}{down}{left:2}{rvrs off}{gray1}{$dc}{rvrs off}{gray1}{$dd}{rvrs off}"
-790 DATA"{gray1}{rvrs off}{$a2}{rvrs off}{gray1}{$a3}{down}{left:2}{rvrs off}{gray1}{$a4}{rvrs off}{gray1}{$a5}{rvrs off}"
-791 DATA"{brown}{rvrs off}{$a1}{rvrs off}{brown}{$a1}{down}{left:2}{rvrs off}{brown}{$a1}{rvrs off}{brown}{$a1}{rvrs off}"
-792 DATA"{gray1}{rvrs off}{$de}{rvrs off}{gray1}{$df}{down}{left:2}{rvrs off}{gray1}{$c9}{rvrs off}{gray1} {rvrs off}"
-793 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-794 DATA"{lt. red}{rvrs off}{$a6}{rvrs off}{lt. red}{$a7}{down}{left:2}{rvrs off}{lt. red}{cmdr pound}{rvrs off}{lt. red}{shft pound}{rvrs off}"
-795 DATA"{lt. red}{rvrs off}{$aa}{rvrs off}{lt. red}{$aa}{down}{left:2}{rvrs off}{lt. red}{$aa}{rvrs off}{lt. red}{$aa}{rvrs off}"
-796 DATA"{brown}{rvrs off}{$ab}{rvrs off}{brown}{$ab}{down}{left:2}{rvrs off}{brown}{$ac}{rvrs off}{brown}{$ac}{rvrs off}"
-797 DATA"{brown}{rvrs off}{$ab}{rvrs off}{brown}{$ad}{down}{left:2}{rvrs off}{brown}{$ac}{rvrs off}{brown}{$ac}{rvrs off}"
-798 DATA"{brown}{rvrs off}{$ad}{rvrs off}{brown}{$ab}{down}{left:2}{rvrs off}{brown}{$ac}{rvrs off}{brown}{$ac}{rvrs off}"
-799 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-800 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+786 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+787 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+788 DATA"{orange}{rvrs off}{$d1}{rvrs off}{orange}{$d1}{down}{left:2}{rvrs off}{orange}{$d1}{rvrs off}{orange}{$d1}{rvrs off}"
+789 DATA"{brown}{rvrs off}{$d2}{rvrs off}{brown}{$d3}{down}{left:2}{rvrs off}{brown}{$d4}{rvrs off}{brown}{$d5}{rvrs off}"
+790 DATA"{lt. red}{rvrs off}{$d6}{rvrs off}{lt. red}{$d7}{down}{left:2}{rvrs off}{lt. red}{$d8}{rvrs off}{lt. red}{$d9}{rvrs off}"
+791 DATA"{gray1}{rvrs off}{$da}{rvrs off}{gray1}{$db}{down}{left:2}{rvrs off}{gray1}{$dc}{rvrs off}{gray1}{$dd}{rvrs off}"
+792 DATA"{gray1}{rvrs off}{$a2}{rvrs off}{gray1}{$a3}{down}{left:2}{rvrs off}{gray1}{$a4}{rvrs off}{gray1}{$a5}{rvrs off}"
+793 DATA"{brown}{rvrs off}{$a1}{rvrs off}{brown}{$a1}{down}{left:2}{rvrs off}{brown}{$a1}{rvrs off}{brown}{$a1}{rvrs off}"
+794 DATA"{gray1}{rvrs off}{$de}{rvrs off}{gray1}{$df}{down}{left:2}{rvrs off}{gray1}{$c9}{rvrs off}{gray1} {rvrs off}"
+795 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+796 DATA"{lt. red}{rvrs off}{$a6}{rvrs off}{lt. red}{$a7}{down}{left:2}{rvrs off}{lt. red}{cmdr pound}{rvrs off}{lt. red}{shft pound}{rvrs off}"
+797 DATA"{lt. red}{rvrs off}{$aa}{rvrs off}{lt. red}{$aa}{down}{left:2}{rvrs off}{lt. red}{$aa}{rvrs off}{lt. red}{$aa}{rvrs off}"
+798 DATA"{brown}{rvrs off}{$ab}{rvrs off}{brown}{$ab}{down}{left:2}{rvrs off}{brown}{$ac}{rvrs off}{brown}{$ac}{rvrs off}"
+799 DATA"{brown}{rvrs off}{$ab}{rvrs off}{brown}{$ad}{down}{left:2}{rvrs off}{brown}{$ac}{rvrs off}{brown}{$ac}{rvrs off}"
+800 DATA"{brown}{rvrs off}{$ad}{rvrs off}{brown}{$ab}{down}{left:2}{rvrs off}{brown}{$ac}{rvrs off}{brown}{$ac}{rvrs off}"
 801 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-802 DATA"{lt. green}{rvrs off}{$ae}{rvrs off}{lt. green}{$d1}{down}{left:2}{rvrs off}{lt. green}{$d1}{rvrs off}{lt. green}{$af}{rvrs off}"
-803 DATA"{lt. green}{rvrs off}{$b0}{rvrs off}{lt. green}{$b1}{down}{left:2}{rvrs off}{lt. green}{$b2}{rvrs off}{lt. green}{$b3}{rvrs off}"
-804 DATA"{lt. green}{rvrs off}{$b4}{rvrs off}{lt. green}{$b5}{down}{left:2}{rvrs off}{lt. green}{$b4}{rvrs off}{lt. green}{$b5}{rvrs off}"
-805 DATA"{lt. green}{rvrs off}{$b6}{rvrs off}{lt. green}{$b7}{down}{left:2}{rvrs off}{lt. green}{$b8}{rvrs off}{lt. green}{$b9}{rvrs off}"
-806 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-807 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+802 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+803 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+804 DATA"{lt. green}{rvrs off}{$ae}{rvrs off}{lt. green}{$d1}{down}{left:2}{rvrs off}{lt. green}{$d1}{rvrs off}{lt. green}{$af}{rvrs off}"
+805 DATA"{lt. green}{rvrs off}{$b0}{rvrs off}{lt. green}{$b1}{down}{left:2}{rvrs off}{lt. green}{$b2}{rvrs off}{lt. green}{$b3}{rvrs off}"
+806 DATA"{lt. green}{rvrs off}{$b4}{rvrs off}{lt. green}{$b5}{down}{left:2}{rvrs off}{lt. green}{$b4}{rvrs off}{lt. green}{$b5}{rvrs off}"
+807 DATA"{lt. green}{rvrs off}{$b6}{rvrs off}{lt. green}{$b7}{down}{left:2}{rvrs off}{lt. green}{$b8}{rvrs off}{lt. green}{$b9}{rvrs off}"
 808 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
 809 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-810 DATA"{brown}{rvrs off}{$ae}{rvrs off}{brown}{$d1}{down}{left:2}{rvrs off}{brown}{$d1}{rvrs off}{brown}{$af}{rvrs off}"
-811 DATA"{brown}{rvrs off}{$b0}{rvrs off}{brown}{$b1}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b3}{rvrs off}"
-812 DATA"{brown}{rvrs off}{$b4}{rvrs off}{brown}{$b5}{down}{left:2}{rvrs off}{brown}{$b4}{rvrs off}{brown}{$b5}{rvrs off}"
-813 DATA"{brown}{rvrs off}{$b6}{rvrs off}{brown}{$b7}{down}{left:2}{rvrs off}{brown}{$b8}{rvrs off}{brown}{$b9}{rvrs off}"
-814 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-815 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+810 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+811 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+812 DATA"{brown}{rvrs off}{$ae}{rvrs off}{brown}{$d1}{down}{left:2}{rvrs off}{brown}{$d1}{rvrs off}{brown}{$af}{rvrs off}"
+813 DATA"{brown}{rvrs off}{$b0}{rvrs off}{brown}{$b1}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b3}{rvrs off}"
+814 DATA"{brown}{rvrs off}{$b4}{rvrs off}{brown}{$b5}{down}{left:2}{rvrs off}{brown}{$b4}{rvrs off}{brown}{$b5}{rvrs off}"
+815 DATA"{brown}{rvrs off}{$b6}{rvrs off}{brown}{$b7}{down}{left:2}{rvrs off}{brown}{$b8}{rvrs off}{brown}{$b9}{rvrs off}"
 816 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
 817 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-818 DATA"{gray1}{rvrs off}{$d1}{rvrs off}{gray1}{$d1}{down}{left:2}{rvrs off}{gray1}{$d1}{rvrs off}{gray1}{$d1}{rvrs off}"
-819 DATA"{gray1}{rvrs off}{$ba}{rvrs off}{gray1}{$d1}{down}{left:2}{rvrs off}{gray1}{$ba}{rvrs off}{gray1}{$d1}{rvrs off}"
-820 DATA"{gray1}{rvrs off}{$ba}{rvrs off}{gray1}{$d1}{down}{left:2}{rvrs off}{gray1}{$bb}{rvrs off}{gray1}{$d1}{rvrs off}"
-821 DATA"{gray1}{rvrs off}{$bc}{rvrs off}{gray1}{$bd}{down}{left:2}{rvrs off}{gray1}{$be}{rvrs off}{gray1}{$be}{rvrs off}"
-822 DATA"{gray1}{rvrs off}{$bf}{rvrs off}{gray1}{$bf}{down}{left:2}{rvrs on}{gray1}@{rvrs on}{gray1}@{rvrs off}"
-823 DATA"{gray2}{rvrs on}A{rvrs on}{gray2}B{down}{left:2}{rvrs on}{gray2}C{rvrs on}{gray2}D{rvrs off}"
-824 DATA"{gray1}{rvrs on}E{rvrs on}{gray1}F{down}{left:2}{rvrs on}{gray1}G{rvrs on}{gray1}H{rvrs off}"
-825 DATA"{brown}{rvrs on}I{rvrs on}{brown}I{down}{left:2}{rvrs on}{brown}I{rvrs on}{brown}I{rvrs off}"
-826 DATA"{lt. red}{rvrs on}J{rvrs on}{lt. red}K{down}{left:2}{rvrs on}{lt. red}L{rvrs on}{lt. red}M{rvrs off}"
-827 DATA"{gray1}{rvrs on}N{rvrs on}{gray1}K{down}{left:2}{rvrs on}{gray1}L{rvrs on}{gray1}M{rvrs off}"
-828 DATA"{lt. green}{rvrs on}O{rvrs on}{lt. green}P{down}{left:2}{rvrs on}{lt. green}Q{rvrs on}{lt. green}R{rvrs off}"
-829 DATA"{gray2}{rvrs on}S{rvrs on}{gray2}T{down}{left:2}{rvrs on}{gray2}U{rvrs on}{gray2}V{rvrs off}"
-830 DATA"{gray1}{rvrs on}W{rvrs on}{gray1}X{down}{left:2}{rvrs on}{gray1}Y{rvrs on}{gray1}Z{rvrs off}"
-831 DATA"{gray1}{rvrs on}[{rvrs on}{gray1}{pound}{down}{left:2}{rvrs on}{gray1}]{rvrs on}{gray1}{^}{rvrs off}"
-832 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-833 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+818 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+819 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+820 DATA"{gray1}{rvrs off}{$d1}{rvrs off}{gray1}{$d1}{down}{left:2}{rvrs off}{gray1}{$d1}{rvrs off}{gray1}{$d1}{rvrs off}"
+821 DATA"{gray1}{rvrs off}{$ba}{rvrs off}{gray1}{$d1}{down}{left:2}{rvrs off}{gray1}{$ba}{rvrs off}{gray1}{$d1}{rvrs off}"
+822 DATA"{gray1}{rvrs off}{$ba}{rvrs off}{gray1}{$d1}{down}{left:2}{rvrs off}{gray1}{$bb}{rvrs off}{gray1}{$d1}{rvrs off}"
+823 DATA"{gray1}{rvrs off}{$bc}{rvrs off}{gray1}{$bd}{down}{left:2}{rvrs off}{gray1}{$be}{rvrs off}{gray1}{$be}{rvrs off}"
+824 DATA"{gray1}{rvrs off}{$bf}{rvrs off}{gray1}{$bf}{down}{left:2}{rvrs on}{gray1}@{rvrs on}{gray1}@{rvrs off}"
+825 DATA"{gray2}{rvrs on}A{rvrs on}{gray2}B{down}{left:2}{rvrs on}{gray2}C{rvrs on}{gray2}D{rvrs off}"
+826 DATA"{gray1}{rvrs on}E{rvrs on}{gray1}F{down}{left:2}{rvrs on}{gray1}G{rvrs on}{gray1}H{rvrs off}"
+827 DATA"{brown}{rvrs on}I{rvrs on}{brown}I{down}{left:2}{rvrs on}{brown}I{rvrs on}{brown}I{rvrs off}"
+828 DATA"{lt. red}{rvrs on}J{rvrs on}{lt. red}K{down}{left:2}{rvrs on}{lt. red}L{rvrs on}{lt. red}M{rvrs off}"
+829 DATA"{gray1}{rvrs on}N{rvrs on}{gray1}K{down}{left:2}{rvrs on}{gray1}L{rvrs on}{gray1}M{rvrs off}"
+830 DATA"{lt. green}{rvrs on}O{rvrs on}{lt. green}P{down}{left:2}{rvrs on}{lt. green}Q{rvrs on}{lt. green}R{rvrs off}"
+831 DATA"{gray2}{rvrs on}S{rvrs on}{gray2}T{down}{left:2}{rvrs on}{gray2}U{rvrs on}{gray2}V{rvrs off}"
+832 DATA"{gray1}{rvrs on}W{rvrs on}{gray1}X{down}{left:2}{rvrs on}{gray1}Y{rvrs on}{gray1}Z{rvrs off}"
+833 DATA"{gray1}{rvrs on}[{rvrs on}{gray1}{pound}{down}{left:2}{rvrs on}{gray1}]{rvrs on}{gray1}{^}{rvrs off}"
 834 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
 835 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
 836 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
@@ -840,39 +840,41 @@
 839 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
 840 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
 841 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-842 DATA"{lt. green}{rvrs on}{back arrow}{rvrs on}{lt. green}!{down}{left:2}{rvrs on}{lt. green}#{rvrs on}{lt. green}${rvrs off}"
-843 DATA"{gray3}{rvrs on}%{rvrs on}{gray3}&{down}{left:2}{rvrs on}{gray3}'{rvrs on}{gray3}({rvrs off}"
-844 DATA"{gray1}{rvrs on}%{rvrs on}{gray1}&{down}{left:2}{rvrs on}{gray1}'{rvrs on}{gray1}({rvrs off}"
-845 DATA"{lt. green}{rvrs on}){rvrs on}{lt. green}*{down}{left:2}{rvrs on}{lt. green}+{rvrs on}{lt. green},{rvrs off}"
-846 DATA"{gray1}{rvrs on}-{rvrs on}{gray1}.{down}{left:2}{rvrs on}{gray1}/{rvrs on}{gray1}0{rvrs off}"
-847 DATA"{gray1}{rvrs on}1{rvrs on}{gray1}2{down}{left:2}{rvrs on}{gray1}3{rvrs on}{gray1}4{rvrs off}"
-848 DATA"{gray1}{rvrs on}5{rvrs on}{gray1}6{down}{left:2}{rvrs on}{gray1}7{rvrs on}{gray1}8{rvrs off}"
-849 DATA"{gray1}{rvrs on}9{rvrs on}{gray1}:{down}{left:2}{rvrs on}{gray1};{rvrs on}{gray1}<{rvrs off}"
-850 DATA"{gray1}{rvrs on}={rvrs on}{gray1}>{down}{left:2}{rvrs on}{gray1}?{rvrs on}{gray1}{$c0}{rvrs off}"
-851 DATA"{lt. green}{rvrs on}9{rvrs on}{lt. green}:{down}{left:2}{rvrs on}{lt. green};{rvrs on}{lt. green}<{rvrs off}"
-852 DATA"{lt. red}{rvrs on}5{rvrs on}{lt. red}6{down}{left:2}{rvrs on}{lt. red}7{rvrs on}{lt. red}8{rvrs off}"
-853 DATA"{lt. green}{rvrs on}5{rvrs on}{lt. green}6{down}{left:2}{rvrs on}{lt. green}7{rvrs on}{lt. green}8{rvrs off}"
-854 DATA"{gray1}{rvrs on}{$c1}{rvrs on}{gray1}{$c2}{down}{left:2}{rvrs on}{gray1}{$c3}{rvrs on}{gray1}{$c4}{rvrs off}"
-855 DATA"{gray1}{rvrs on}{$c5}{rvrs on}{gray1}{$c6}{down}{left:2}{rvrs on}{gray1}{$c7}{rvrs on}{gray1}{$c8}{rvrs off}"
-856 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-857 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
-858 DATA"        ",00,00,00,00,-1 
-859 DATA"DOLCH   ",03,00,00,00,00  
-860 DATA"HELM    ",00,02,-1,00,01  
-861 DATA"KRAEUTER",00,00,-1,10,02  
-862 DATA"FEUER   ",00,00,00,05,03  
-863 DATA"EIS     ",00,00,00,08,03  
-864 DATA"MUT     ",00,00,00,23,03  
-865 DATA"BOMBE   ",00,00,00,50,03  
-866 DATA"KIRSCHE ",00,00,-1,15,02  
-867 DATA"HEILEN  ",00,00,00,04,03  
-868 DATA"SKULL   ",00,00,00,00,04  
-869 DATA"FLEGEL  ",07,00,-1,00,00  
-870 DATA"LAHM    ",00,00,00,04,03  
-871 DATA"STAB    ",12,00,00,00,00  
-872 DATA"FEDER   ",00,10,00,00,01  
-873 DATA"STOCK   ",23,00,00,00,00  
-874 DATA"WESTE   ",00,14,00,00,01  
-875 DATA"SCHILD  ",00,24,00,00,01  
-876 DATA"ZURUECK ",00,00,00,0 ,09  
-877 END
+842 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+843 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+844 DATA"{lt. green}{rvrs on}{back arrow}{rvrs on}{lt. green}!{down}{left:2}{rvrs on}{lt. green}#{rvrs on}{lt. green}${rvrs off}"
+845 DATA"{gray3}{rvrs on}%{rvrs on}{gray3}&{down}{left:2}{rvrs on}{gray3}'{rvrs on}{gray3}({rvrs off}"
+846 DATA"{gray1}{rvrs on}%{rvrs on}{gray1}&{down}{left:2}{rvrs on}{gray1}'{rvrs on}{gray1}({rvrs off}"
+847 DATA"{lt. green}{rvrs on}){rvrs on}{lt. green}*{down}{left:2}{rvrs on}{lt. green}+{rvrs on}{lt. green},{rvrs off}"
+848 DATA"{gray1}{rvrs on}-{rvrs on}{gray1}.{down}{left:2}{rvrs on}{gray1}/{rvrs on}{gray1}0{rvrs off}"
+849 DATA"{gray1}{rvrs on}1{rvrs on}{gray1}2{down}{left:2}{rvrs on}{gray1}3{rvrs on}{gray1}4{rvrs off}"
+850 DATA"{gray1}{rvrs on}5{rvrs on}{gray1}6{down}{left:2}{rvrs on}{gray1}7{rvrs on}{gray1}8{rvrs off}"
+851 DATA"{gray1}{rvrs on}9{rvrs on}{gray1}:{down}{left:2}{rvrs on}{gray1};{rvrs on}{gray1}<{rvrs off}"
+852 DATA"{gray1}{rvrs on}={rvrs on}{gray1}>{down}{left:2}{rvrs on}{gray1}?{rvrs on}{gray1}{$c0}{rvrs off}"
+853 DATA"{lt. green}{rvrs on}9{rvrs on}{lt. green}:{down}{left:2}{rvrs on}{lt. green};{rvrs on}{lt. green}<{rvrs off}"
+854 DATA"{lt. red}{rvrs on}5{rvrs on}{lt. red}6{down}{left:2}{rvrs on}{lt. red}7{rvrs on}{lt. red}8{rvrs off}"
+855 DATA"{lt. green}{rvrs on}5{rvrs on}{lt. green}6{down}{left:2}{rvrs on}{lt. green}7{rvrs on}{lt. green}8{rvrs off}"
+856 DATA"{gray1}{rvrs on}{$c1}{rvrs on}{gray1}{$c2}{down}{left:2}{rvrs on}{gray1}{$c3}{rvrs on}{gray1}{$c4}{rvrs off}"
+857 DATA"{gray1}{rvrs on}{$c5}{rvrs on}{gray1}{$c6}{down}{left:2}{rvrs on}{gray1}{$c7}{rvrs on}{gray1}{$c8}{rvrs off}"
+858 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+859 DATA"{gray1}{rvrs off} {rvrs off}{gray1} {down}{left:2}{rvrs off}{gray1} {rvrs off}{gray1} {rvrs off}"
+860 DATA"        ",00,00,00,00,-1 
+861 DATA"DOLCH   ",03,00,00,00,00  
+862 DATA"HELM    ",00,02,-1,00,01  
+863 DATA"KRAEUTER",00,00,-1,10,02  
+864 DATA"FEUER   ",00,00,00,05,03  
+865 DATA"EIS     ",00,00,00,08,03  
+866 DATA"MUT     ",00,00,00,23,03  
+867 DATA"BOMBE   ",00,00,00,50,03  
+868 DATA"KIRSCHE ",00,00,-1,15,02  
+869 DATA"HEILEN  ",00,00,00,04,03  
+870 DATA"SKULL   ",00,00,00,00,04  
+871 DATA"FLEGEL  ",07,00,-1,00,00  
+872 DATA"LAHM    ",00,00,00,04,03  
+873 DATA"STAB    ",12,00,00,00,00  
+874 DATA"FEDER   ",00,10,00,00,01  
+875 DATA"STOCK   ",23,00,00,00,00  
+876 DATA"WESTE   ",00,14,00,00,01  
+877 DATA"SCHILD  ",00,24,00,00,01  
+878 DATA"ZURUECK ",00,00,00,0 ,09  
+879 END
