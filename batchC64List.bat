@@ -20,6 +20,9 @@ xcopy blitz.prg VICE\bin\*.* /Y
 xcopy asm.raster.prg VICE\bin\*.* /Y
 xcopy txt.intro.seq VICE\bin\*.* /Y
 xcopy txt.ende.seq VICE\bin\*.* /Y
+xcopy txt.welcome.lena.seq VICE\bin\*.* /Y
+xcopy txt.welcome.dolm.seq VICE\bin\*.* /Y
+xcopy txt.welcome.mira.seq VICE\bin\*.* /Y
 
 
 REM SCHREIBE DISK
@@ -32,6 +35,9 @@ c1541 -attach dungeon.d64 -write blitz.prg blitz
 c1541 -attach dungeon.d64 -write asm.raster.prg asm.raster
 c1541 -attach dungeon.d64 -write txt.intro.seq txt.intro,s
 c1541 -attach dungeon.d64 -write txt.ende.seq txt.ende,s
+c1541 -attach dungeon.d64 -write txt.welcome.lena.seq txt.welcome.lena,s
+c1541 -attach dungeon.d64 -write txt.welcome.dolm.seq txt.welcome.dolm,s
+c1541 -attach dungeon.d64 -write txt.welcome.mira.seq txt.welcome.mira,s
 
 cd..
 cd..

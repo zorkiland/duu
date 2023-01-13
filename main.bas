@@ -236,8 +236,10 @@ goto{:goto_newgame}
 	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
 	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
 	sys 820                  'start asm.raster
-	gosub{:gosub_print_rahmen_map}
+	gosub{:gosub_print_rahmen_oben}
+	gosub{:gosub_print_rahmen_unten_map}
 	gosub{:gosub_print_player_hp}
+	gosub{:info_txt}
 {:mainloop_cleartop}
 	print"{home}{down}{right}{white}{$20:38}";
 {:mainloop_print_map}
@@ -319,18 +321,18 @@ goto{:goto_newgame}
 {:raumaktion_text}
 	'aktion truhe
 		if c=12  and aa%=0 then goto {:mainloop_oldpos}
-		if c=12  and aa%=1 then print"{home}{white}{down}{right}in der truhe ist was!"         :gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=12  and aa%=1 then va$="in der truhe ist was!"         :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
 	'aktion baum
 		if c=25 and aa%=0 then goto {:mainloop_oldpos}
-		if c=25 and aa%=1 then print"{home}{white}{down}{right}der baum sieht intressant aus!":gosub{:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
+		if c=25 and aa%=1 then va$="der baum sieht intressant aus!" :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
 {:raumaktion_npc}
 	'npc                                                123456789a123456789b123456789c12345678
 		if c=49 then print"{white}{home}{down}{right}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 		if c=53 then print"{white}{home}{down}{right}ein feuerzauber ist in den katakomben" :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
 	'player
-		if c=50 then print"{white}{home}{down}{right}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(0)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(1)=1 :tx=12:ty=4:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
-		if c=52 then print"{white}{home}{down}{right}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(1)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(2)=1 :tx=7 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
-		if c=51 then print"{white}{home}{down}{right}ich komme mit dir!"                     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:{var:npc_flag}(2)=1:gosub{:gosub_raumaktion_poke_mapspeicher}:{var:player_activ}(3)=1 :tx=3 :ty=2:gosub{:gosub_raumaktion_print_one_tile}:gosub{:gosub_print_player_hp}:goto{:mainloop_oldpos}
+		if c=50 then {var:npc_flag}(0)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(1)=1 :tx=12:ty=4 : gosub{:gosub_raumaktion_print_one_tile} : gosub{:gosub_print_player_hp} : {var:seq_select}="txt.welcome.lena" : gosub{:gosub_input_seq} : goto{:mainloop_oldpos}
+		if c=52 then {var:npc_flag}(1)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(2)=1 :tx=7 :ty=2 : gosub{:gosub_raumaktion_print_one_tile} : gosub{:gosub_print_player_hp} : {var:seq_select}="txt.welcome.dolm" : gosub{:gosub_input_seq} : goto{:mainloop_oldpos}
+		if c=51 then {var:npc_flag}(2)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(3)=1 :tx=3 :ty=2 : gosub{:gosub_raumaktion_print_one_tile} : gosub{:gosub_print_player_hp} : {var:seq_select}="txt.welcome.mira" : gosub{:gosub_input_seq} : goto{:mainloop_oldpos}
 	'monster
 		if c=67 then print"{white}{home}{down}{right}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:npc_flag}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 		if c=72 then print"{white}{home}{down}{right}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:npc_flag}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
@@ -338,7 +340,7 @@ goto{:goto_newgame}
 		if c=77 then print"{white}{home}{down}{right}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=40 wasser
-		if c=40 then print"{home}{white}{down}{right}du bist geheilt!" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
+		if c=40 then va$="du bist geheilt!" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 {:gosub_raumaktion_print_one_tile}
 	'set sp
@@ -369,8 +371,8 @@ goto{:goto_newgame}
 	return
 {:gosub_raumaktion_print_schalter_status}
 	'schalter status
-		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=0 then print"{home}{white}{down}{right}der schalter ist aus!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
-		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=1 then print"{home}{white}{down}{right}der schalter ist ein!";:gosub{:gosub_delay_text} : gosub{:gosub_clear_top}
+		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=0 then va$="der schalter ist aus!":gosub{:gosub_info_txt}
+		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=1 then va$="schalter ist ein!"    :gosub{:gosub_info_txt}
 	return
 {:gosub_raumaktion_variabeln}
 
@@ -533,11 +535,11 @@ goto{:goto_newgame}
 	'add item inventar
 		{var:nimm_item}={var:event_item}(ei) : gosub{:gosub_add_item_inventar}
 	'inventar max
-		if is=99 then print"{home}{white}{down}{right}du kannst nicht mehr tragen!" : gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
+		if is=99 then va$="du kannst nicht mehr tragen!" : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 	'loesche event item
 		{var:event_raum}(ei)=-1
 	'inventar print
-		print"{home}{white}{down}{right}gefunden: ";{var:item_name}({var:inventar_slot}(is));: gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
+		va$="gefunden: "+{var:item_name}({var:inventar_slot}(is)): gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 	{:nimm_next}
 		'wenn ei=max
 		ei=ei+1
@@ -545,7 +547,7 @@ goto{:goto_newgame}
 		goto{:nimm}
 	{:aktion_nichts}
 		'wenn nichts zutrifft
-		print "{home}{down}{right}{white}nichts besonderes!": gosub{:gosub_delay_text} : gosub{:gosub_clear_top} : goto{:mainloop_oldpos}
+		va$="nichts besonderes!": gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 'battel
 {:battel}
@@ -557,14 +559,10 @@ goto{:goto_newgame}
 			if {var:fight_hp}(i)<=0then {var:fight_active}(i)=-1:pp=pp-1 : 'wenn player nicht aktiv pp-1
 			{var:fight_atk}(i)={var:player_atk}(i)+{var:item_atk}({var:player_waffe}(i)):fd(i)={var:player_def}(i)+{var:item_def}({var:player_ruestung}(i)):{var:fight_hp_max}(i)={var:player_hp_max}(i):{var:fight_mp_max}(i)={var:player_mp_max}(i)
 		next
-	'rahmen oben
-		print"{brown}{home}{$c1}{$c2:38}{$c3}";
-		print"{$c4}                                      {$c5}";
-		print"{$c6}{$c7:38}{$c8}";
 	'clear map
 		print"{home}{down:3}{white}";:for i=0 to 15:print"                                        ";:next
 	'print rahmen mit hp player
-		printdd$;"{brown}{up}{$c1}{$c2:7}{white}hp{brown}{$c2:1}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
+		gosub{:gosub_print_rahmen_unten_battel}
 		gosub{:gosub_battel_monsterauswahl}
 		gosub{:gosub_print_player_hp}
 		gosub{:gosub_print_player_tile}
@@ -1131,6 +1129,79 @@ goto{:goto_newgame}
 	poke 50151,72:poke 56295,9
 	{var:seq_select}="ende" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
+
+'***work***
+{:gosub_print_rahmen_oben}
+	'rahmen oben
+		print"{brown}{home}{$c1}{$c2:38}{$c3}";
+		print"{$c4}                                      {$c5}";
+		print"{$c6}{$c7:38}{$c8}"
+	return
+{:gosub_print_rahmen_unten_battel}
+	'hp/mp wird nicht geloescht
+		print dd$;"{brown}{up}{$c1}{$c2:7}{white}hp{brown}{$c2:1}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
+		'print dd$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
+		for i=0 to 3:print"{$c4}{$20:10}{$c5}{$c4}{$20:12}{$c5}{$c4}{right:12}{$c5}";:next
+		print"{$c6}{$c7:10}{$c8}{$c6}{$c7:12}{$c8}{$c6}{$c7:12}";
+		poke 50151,72:poke 56295,9
+	return
+{:gosub_print_rahmen_unten_map}
+	'hp/mp wird nicht geloescht
+		print dd$;"{brown}{up}{$c1}{$c2:12}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
+		for i=0 to 3:print"{$c4}{$20:12}{$20:12}{$c5}{$c4}{right:12}{$c5}";:next
+		print"{$c6}{$c7:12}{$c7:12}{$c8}{$c6}{$c7:12}";
+		poke 50151,72:poke 56295,9
+	return
+
+{:gosub_input_seq}
+	poke 56322,224 : 'tastatur 224=aus 225=an
+	if {var:seq_select}="txt.welcome.lena" then open 1,8,4,"txt.welcome.lena,s,r" : va$="lena aufgenaommen!"
+	if {var:seq_select}="txt.welcome.dolm" then open 1,8,4,"txt.welcome.dolm,s,r" : va$="dolm aufgenaommen!"
+	if {var:seq_select}="txt.welcome.mira" then open 1,8,4,"txt.welcome.mira,s,r" : va$="mira aufgenaommen!"
+	if {var:seq_select}="" then return
+	i=0:sb$(0)="":sb$(1)="":sb$(2)=""
+	{:input_seq}
+		input#1,sb$(i)
+		if st=0 then i=i+1: goto{:input_seq}
+	close 1
+	poke 56322,225 : 'tastatur 224=aus 225=an
+	'clear
+		print "{home}{right}{down:20}"+"{$20:24}"
+		print "{home}{right}{down:21}"+"{$20:24}"
+		print "{home}{right}{down:22}"+"{$20:24}"
+		print "{home}{right}{down:23}"+"{$20:24}"
+	'print
+		print "{home}{white}"
+		print "{home}{right}{down:20}"+sb$(0)
+		print "{home}{right}{down:21}"+sb$(1)
+		print "{home}{right}{down:22}"+sb$(2)
+	'wait fire
+		gosub{:gosub_joywait_fire}
+	'clear
+		print "{home}{right}{down:20}"+"{$20:24}"
+		print "{home}{right}{down:21}"+"{$20:24}"
+		print "{home}{right}{down:22}"+"{$20:24}"
+	'print info txt
+		gosub {:gosub_info_txt}
+	return
+{:gosub_info_txt}
+	ib$(0)=ib$(1)
+	ib$(1)=ib$(2)
+	ib$(2)=ib$(3)
+	ib$(3)=va$
+	{:info_txt}
+	'clear
+		print "{home}{right}{down:20}"+"{$20:24}"
+		print "{home}{right}{down:21}"+"{$20:24}"
+		print "{home}{right}{down:22}"+"{$20:24}"
+		print "{home}{right}{down:23}"+"{$20:24}"
+	'print
+		print "{home}{cyan}"
+		print "{home}{right}{down:20}"+ib$(0)
+		print "{home}{right}{down:21}"+ib$(1)
+		print "{home}{right}{down:22}"+ib$(2)
+		print "{home}{right}{down:23}"+ib$(3)
+	return
 {:gosub_print_txt_screen}
 	poke 1020,{var:farbe_bl}
 	poke 56322,224 : 'tastatur 224=aus 225=an
@@ -1145,6 +1216,7 @@ goto{:goto_newgame}
 		print {var:seq_buffer};
 		if {var:seq_buffer}<>" " then poke 162,0: wait 162,4
 	goto {:txt_screen_get}
+
 {:gosub_validate_hp_mp}
 	t$=str$(a)
 	d$=right$("000"+right$(t$,len(t$)-1),3):return
