@@ -1155,9 +1155,9 @@ goto{:goto_newgame}
 
 {:gosub_input_seq}
 	poke 56322,224 : 'tastatur 224=aus 225=an
-	if {var:seq_select}="txt.welcome.lena" then open 1,8,4,"txt.welcome.lena,s,r" : va$="lena aufgenaommen!"
-	if {var:seq_select}="txt.welcome.dolm" then open 1,8,4,"txt.welcome.dolm,s,r" : va$="dolm aufgenaommen!"
-	if {var:seq_select}="txt.welcome.mira" then open 1,8,4,"txt.welcome.mira,s,r" : va$="mira aufgenaommen!"
+	if {var:seq_select}="txt.welcome.lena" then open 1,8,4,"txt.welcome.lena,s,r" : va$="lena aufgenommen!"
+	if {var:seq_select}="txt.welcome.dolm" then open 1,8,4,"txt.welcome.dolm,s,r" : va$="dolm aufgenommen!"
+	if {var:seq_select}="txt.welcome.mira" then open 1,8,4,"txt.welcome.mira,s,r" : va$="mira aufgenommen!"
 	if {var:seq_select}="" then return
 	i=0:sb$(0)="":sb$(1)="":sb$(2)=""
 	{:input_seq}
