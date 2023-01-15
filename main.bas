@@ -750,7 +750,7 @@ goto{:goto_newgame}
 		return
 	{:battel_gewonnen_joyauswertung}
 		gosub{:gosub_joywait_fire}
-		goto{:mainloop_cleartop}
+		goto{:mainloop}
 {:battel_verloren}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}du hast verloren                     "
