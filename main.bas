@@ -321,10 +321,10 @@ goto{:goto_newgame}
 {:raumaktion_text}
 	'aktion truhe
 		if c=12  and aa%=0 then goto {:mainloop_oldpos}
-		if c=12  and aa%=1 then va$="{cyan}% {white}in der truhe ist was"         :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
+		if c=12  and aa%=1 then va$="{cyan}< {white}in der truhe ist was"         :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
 	'aktion baum
 		if c=25 and aa%=0 then goto {:mainloop_oldpos}
-		if c=25 and aa%=1 then va$="{cyan}% {white}der baum sieht intressant aus" :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
+		if c=25 and aa%=1 then va$="{cyan}< {white}der baum sieht intressant aus" :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
 {:raumaktion_npc}
 	'npc                                                123456789a123456789b123456789c12345678
 		if c=49 then print"{white}{home}{down}{right}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
@@ -340,7 +340,7 @@ goto{:goto_newgame}
 		if c=77 then print"{white}{home}{down}{right}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=40 wasser
-		if c=40 then va$="{cyan}% {white}du bist geheilt" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
+		if c=40 then va$="{cyan}< {white}du bist geheilt" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 {:gosub_raumaktion_print_one_tile}
 	'set sp
@@ -371,8 +371,8 @@ goto{:goto_newgame}
 	return
 {:gosub_raumaktion_print_schalter_status}
 	'schalter status
-		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=0 then va$="{cyan}% {white}der schalter ist aus":gosub{:gosub_info_txt}
-		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=1 then va$="{cyan}% {white}schalter ist ein"    :gosub{:gosub_info_txt}
+		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=0 then va$="{cyan}< {white}der schalter ist aus":gosub{:gosub_info_txt}
+		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=1 then va$="{cyan}< {white}schalter ist ein"    :gosub{:gosub_info_txt}
 	return
 {:gosub_raumaktion_variabeln}
 
@@ -535,11 +535,11 @@ goto{:goto_newgame}
 	'add item inventar
 		{var:nimm_item}={var:event_item}(ei) : gosub{:gosub_add_item_inventar}
 	'inventar max
-		if is=99 then va$="{cyan}% {white}du kannst nicht mehr tragen" : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
+		if is=99 then va$="{cyan}< {white}du kannst nicht mehr tragen" : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 	'loesche event item
 		{var:event_raum}(ei)=-1
 	'inventar print
-		va$="{green}& {white}gefunden: "+{var:item_name}({var:inventar_slot}(is)): gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
+		va$="{green}> {white}gefunden: "+{var:item_name}({var:inventar_slot}(is)): gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 	{:nimm_next}
 		'wenn ei=max
 		ei=ei+1
@@ -547,7 +547,7 @@ goto{:goto_newgame}
 		goto{:nimm}
 	{:aktion_nichts}
 		'wenn nichts zutrifft
-		va$="{cyan}% {white}nichts besonderes": gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
+		va$="{cyan}< {white}nichts besonderes": gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 'battel
 {:battel}
@@ -1155,10 +1155,12 @@ goto{:goto_newgame}
 	return
 
 {:gosub_input_seq}
+	'print ">"= pfeil rechts
+	'print "<"= i
 	poke 56322,224 : 'tastatur 224=aus 225=an
-	if {var:seq_select}="txt.welcome.lena" then open 1,8,4,"txt.welcome.lena,s,r" : va$="{green}& {white}lena: {white}ist im team"
-	if {var:seq_select}="txt.welcome.dolm" then open 1,8,4,"txt.welcome.dolm,s,r" : va$="{green}& {white}dolm: {white}ist im team"
-	if {var:seq_select}="txt.welcome.mira" then open 1,8,4,"txt.welcome.mira,s,r" : va$="{green}& {white}mira: {white}ist im team"
+	if {var:seq_select}="txt.welcome.lena" then open 1,8,4,"txt.welcome.lena,s,r" : va$="{green}> {white}lena: {white}ist im team"
+	if {var:seq_select}="txt.welcome.dolm" then open 1,8,4,"txt.welcome.dolm,s,r" : va$="{green}> {white}dolm: {white}ist im team"
+	if {var:seq_select}="txt.welcome.mira" then open 1,8,4,"txt.welcome.mira,s,r" : va$="{green}> {white}mira: {white}ist im team"
 	if {var:seq_select}="" then return
 	i=0:sb$(0)="":sb$(1)="":sb$(2)=""
 	{:input_seq}
@@ -1172,7 +1174,7 @@ goto{:goto_newgame}
 		print "{home}{right}{down:22}"+"{$20:24}"
 		print "{home}{right}{down:23}"+"{$20:24}"
 	'print
-		print "{home}{right}{down:20}{cyan}% {white}"+sb$(0)
+		print "{home}{right}{down:20}{cyan}< {white}"+sb$(0)
 		print "{home}{right}{down:21}{cyan}  {white}"+sb$(1)
 		print "{home}{right}{down:22}{cyan}  {white}"+sb$(2)
 		print "{home}{right}{down:23}{cyan}  {white}"+sb$(3)
