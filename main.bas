@@ -227,15 +227,17 @@
 	poke {var:multifarbspeicher_2},{var:farbe_sw}'          multicolor 2 =0 (sw)
 	poke {var:rahmenfarbe},{var:farbe_sw}'                  rahmenfarbe
 	poke {var:bildschirmfarbe},{var:farbe_bl}'              bildschirmfarbe
+'set raster
+	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
+	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
+	sys 820                  'start asm.raster
 
 gosub{:gosub_raumaktion_variabeln}
 goto{:goto_newgame}
 
 'mainloop
 {:mainloop}
-	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
-	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
-	sys 820                  'start asm.raster
+	gosub{:gosub_clear_screen}
 	gosub{:gosub_print_rahmen_oben}
 	gosub{:gosub_print_rahmen_unten_map}
 	gosub{:gosub_print_player_hp}
