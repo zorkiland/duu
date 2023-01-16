@@ -1,17 +1,6 @@
 '*****************************
-'c64list v4.0
+'c64list v4.04
 '*****************************
-
-'edit 05.01.2023
-'gosub heilen leerzeichen : leerzeichen
-'aa in aa%
-'if a$="e" flucht auskommentiert
-'ct$ gelöscht
-'erst weiter wenn keine bewegung oder fire+rechts
-
-'edit 06.01.2023
-'npc text right:2 to right
-'gosub_joy fire+left/right/up/down eingefügt
 
 
 {renumber}
@@ -237,8 +226,8 @@ goto{:goto_newgame}
 
 'mainloop
 {:mainloop}
-	gosub{:gosub_clear_screen}
 	gosub{:gosub_print_rahmen_oben}
+	gosub{:gosub_clear_screen}
 	gosub{:gosub_print_rahmen_unten_map}
 	gosub{:gosub_print_player_hp}
 	gosub{:info_txt}
@@ -1106,7 +1095,7 @@ goto{:goto_newgame}
 		print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 		fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
 		print"{$c6}{$c7:38}{up:3}";
-		poke50151,72:poke56295,9
+		poke 50151,72:poke 56295,9 '50151 = letzte pos bidschirmspeicher 56295= letzte pos farbspeicher
 	'raum und posx/y
 		x=15:y=2:cr=0
 	'player aktiv
@@ -1128,7 +1117,7 @@ goto{:goto_newgame}
 	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
 	print"{$c6}{$c7:38}{up:3}";
-	poke 50151,72:poke 56295,9
+	poke 50151,72:poke 56295,9 '50151 = letzte pos bidschirmspeicher 56295= letzte pos farbspeicher
 	{var:seq_select}="ende" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
 
