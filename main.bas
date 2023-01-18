@@ -1168,10 +1168,10 @@ goto{:goto_newgame}
 		print "{home}{right}{down:22}"+"{$20:24}"
 		print "{home}{right}{down:23}"+"{$20:24}"
 	'print
-		print "{home}{right}{down:20}{white} "+sb$(0)
-		print "{home}{right}{down:21}{white} "+sb$(1)
-		print "{home}{right}{down:22}{white} "+sb$(2)
-		print "{home}{right}{down:23}{white} "+sb$(3)
+		print "{home}{right}{down:20}{white}"+sb$(0)
+		print "{home}{right}{down:21}{white}"+sb$(1)
+		print "{home}{right}{down:22}{white}"+sb$(2)
+		print "{home}{right}{down:23}{white}"+sb$(3)
 	'wait fire
 		gosub{:gosub_joywait_fire}
 	'clear

@@ -674,10 +674,10 @@
 673 PRINT"{home}{right}{down:21}"+"                        "
 674 PRINT"{home}{right}{down:22}"+"                        "
 675 PRINT"{home}{right}{down:23}"+"                        "
-676 PRINT"{home}{right}{down:20}{white} "+SB$(0)
-677 PRINT"{home}{right}{down:21}{white} "+SB$(1)
-678 PRINT"{home}{right}{down:22}{white} "+SB$(2)
-679 PRINT"{home}{right}{down:23}{white} "+SB$(3)
+676 PRINT"{home}{right}{down:20}{white}"+SB$(0)
+677 PRINT"{home}{right}{down:21}{white}"+SB$(1)
+678 PRINT"{home}{right}{down:22}{white}"+SB$(2)
+679 PRINT"{home}{right}{down:23}{white}"+SB$(3)
 680 GOSUB745
 681 PRINT"{home}{right}{down:20}"+"                        "
 682 PRINT"{home}{right}{down:21}"+"                        "
