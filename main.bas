@@ -512,9 +512,16 @@ goto{:goto_newgame}
 		'item ident <> sl=0 waffe sl=1 ruestung
 			if {var:inventar_slot}(m)<>0 and {var:item_ident}({var:inventar_slot}(m))<>sl then {:mainloop_cleartop}
 		'ausruesten sl=0 waffe
-			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_slot}(m)   :{var:inventar_slot}(m)=q  :va$="{white}= {cyan}"+{var:player_name}(p)+" atk+"+str$({var:item_atk}({var:player_waffe}(p)))   :gosub{:gosub_info_txt}:goto{:mainloop_cleartop}
+			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_slot}(m)   :{var:inventar_slot}(m)=q  : gosub{:equipment_item_txt_waffe}    :goto{:mainloop_cleartop}
 		'ausruesten sl=1 ruestung
-			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_slot}(m) :{var:inventar_slot}(m)=q :va$="{white}= {cyan}"+{var:player_name}(p)+" def+"+str$({var:item_def}({var:player_ruestung}(p))):gosub{:gosub_info_txt}:goto{:mainloop_cleartop}
+			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_slot}(m) :{var:inventar_slot}(m)=q : gosub{:equipment_item_txt_ruestung} :goto{:mainloop_cleartop}
+			stop
+	{:equipment_item_txt_waffe}
+		va$="{white}= {cyan}"+{var:player_name}(p)+" equip "+{var:item_name}({var:player_waffe}(p))    : gosub{:gosub_info_txt}
+		va$="{white}= {cyan}"+{var:player_name}(p)+" atk"+str$({var:player_atk}(p))+" + atk"+str$({var:item_atk}({var:player_waffe}(p)))    : gosub{:gosub_info_txt}: return
+	{:equipment_item_txt_ruestung}
+		va$="{white}= {cyan}"+{var:player_name}(p)+" equip "+{var:item_name}({var:player_ruestung}(p)) : gosub{:gosub_info_txt}
+		va$="{white}= {cyan}"+{var:player_name}(p)+" def"+str$({var:player_def}(p))+" + def"+str$({var:item_def}({var:player_ruestung}(p))) : gosub{:gosub_info_txt}: return
 		'
 {:untersuche}
 	gosub {:gosub_clear_top}
