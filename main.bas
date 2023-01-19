@@ -512,9 +512,9 @@ goto{:goto_newgame}
 		'item ident <> sl=0 waffe sl=1 ruestung
 			if {var:inventar_slot}(m)<>0 and {var:item_ident}({var:inventar_slot}(m))<>sl then {:mainloop_cleartop}
 		'ausruesten sl=0 waffe
-			if sl=0 then q={var:player_waffe}(p):{var:player_waffe}(p)={var:inventar_slot}(m):{var:inventar_slot}(m)=q:goto {:mainloop_cleartop}
+			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_slot}(m)   :{var:inventar_slot}(m)=q  :va$="{white}= {cyan}"+{var:player_name}(p)+" atk+"+str$({var:item_atk}({var:player_waffe}(p)))   :gosub{:gosub_info_txt}:goto{:mainloop_cleartop}
 		'ausruesten sl=1 ruestung
-			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_slot}(m):{var:inventar_slot}(m)=q:goto {:mainloop_cleartop}
+			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_slot}(m) :{var:inventar_slot}(m)=q :va$="{white}= {cyan}"+{var:player_name}(p)+" def+"+str$({var:item_def}({var:player_ruestung}(p))):gosub{:gosub_info_txt}:goto{:mainloop_cleartop}
 		'
 {:untersuche}
 	gosub {:gosub_clear_top}
@@ -831,7 +831,6 @@ goto{:goto_newgame}
 	print"{home}"left$(cd$,5+i*3);spc(37);{var:player_tile}(i):next
 	return
 
-'***work***
 {:gosub_menu_item}
 	gosub{:gosub_sort_inventar}
 	mi=-1:m=0:mo=0
