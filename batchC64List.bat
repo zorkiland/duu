@@ -15,7 +15,6 @@ c64list main.prg -txt -ovr
 
 REM COPY PRG->VICE\bin
 xcopy loader.prg VICE\bin\*.* /Y
-xcopy main.prg VICE\bin\*.* /Y
 xcopy blitz.prg VICE\bin\*.* /Y
 xcopy asm.raster.prg VICE\bin\*.* /Y
 xcopy txt.intro.seq VICE\bin\*.* /Y
@@ -30,7 +29,6 @@ cd VICE
 cd bin
 c1541 -format "dungeon,id" d64 dungeon.d64
 c1541 -attach dungeon.d64 -write loader.prg loader
-c1541 -attach dungeon.d64 -write main.prg main
 c1541 -attach dungeon.d64 -write blitz.prg blitz
 c1541 -attach dungeon.d64 -write asm.raster.prg asm.raster
 c1541 -attach dungeon.d64 -write txt.intro.seq txt.intro,s

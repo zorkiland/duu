@@ -296,7 +296,7 @@ goto{:goto_newgame}
 		if c=3 then{:raumaktion_schalten} 'wenn c=3 druckplatte
 		goto{:mainloop_print_playertile}  'else goto print player
 
-'***edit duu***
+'***raumaktion***
 {:raumaktion_durchgang}
 	if cr=16 then cr=16:x=0:y=0 :goto{:mainloop_cleartop}
 	if cr=16 then {:goto_end_game}
@@ -540,14 +540,9 @@ goto{:goto_newgame}
 		va$="{white}= {cyan}nichts besonderes": gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 {:gosub_equipment_print_waffe_info}
-	{var:val_atk}={var:player_atk}(p)+{var:item_atk}({var:player_waffe}(p))
-	if {var:val_atk} > 999 then {var:val_atk} = 999
-	va$="{white}= {cyan}"+{var:player_name}(p)+" atk"+str$({var:val_atk}) : gosub{:gosub_info_txt}:return
+	va$="{white}= {cyan}"+{var:player_name}(p)+" benutzt "+{var:item_name}({var:player_waffe}(p)) : gosub{:gosub_info_txt}:return
 {:gosub_equipment_print_ruestung_info}
-	{var:val_def}={var:player_def}(p)+{var:item_def}({var:player_ruestung}(p))
-	if {var:val_def} > 999 then {var:val_def} = 999
-	va$="{white}= {cyan}"+{var:player_name}(p)+" def"+str$({var:item_def}) : gosub{:gosub_info_txt}:return
-
+	a$="{white}= {cyan}"+{var:player_name}(p)+" benutzt "+{var:item_name}({var:player_ruestung}(p)) : gosub{:gosub_info_txt}:return
 
 'battel
 {:battel}
@@ -815,16 +810,6 @@ goto{:goto_newgame}
 		{var:player_mp}(i) = {var:player_mp_max}(i)
 	{:gosub_heilen_next}
 		next:return
-{:gosub_print_rahmen_map}
-	'rahmen oben
-	print"{brown}{home}{$c1}{$c2:38}{$c3}";
-	print"{$c4}                                      {$c5}";
-	print"{$c6}{$c7:38}{$c8}";
-	'rahmen mehr rechts
-	printdd$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
-	fori=0to3:print"{$c4}{$20:10}{$c5}{$c4}{$20:12}{$c5}{$c4}{$20:12}{$c5}";:next
-	print"{$c6}{$c7:10}{$c8}{$c6}{$c7:12}{$c8}{$c6}{$c7:12}";
-	poke50151,72:poke56295,9:return
 {:gosub_print_player_hp}
 	printdd$;
 	fori=0to3:if{var:player_activ}(i)=0thenprintspc(40);:goto{:gosub_print_player_hp_next_return}
@@ -940,14 +925,10 @@ goto{:goto_newgame}
 		next i
 		return
 
-{:gosub_print_rahmen_mitte}
-	print"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";
-	fori=0to13
-	print"{$c4}                                      {$c5}";:next
-	print"{$c6}{$c7:38}{$c8}";:return
 {:gosub_clear_map}
+	print"{brown}{home}{down:3}";
 	fori=0to15
-	print"{$c4}                                      {$c5}";:next
+	print"{$20:40}";:next
 	return
 {:gosub_clear_top}
 	print"{home}{down}{right}{white}{$20:38}";
@@ -1122,8 +1103,8 @@ goto{:goto_newgame}
 		gosub {:gosub_raumaktion_poke_mapspeicher}
 	'print text
 		{var:seq_select}="intro" : gosub {:gosub_print_txt_screen}
-	'print"{clr}";fre(0)
-	'stop
+		'print"{clr}";fre(0)
+		'stop
 	goto{:mainloop}
 {:goto_end_game}
 	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
@@ -1133,7 +1114,7 @@ goto{:goto_newgame}
 	{var:seq_select}="ende" : gosub {:gosub_print_txt_screen}
 	goto{:mainloop}
 
-'***work***
+'***rahmen***
 {:gosub_print_rahmen_oben}
 	'rahmen oben
 		print"{brown}{home}{$c1}{$c2:38}{$c3}";
@@ -1156,7 +1137,13 @@ goto{:goto_newgame}
 		print"{$c6}{$c7:12}{$c7:12}{$c8}{$c6}{$c7:12}";
 		poke 50151,72:poke 56295,9
 	return
+{:gosub_print_rahmen_mitte}
+	print"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";
+	fori=0to13
+	print"{$c4}                                      {$c5}";:next
+	print"{$c6}{$c7:38}{$c8}";:return
 
+'***txt***
 {:gosub_input_seq}
 	'print "<"= pfeil links
 	'print "="= i
@@ -1198,9 +1185,11 @@ goto{:goto_newgame}
 
 	if ib$(0)="" then ib$(0)=va$ : goto{:info_txt}
 	if ib$(1)="" then ib$(1)=va$ : goto{:info_txt}
+	if ib$(2)="" then ib$(2)=va$ : goto{:info_txt}
 
 	ib$(0)=ib$(1)
-	ib$(1)=va$
+	ib$(1)=ib$(2)
+	ib$(2)=va$
 	{:info_txt}
 		print"{home}{white}"
 	'clear
@@ -1211,6 +1200,7 @@ goto{:goto_newgame}
 	'print
 		print "{home}{right}{down:20}"+ib$(0)
 		print "{home}{right}{down:21}"+ib$(1)
+		print "{home}{right}{down:22}"+ib$(2)
 	return
 {:gosub_print_txt_screen}
 	poke 1020,{var:farbe_bl}
@@ -1231,7 +1221,7 @@ goto{:goto_newgame}
 	t$=str$(a)
 	d$=right$("000"+right$(t$,len(t$)-1),3):return
 
-
+'***joy***
 {:gosub_joy}
 	a$=""
 	{:joy_wait}
@@ -1287,6 +1277,7 @@ goto{:goto_newgame}
 		if j=111 then a$=chr$(13)
 	goto {:joywait_fire}
 
+'***delay***
 {:gosub_delay_joy}
 	poke 162,0: wait 162,16 :return
 {:gosub_delay_joymap}

@@ -17,19 +17,9 @@ if as=0 then as=1 : load"asm.raster",8,1
 rem initialisierung
 	poke 45,99:poke 46,99:clr
 	rem poke 55,240:poke 56,120:clr
-rem choose basic / blitz
-	print"{clear}{home}{down}{lt. blue}";
-	print" press 1 = basic"
-	print" press 2 = blitz"
-	{:get}
-		get a$
-		if (a$="") then goto {:get}
-	if (a$="1") then a=1 : goto {:print}
-	if (a$="2") then a=2 : goto {:print}
-	goto {:get}
 rem read zeichensatz
 	{:print}
-		print"{clear}{home}{down}"
+		print"{clear}{home}{down}{lt. blue}"
 		print" lade zeichensatz..."
 	{:zeichensatz}
 		readc:ifc=-1then{:sprite}
@@ -44,11 +34,8 @@ rem read map
 	for i=0 to rs*rc-1:read b:poke 30960+i,b:next
 
 rem load basic / blitz and asm.raster
-	if a=1 then print" lade basic...{blue}"
-	if a=2 then print" lade blitz...{blue}"	
-	if peek(2)=0 and a=1 then poke 2,1: load "main",8,1
-	if peek(2)=0 and a=2 then poke 2,1: load "blitz",8,1
-
+	print" lade blitz...{blue}"
+	if peek(2)=0 then poke 2,1: load "blitz",8,1
 
 rem data zeichensatz
 '##########################################################################################
