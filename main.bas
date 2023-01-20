@@ -540,13 +540,13 @@ goto{:goto_newgame}
 		va$="{white}= {cyan}nichts besonderes": gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 {:gosub_equipment_print_waffe_info}
-		{var:val_atk}={var:player_atk}(p)+{var:item_atk}({var:player_waffe}(p))
-		if {var:val_atk} > 999 then {var:val_atk} = 999
-		va$="{white}= {cyan}"+{var:player_name}(p)+" atk"+str$({var:val_atk}) : gosub{:gosub_info_txt}:return
+	{var:val_atk}={var:player_atk}(p)+{var:item_atk}({var:player_waffe}(p))
+	if {var:val_atk} > 999 then {var:val_atk} = 999
+	va$="{white}= {cyan}"+{var:player_name}(p)+" atk"+str$({var:val_atk}) : gosub{:gosub_info_txt}:return
 {:gosub_equipment_print_ruestung_info}
-		{var:val_def}={var:player_def}(p)+{var:item_def}({var:player_ruestung}(p))
-		if {var:val_def} > 999 then {var:val_def} = 999
-		va$="{white}= {cyan}"+{var:player_name}(p)+" def"+str$({var:item_def}) : gosub{:gosub_info_txt}:return
+	{var:val_def}={var:player_def}(p)+{var:item_def}({var:player_ruestung}(p))
+	if {var:val_def} > 999 then {var:val_def} = 999
+	va$="{white}= {cyan}"+{var:player_name}(p)+" def"+str$({var:item_def}) : gosub{:gosub_info_txt}:return
 
 
 'battel
