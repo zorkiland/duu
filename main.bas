@@ -227,7 +227,7 @@ goto{:goto_newgame}
 'mainloop
 {:mainloop}
 	gosub{:gosub_print_rahmen_oben}
-	gosub{:gosub_clear_screen}
+	gosub{:gosub_clear_map}
 	gosub{:gosub_print_rahmen_unten_map}
 	gosub{:gosub_print_player_hp}
 	gosub{:info_txt}
@@ -433,7 +433,7 @@ goto{:goto_newgame}
 	onm+1goto {:untersuche},{:equipment},{:inventar}
 {:inventar}
 	poke 1020,{var:farbe_sw} 'hintergrundfarbe map
-	gosub{:gosub_clear_screen}
+	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}inventar: waehle dein item           ";
 	mt=2:mx=2:my=4:mc=14:gosub{:gosub_menu_item}
@@ -719,7 +719,7 @@ goto{:goto_newgame}
 	printdd$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}{white}";
 	'                        123456789a123456789b123456789c12345678
 	print"{home}{down}{right}du hast gewonnen                     ";:gosub{:gosub_print_monstername}
-	gosub{:gosub_clear_screen}
+	gosub{:gosub_print_rahmen_mitte}
 	fori=0to3:if{var:player_activ}(i)=0then{:battel_gewonnen_jmp}
 	print"{home}{white}{right:3}";:if{var:player_hp}(i)=0thenprint"{red}";
 	printleft$(cd$,4+i*3){var:player_name}(i)
@@ -940,11 +940,15 @@ goto{:goto_newgame}
 		next i
 		return
 
-{:gosub_clear_screen}
+{:gosub_print_rahmen_mitte}
 	print"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";
 	fori=0to13
 	print"{$c4}                                      {$c5}";:next
 	print"{$c6}{$c7:38}{$c8}";:return
+{:gosub_clear_map}
+	fori=0to15
+	print"{$c4}                                      {$c5}";:next
+	return
 {:gosub_clear_top}
 	print"{home}{down}{right}{white}{$20:38}";
 	return
@@ -1194,11 +1198,9 @@ goto{:goto_newgame}
 
 	if ib$(0)="" then ib$(0)=va$ : goto{:info_txt}
 	if ib$(1)="" then ib$(1)=va$ : goto{:info_txt}
-	if ib$(2)="" then ib$(2)=va$ : goto{:info_txt}
 
 	ib$(0)=ib$(1)
-	ib$(1)=ib$(2)
-	ib$(2)=va$
+	ib$(1)=va$
 	{:info_txt}
 		print"{home}{white}"
 	'clear
@@ -1209,7 +1211,6 @@ goto{:goto_newgame}
 	'print
 		print "{home}{right}{down:20}"+ib$(0)
 		print "{home}{right}{down:21}"+ib$(1)
-		print "{home}{right}{down:22}"+ib$(2)
 	return
 {:gosub_print_txt_screen}
 	poke 1020,{var:farbe_bl}
