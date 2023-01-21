@@ -230,7 +230,6 @@ goto{:goto_newgame}
 	gosub{:gosub_clear_map}
 	gosub{:gosub_print_rahmen_unten_map}
 	gosub{:gosub_print_player_hp}
-	gosub{:info_txt}
 {:mainloop_cleartop}
 	print"{home}{down}{right}{white}{$20:38}";
 {:mainloop_print_map}
@@ -312,10 +311,10 @@ goto{:goto_newgame}
 {:raumaktion_text}
 	'aktion truhe
 		if c=12  and aa%=0 then goto {:mainloop_oldpos}
-		if c=12  and aa%=1 then va$="{white}= {cyan}in der truhe ist was"         :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
+		if c=12  and aa%=1 then va$="in der truhe ist was"         :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
 	'aktion baum
 		if c=25 and aa%=0 then goto {:mainloop_oldpos}
-		if c=25 and aa%=1 then va$="{white}= {cyan}der baum sieht intressant aus" :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
+		if c=25 and aa%=1 then va$="der baum sieht intressant aus" :gosub{:gosub_info_txt}:goto{:mainloop_oldpos}
 {:raumaktion_npc}
 	'npc                                                123456789a123456789b123456789c12345678
 		if c=49 then print"{white}{home}{down}{right}ein heilzauber ist unter dem baum"     :gosub {:gosub_delay_text}:gosub{:gosub_clear_top}:goto{:mainloop_oldpos}
@@ -331,7 +330,7 @@ goto{:goto_newgame}
 		if c=77 then print"{white}{home}{down}{right}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=40 wasser
-		if c=40 then va$="{white}= {cyan}du bist geheilt" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
+		if c=40 then va$="du bist geheilt" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 {:gosub_raumaktion_print_one_tile}
 	'set sp
@@ -362,8 +361,8 @@ goto{:goto_newgame}
 	return
 {:gosub_raumaktion_print_schalter_status}
 	'schalter status
-		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=0 then va$="{white}= {cyan}der schalter ist aus":gosub{:gosub_info_txt}
-		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=1 then va$="{white}= {cyan}schalter ist ein"    :gosub{:gosub_info_txt}
+		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=0 then va$="der schalter ist aus":gosub{:gosub_info_txt}
+		if cr={var:schalter_raum}(0) and zx={var:schalter_posx}(0) and {var:schalter_flag}(0)=1 then va$="schalter ist ein"    :gosub{:gosub_info_txt}
 	return
 {:gosub_raumaktion_variabeln}
 
@@ -512,9 +511,9 @@ goto{:goto_newgame}
 		'item ident <> sl=0 waffe sl=1 ruestung
 			if {var:inventar_slot}(m)<>0 and {var:item_ident}({var:inventar_slot}(m))<>sl then {:mainloop_cleartop}
 		'ausruesten sl=0 waffe
-			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_slot}(m)   :{var:inventar_slot}(m)=q  : gosub{:gosub_equipment_print_waffe_info}    :goto{:mainloop_cleartop}
+			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_slot}(m)   :{var:inventar_slot}(m)=q  :goto{:mainloop_cleartop}
 		'ausruesten sl=1 ruestung
-			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_slot}(m) :{var:inventar_slot}(m)=q : gosub{:gosub_equipment_print_ruestung_info} :goto{:mainloop_cleartop}
+			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_slot}(m) :{var:inventar_slot}(m)=q :goto{:mainloop_cleartop}
 {:untersuche}
 	gosub {:gosub_clear_top}
 	gosub {:gosub_delay_500}
@@ -525,11 +524,11 @@ goto{:goto_newgame}
 	'add item inventar
 		{var:nimm_item}={var:event_item}(ei) : gosub{:gosub_add_item_inventar}
 	'inventar max
-		if is=99 then va$="{white}= {cyan}du kannst nicht mehr tragen" : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
+		if is=99 then va$="du kannst nicht mehr tragen" : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 	'loesche event item
 		{var:event_raum}(ei)=-1
 	'inventar print
-		va$="{white}> {cyan}gefunden: "+{var:item_name}({var:inventar_slot}(is)): gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
+		va$="gefunden: "+{var:item_name}({var:inventar_slot}(is)): gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 	{:nimm_next}
 		'wenn ei=max
 		ei=ei+1
@@ -537,12 +536,7 @@ goto{:goto_newgame}
 		goto{:nimm}
 	{:aktion_nichts}
 		'wenn nichts zutrifft
-		va$="{white}= {cyan}nichts besonderes": gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
-
-{:gosub_equipment_print_waffe_info}
-	va$="{white}= {cyan}"+{var:player_name}(p)+" benutzt "+{var:item_name}({var:player_waffe}(p)) : gosub{:gosub_info_txt}:return
-{:gosub_equipment_print_ruestung_info}
-	a$="{white}= {cyan}"+{var:player_name}(p)+" benutzt "+{var:item_name}({var:player_ruestung}(p)) : gosub{:gosub_info_txt}:return
+		va$="nichts besonderes": gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
 
 'battel
 {:battel}
@@ -1151,9 +1145,9 @@ goto{:goto_newgame}
 	'{green}> {white} -> {white}> {cyan}
 	' {cyan}= {white} -> {white}= {cyan}
 	poke 56322,224 : 'tastatur 224=aus 225=an
-	if {var:seq_select}="txt.welcome.lena" then open 1,8,4,"txt.welcome.lena,s,r" : va$="{white}> {cyan}lena {cyan}ist im team"
-	if {var:seq_select}="txt.welcome.dolm" then open 1,8,4,"txt.welcome.dolm,s,r" : va$="{white}> {cyan}dolm {cyan}ist im team"
-	if {var:seq_select}="txt.welcome.mira" then open 1,8,4,"txt.welcome.mira,s,r" : va$="{white}> {cyan}mira {cyan}ist im team"
+	if {var:seq_select}="txt.welcome.lena" then open 1,8,4,"txt.welcome.lena,s,r"
+	if {var:seq_select}="txt.welcome.dolm" then open 1,8,4,"txt.welcome.dolm,s,r"
+	if {var:seq_select}="txt.welcome.mira" then open 1,8,4,"txt.welcome.mira,s,r"
 	if {var:seq_select}="" then return
 	i=0:sb$(0)="":sb$(1)="":sb$(2)=""
 	{:input_seq}
@@ -1179,28 +1173,12 @@ goto{:goto_newgame}
 		print "{home}{right}{down:22}"+"{$20:24}"
 		print "{home}{right}{down:23}"+"{$20:24}"
 	'print info txt
-		gosub {:gosub_info_txt}
 	return
 {:gosub_info_txt}
-
-	if ib$(0)="" then ib$(0)=va$ : goto{:info_txt}
-	if ib$(1)="" then ib$(1)=va$ : goto{:info_txt}
-	if ib$(2)="" then ib$(2)=va$ : goto{:info_txt}
-
-	ib$(0)=ib$(1)
-	ib$(1)=ib$(2)
-	ib$(2)=va$
-	{:info_txt}
-		print"{home}{white}"
-	'clear
-		print "{home}{right}{down:20}"+"{$20:24}"
-		print "{home}{right}{down:21}"+"{$20:24}"
-		print "{home}{right}{down:22}"+"{$20:24}"
-		print "{home}{right}{down:23}"+"{$20:24}"
-	'print
-		print "{home}{right}{down:20}"+ib$(0)
-		print "{home}{right}{down:21}"+ib$(1)
-		print "{home}{right}{down:22}"+ib$(2)
+	'print top screen
+		print"{home}{down}{white}{right}";va$
+		gosub {:gosub_joywait_fire}
+		gosub {:gosub_clear_top}
 	return
 {:gosub_print_txt_screen}
 	poke 1020,{var:farbe_bl}
