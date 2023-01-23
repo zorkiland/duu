@@ -277,6 +277,8 @@ goto{:goto_newgame}
 		if c>=48 then {:raumaktion_npc}       'wenn c>=48 npc
 		if c>7   then {:mainloop_oldpos}      'wenn c>7 nicht begehbar
 {:mainloop_set_newpos}
+	'loesche infotext (va)
+		va=0
 	'loesche player print tile
 		print"{home}"left$(cd$,3+y*2)spc(x*2){var:map_tile}(peek(cp+x+y*20))
 	'loesche info txt
