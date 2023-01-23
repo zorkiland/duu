@@ -221,8 +221,10 @@
 	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
 	sys 820                  'start asm.raster
 
+{:start}
 gosub{:gosub_raumaktion_variabeln}
 goto{:goto_newgame}
+
 
 'mainloop
 {:mainloop}
@@ -277,6 +279,8 @@ goto{:goto_newgame}
 {:mainloop_set_newpos}
 	'loesche player print tile
 		print"{home}"left$(cd$,3+y*2)spc(x*2){var:map_tile}(peek(cp+x+y*20))
+	'loesche info txt
+		gosub {:gosub_clear_top}
 	'zufall monster
 		if rnd(1)*100>97 and peek(cp+164)>0 then ff=0:goto{:battel}
 	'set newpos
@@ -324,10 +328,10 @@ goto{:goto_newgame}
 		if c=52 then {var:seq_select}="txt.welcome.dolm" : gosub{:gosub_input_seq} : {var:npc_flag}(1)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(2)=1 :tx=7 :ty=2 : gosub{:gosub_raumaktion_print_one_tile} : gosub{:gosub_print_player_hp} : goto{:mainloop_oldpos}
 		if c=51 then {var:seq_select}="txt.welcome.mira" : gosub{:gosub_input_seq} : {var:npc_flag}(2)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(3)=1 :tx=3 :ty=2 : gosub{:gosub_raumaktion_print_one_tile} : gosub{:gosub_print_player_hp} : goto{:mainloop_oldpos}
 	'monster
-		if c=67 then print"{white}{home}{down}{right}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:npc_flag}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c=72 then print"{white}{home}{down}{right}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:npc_flag}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c=76 then print"{white}{home}{down}{right}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:npc_flag}(5)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c=77 then print"{white}{home}{down}{right}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=67 then print"{white}{home}{down}{right}du kannst hier nicht durch!"            :gosub {:gosub_delay_text} :ff=4 :{var:npc_flag}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:gosub{:gosub_clear_top}:goto{:battel}
+		if c=72 then print"{white}{home}{down}{right}ach wie suess!"                         :gosub {:gosub_delay_text} :ff=9 :{var:npc_flag}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:gosub{:gosub_clear_top}:goto{:battel}
+		if c=76 then print"{white}{home}{down}{right}du willst mich besiegen!"               :gosub {:gosub_delay_text} :ff=13:{var:npc_flag}(5)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:gosub{:gosub_clear_top}:goto{:battel}
+		if c=77 then print"{white}{home}{down}{right}du hast meine erwartung uebertroffen!"  :gosub {:gosub_delay_text} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:gosub{:gosub_clear_top}:goto{:battel}
 {:raumaktion_heilen}
 	'wenn c=40 wasser
 		if c=40 then va$="du bist geheilt" : gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_info_txt} : goto{:mainloop_oldpos}
@@ -395,9 +399,9 @@ goto{:goto_newgame}
 	'event
 		'event(x) = find item bei gefunden event_raum(x) = -1 else raumnummer
 		{var:event_raum}(0)=16  :{var:event_posx}(0)=0   :{var:event_posy}(0)=0  :{var:event_item}(1)=0   'leer
-		{var:event_raum}(1)=0   :{var:event_posx}(1)=1   :{var:event_posy}(1)=2  :{var:event_item}(1)=3   'kraeuter
+		{var:event_raum}(1)=0   :{var:event_posx}(1)=1   :{var:event_posy}(1)=2  :{var:event_item}(1)=4   'feuer
 		{var:event_raum}(2)=0   :{var:event_posx}(2)=18  :{var:event_posy}(2)=2  :{var:event_item}(2)=15  'stock
-		{var:event_raum}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=4   'feuer
+		{var:event_raum}(3)=16  :{var:event_posx}(3)=0   :{var:event_posy}(3)=0  :{var:event_item}(3)=3   'kraeuter
 		{var:event_raum}(4)=16  :{var:event_posx}(4)=0   :{var:event_posy}(4)=0  :{var:event_item}(4)=8   'kirsche
 		{var:event_raum}(5)=16  :{var:event_posx}(5)=0   :{var:event_posy}(5)=0  :{var:event_item}(5)=5   'eis
 		{var:event_raum}(6)=16  :{var:event_posx}(6)=0   :{var:event_posy}(6)=0  :{var:event_item}(6)=16  'weste
@@ -744,7 +748,7 @@ goto{:goto_newgame}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}du hast verloren                     "
 	gosub{:gosub_joywait_fire}
-	goto{:goto_newgame}
+	goto{:start}
 
 
 'gosub
@@ -1176,9 +1180,8 @@ goto{:goto_newgame}
 	return
 {:gosub_info_txt}
 	'print top screen
-		print"{home}{down}{white}{right}";va$
-		gosub {:gosub_joywait_fire}
 		gosub {:gosub_clear_top}
+		print"{home}{down}{white}{right}";va$
 	return
 {:gosub_print_txt_screen}
 	poke 1020,{var:farbe_bl}
@@ -1348,7 +1351,7 @@ goto{:goto_newgame}
 	data"{brown}{rvrs off}{176}{rvrs off}{brown}{177}{down}{left:2}{rvrs off}{brown}{178}{rvrs off}{brown}{179}{rvrs off}"
 	data"{brown}{rvrs off}{180}{rvrs off}{brown}{181}{down}{left:2}{rvrs off}{brown}{180}{rvrs off}{brown}{181}{rvrs off}"
 	data"{brown}{rvrs off}{182}{rvrs off}{brown}{183}{down}{left:2}{rvrs off}{brown}{184}{rvrs off}{brown}{185}{rvrs off}"
-	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
+	data"{graCy1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
 	data"{gray1}{rvrs off}{32}{rvrs off}{gray1}{32}{down}{left:2}{rvrs off}{gray1}{32}{rvrs off}{gray1}{32}{rvrs off}"
@@ -1379,7 +1382,8 @@ goto{:goto_newgame}
 	data"{lt. green}{rvrs on}{95}{rvrs on}{lt. green}{33}{down}{left:2}{rvrs on}{lt. green}{35}{rvrs on}{lt. green}{36}{rvrs off}"
 	data"{gray3}{rvrs on}{37}{rvrs on}{gray3}{38}{down}{left:2}{rvrs on}{gray3}{39}{rvrs on}{gray3}{40}{rvrs off}"
 	data"{gray1}{rvrs on}{37}{rvrs on}{gray1}{38}{down}{left:2}{rvrs on}{gray1}{39}{rvrs on}{gray1}{40}{rvrs off}"
-	data"{lt. green}{rvrs on}{41}{rvrs on}{lt. green}{42}{down}{left:2}{rvrs on}{lt. green}{43}{rvrs on}{lt. green}{44}{rvrs off}"
+	'data"{lt. green}{rvrs on}{41}{rvrs on}{lt. green}{42}{down}{left:2}{rvrs on}{lt. green}{43}{rvrs on}{lt. green}{44}{rvrs off}"
+	data"{orange}{rvrs on}{95}{rvrs on}{orange}{33}{down}{left:2}{rvrs on}{orange}{35}{rvrs on}{orange}{36}{rvrs off}"
 	data"{gray1}{rvrs on}{45}{rvrs on}{gray1}{46}{down}{left:2}{rvrs on}{gray1}{47}{rvrs on}{gray1}{48}{rvrs off}"
 	data"{gray1}{rvrs on}{49}{rvrs on}{gray1}{50}{down}{left:2}{rvrs on}{gray1}{51}{rvrs on}{gray1}{52}{rvrs off}"
 	data"{gray1}{rvrs on}{53}{rvrs on}{gray1}{54}{down}{left:2}{rvrs on}{gray1}{55}{rvrs on}{gray1}{56}{rvrs off}"
