@@ -1180,6 +1180,7 @@ goto{:goto_newgame}
 	return
 {:gosub_info_txt}
 	'print top screen
+		va=1
 		gosub {:gosub_clear_top}
 		print"{home}{down}{white}{right}";va$
 	return
@@ -1238,7 +1239,9 @@ goto{:goto_newgame}
 		goto {:joymap_wait}
 	{:joymap}
 	j=peek(56320)
-	'warten fire und keine bewegung return
+	'warten keine bewegung und fire (abfallende flanke) und infotext (va) dann nur return
+		if j=127 and a$=chr$(13) and va=1 then va=0 : gosub {:gosub_clear_top} : a$="":return
+	'warten keine bewegung und fire (abfallende flanke)
 		if j=127 and a$=chr$(13) then return
 	'links,rechts,oben oder unten
 		if j=123 then a$="a":gosub {:gosub_delay_joymap}:return
